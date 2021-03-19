@@ -7,7 +7,7 @@ using namespace std;
 int main(){
 
         Platform *p1 = new Platform();
-        p1->addNode();
+        p1->addNode(13);
 
         initscr();
         noecho();       // fa si che non si vede quello che premo dalla tastiera
@@ -25,7 +25,7 @@ int main(){
                 else if(c == 97 && ps > 0) // se premo a <-
                         ps--;
                 clear();        // mi pulisce lo schermo, forse andrà spostato
-                p1->printPlatforms(ps);         // chiama funzione che gestisce il print delle platform
+                p1->printPlatforms(ps, 61);         // chiama funzione che gestisce il print delle platform
                 // mvprintw(10, 10, "S"); // a caso, è per stampare l'omino in basso ma forse andrà gestito da un altra parte  
                 move(0,0);      // leva il cursore fuori dai coglioni
         }
