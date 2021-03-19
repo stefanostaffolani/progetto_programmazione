@@ -3,8 +3,8 @@ class Platform{
 
 public:
         Platform();
-        void addNode();
-        void printPlatforms(int ps); // gli viene passato il puntatore della visuale
+        void addNode(int h);    
+        void printPlatforms(int ps, int LenS); // gli viene passato il puntatore della visuale
 
 protected:
 
