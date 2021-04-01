@@ -11,7 +11,7 @@ Field::Field(){
 	lenS = 75;
 }
 
-void Field::printField(){
+void Field::printField(int ps){
 	initscr();
 	noecho();
 	
