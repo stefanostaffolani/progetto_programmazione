@@ -1,7 +1,7 @@
 class Field{
 public:
 	Field();
-	void printField();
+	void printField(int ps);
 	void upgradeData(int plLife, int plPoints);
 
 	int getLenS() { return lenS; }
