@@ -6,20 +6,23 @@ Field::Field(){
 	i = 1;
 	life = 0;
 	points = 0;
+	
+	height = 14;
+	lenS = 75;
 }
 
 void Field::printField(){
 	initscr();
 	noecho();
 	
-	for (int i = 1; i <= 75; i++){
+	for (int i = 1; i <= lenS; i++){
 		
 		mvprintw(1,i,"-");
-		if(i < 14){
+		if(i < height && ps == 0){
 			mvprintw(i+1,0,"|");		
 		}
 
-		mvprintw(15,i,"-");
+		mvprintw(height + 1,i,"-");
 	}
 
 	mvprintw(0,8,"LIFE:");
