@@ -40,7 +40,7 @@ void Field::upgradeData(int plLife, int plPoints){
 	//mvprintw(0,14, "   ");
 	//mvprintw(0,44, "       ");
 	
-	for(i = 0; i < 8, i++){
+	for(i = 0; i < 8; i++){
 		mvdelch(0,14 + i);
 		mvdelch(0,44 + i);
 		
