@@ -28,6 +28,7 @@ int main(){
                         p1 -> generate(height, lenS, ps, 50);
 
                         field->printField(ps);
+			field->upgradeData(100,0);
                 // parte relativa alla stampa delle platform
                 if(c == 100) // se premo d ->
                         ps++;
@@ -38,9 +39,9 @@ int main(){
                 move(0,0);      // leva il cursore fuori dai coglioni
 
                 /*
-					field->upgradeData(100,0);
+					
 
-					field->upgradeData(95,0);
+			field->upgradeData(95,0);
 
                 */
         }
