@@ -51,6 +51,5 @@ void Field::upgradeData(int plLife, int plPoints){
 	points = plPoints;
 	mvprintw(0,14, "%d",life);
 	mvprintw(0,44, "%d",points);
-	getch();
 	endwin();
 }
