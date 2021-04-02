@@ -28,17 +28,23 @@ void Field::printField(int ps){
 	mvprintw(0,8,"LIFE:");
 	mvprintw(0,35,"POINTS:");
 
-	/*mvprintw(0,14, (char[])life);
-	mvprintw(0,14, (char[])points);*/
 	endwin();
 }
 
 void Field::upgradeData(int plLife, int plPoints){
 
+	int i;
+	
 	initscr();
 	noecho();
-	mvprintw(0,14, "   ");
-	mvprintw(0,44, "       ");
+	//mvprintw(0,14, "   ");
+	//mvprintw(0,44, "       ");
+	
+	for(i = 0; i < 8, i++){
+		mvdelch(0,14 + i);
+		mvdelch(0,44 + i);
+		
+	}
 
 
 	life = plLife;
