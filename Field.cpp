@@ -4,7 +4,7 @@ using namespace std;
 
 Field::Field(){
 	i = 1;
-	life = 0;
+	life = 100;
 	points = 0;
 	
 	height = 14;
