@@ -7,6 +7,7 @@ using namespace std;
 
 int main(){
 
+        srand(time(NULL));
 	Field *field = new Field();
         Platform *p1 = new Platform();
 
