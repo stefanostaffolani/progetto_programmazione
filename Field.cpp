@@ -7,7 +7,7 @@ Field::Field(){
 	life = 0;
 	points = 0;
 	
-	height = 14;
+	height = 12;
 	lenS = 75;
 }
 
