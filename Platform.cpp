@@ -16,7 +16,7 @@ void Platform::addNode(int h){ // ==============================================
         if(first == NULL){
                 first = new node;
                 first -> x = 40; // un valore a caso che può essere anche k
-                first -> y = rand() % 5 + 3;  // siccome il player deve poterci saltare do valore rand
+                first -> y = rand() % 2 + 2;  // siccome il player deve poterci saltare do valore rand
                 first -> len = 10;
                 first -> prev = NULL;
                 first -> next = NULL;
