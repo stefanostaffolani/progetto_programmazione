@@ -4,7 +4,7 @@ class Platform{
 public:
         Platform();
         void addNode(int h);    
-        void printPlatforms(int ps, int LenS); // gli viene passato il puntatore della visuale
+        void printPlatforms(int ps, int LenS, int versor); // gli viene passato il puntatore della visuale
         void generate(int height, int lenS, int ps, int n); // genera n nuove platform
         
 protected:

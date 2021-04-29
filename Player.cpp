@@ -1,7 +1,7 @@
 #include <iostream>
 #include <time.h>
 #include <ncurses.h>
-#include "Player_new.hpp"
+#include "Player.hpp"
 #include <thread>
 #include <chrono>
 

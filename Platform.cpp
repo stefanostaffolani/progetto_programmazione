@@ -43,7 +43,7 @@ void Platform::addNode(int h){ // ==============================================
 
 
 
-void Platform::printPlatforms(int ps, int lenS){ // ===================================
+void Platform::printPlatforms(int ps, int lenS, int versor){ // ===================================
 
         // 1) verifica dell'aggiornamento valore current -------------------------
                 // se sto andando indietro:
@@ -57,6 +57,8 @@ void Platform::printPlatforms(int ps, int lenS){ // ============================
         p_node iter = current;   void generate(int n);   // genera n nuove platform
 
         while(iter != NULL && iter -> x < ps + lenS){ // cicla fino a che la nuova x di iter è fuori dallo schermo
+                if(versor == 1) mvdelch(iter->y, iter->x + iter->len - ps + 1); 
+                else if(versor == -1) mvdelch(iter->y, iter->x - ps - 1);
                 for(int i = 0; i < iter->len; i++){
                         if(iter -> x + i >= ps && iter -> x + i < ps + lenS)
                                 mvprintw(iter -> y, iter -> x + i - ps, "=");
