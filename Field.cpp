@@ -11,10 +11,7 @@ Field::Field(){
 	lenS = 75;
 }
 
-void Field::printField(int ps){
-	initscr();
-	noecho();
-	
+void Field::printField(int ps){	
 	for (int i = 1; i <= lenS; i++){
 		
 		mvprintw(1,i,"-");
@@ -27,16 +24,11 @@ void Field::printField(int ps){
 
 	mvprintw(0,8,"LIFE:");
 	mvprintw(0,35,"POINTS:");
-
-	endwin();
 }
 
 void Field::upgradeData(int plLife, int plPoints){
 
 	int i;
-	
-	initscr();
-	noecho();
 	//mvprintw(0,14, "   ");
 	//mvprintw(0,44, "       ");
 	
@@ -51,5 +43,4 @@ void Field::upgradeData(int plLife, int plPoints){
 	points = plPoints;
 	mvprintw(0,14, "%d",life);
 	mvprintw(0,44, "%d",points);
-	endwin();
 }
