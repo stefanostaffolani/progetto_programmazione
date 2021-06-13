@@ -1,8 +1,10 @@
 class Player{
 public:
-    Player();
+    Player(int, int);
+    void printPlayer();
     void moveRight();
     void moveLeft();
+    void set_x(int);
     int get_x();
     int get_y();
     void collision_jump(int, int, int);

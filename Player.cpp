@@ -6,11 +6,20 @@
 #include <chrono>
 
 using namespace std;
-
-Player::Player(){
-    x = 1;
-    y = 12;
+ 
+Player::Player(int lenS, int height){
+    x = lenS / 2; 
+    y = height;
     versor = 0;
+    printPlayer();
+}
+
+void Player::printPlayer(){
+    mvprintw(this->y, this->x, "@");
+    if(this->versor == -1)
+        mvprintw(this->y, this->x + 1, " ");
+    else if(this->versor == 1)
+        mvprintw(this->y, this->x - 1, " ");
 }
 
 void Player::set_versor(int i){this->versor = i;}
@@ -35,13 +44,11 @@ void Player::moveRight() {
     }
 }
 
-int Player::get_x() {
-    return this->x;
-}
+void Player::set_x(int n){ this->x = n; }
 
-int Player::get_y() {
-    return this->y;
-}
+int Player::get_x() { return this->x; }
+
+int Player::get_y() { return this->y; }
 
 void Player::gravity(int x_platform_i, int x_platform_f, int y_platform){
     bool arrived;
