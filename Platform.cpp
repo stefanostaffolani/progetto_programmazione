@@ -60,7 +60,7 @@ void Platform::printPlatforms(int ps, int lenS, int versor){ // ================
                 if(versor == 1) mvprintw(iter->y, iter->x + iter->len - ps, " "); 
                 else if(versor == -1) mvprintw(iter->y, iter->x - ps - 1, " ");
                 for(int i = 0; i < iter->len; i++){
-                        if(iter -> x + i >= ps && iter -> x + i < ps + lenS)
+                        if(iter -> x + i >= ps && iter -> x + i < ps + lenS - 1)
                                 mvprintw(iter -> y, iter -> x + i - ps, "=");
                 }
                 iter = iter->next;
