@@ -18,6 +18,8 @@ void Field::printField(int ps){
 		if(i < height && ps == 0){
 			mvprintw(i+1,0,"|");		
 		}
+		else if(ps > 0)
+			mvprintw(i+1, 0, " ");
 
 		mvprintw(height + 1,i,"-");
 	}
@@ -33,8 +35,8 @@ void Field::upgradeData(int plLife, int plPoints){
 	//mvprintw(0,44, "       ");
 	
 	for(i = 0; i < 8; i++){
-		mvdelch(0,14 + i);
-		mvdelch(0,44 + i);
+		mvprintw(0,14 + i, " ");
+		mvprintw(0,44 + i, " ");
 		
 	}
 
