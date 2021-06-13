@@ -55,9 +55,17 @@ void Player::gravity(int x_platform_i, int x_platform_f, int y_platform){
         mvprintw(this->y, this->x, " ");
         this->y++;
         this->x = this->x + this->versor;
-        mvaddch(this->y, this->x, '@');
-        refresh();
-        if ((this->x >= x_platform_i && this->x <= x_platform_f && (this->y == y_platform - 1)) || (this->y == 12)) arrived = true;
+	if (this->y == y_platform && (this->x == x_platform_i || this->x == x_platform_f)){
+		this->y--;
+		mvaddch(this->y, this->x, '@');
+		refresh();
+		arrived = true;	
+	}
+	else{
+        	mvaddch(this->y, this->x, '@');
+        	refresh();
+        	if ((this->x >= x_platform_i && this->x <= x_platform_f && (this->y == y_platform - 1)) || (this->y == 12)) arrived = true;
+	}
         std::this_thread::sleep_for(std::chrono::milliseconds (100));
     }
 }
