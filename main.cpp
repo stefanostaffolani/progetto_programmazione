@@ -3,6 +3,7 @@
 #include "Platform.hpp"
 #include "Field.hpp"
 #include "Player.hpp"
+#include "Bonus.hpp"
 using namespace std;
 
 // dai cazzo
@@ -12,11 +13,13 @@ int main(){
         srand(time(NULL));
 	Field *field = new Field();
         Platform *p1 = new Platform();
+        Bonus *b1 = new Bonus();
 
         int lenS = field -> getLenS();
         int height = field -> getHeight();
 
         p1->addNode(height);
+        b1->addCash(p1->get_current(), height);
 
         initscr();
         noecho();       // fa si che non si vede quello che premo dalla tastiera
@@ -29,6 +32,9 @@ int main(){
         // ciclo in cui di base avviene tutto
         while((c = getch()) != 27){ // 48 è il tasto 0, 27 tasto ESC 
                 // ... qua piazziamo codice tipo per i movimenti del giocatore o altre cose ... 
+                        if(rand()%10 == 0)
+                                b1->addCash(p1->get_current(), height);
+
                         p1 -> generate(height, lenS, ps, 50);
                         field->printField(ps);
 			field->upgradeData(100,0);
@@ -49,6 +55,15 @@ int main(){
                         player->set_versor(-1);
                 }
                 player->printPlayer();
+                if(rand()%10000 == 0)
+                        b1->addCash(p1->get_current(), height);
+                
+                if(b1->findCash(ps, lenS, player->get_x(), player->get_y())){
+                        cout << "\a";
+                        field->setPoint(10);
+                }
+
+                b1->printCash(ps, lenS, player->get_versor());
                 p1->printPlatforms(ps, lenS, player->get_versor()); // chiama funzione che gestisce il print delle platform
                 // mvprintw(10, 10, "S"); // a caso, è per stampare l'omino in basso ma forse andrà gestito da un altra parte  
                 move(0,0);      // leva il cursore fuori dai coglioni

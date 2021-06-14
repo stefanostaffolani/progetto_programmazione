@@ -6,6 +6,9 @@ public:
 
 	int getLenS() { return lenS; }
 	int getHeight() { return height; }
+	int getPoint() { return points; }
+	
+	void setPoint(int n) { points += n; }
 	
 protected:
 	int i;

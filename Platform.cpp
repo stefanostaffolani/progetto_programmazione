@@ -18,6 +18,12 @@ void Platform::addNode(int h){ // ==============================================
                 first -> x = 40; // un valore a caso che può essere anche k
                 first -> y = rand() % 2 + 2;  // siccome il player deve poterci saltare do valore rand
                 first -> len = 10;
+
+                if(rand()%4 == 0)
+                        first -> gotCash = false;
+                else    
+                        first -> gotCash = true;
+                
                 first -> prev = NULL;
                 first -> next = NULL;
                 last = first;
@@ -28,6 +34,11 @@ void Platform::addNode(int h){ // ==============================================
                 last -> next = tmp;
                 tmp -> prev = last;
                 tmp -> next = NULL;
+                if(rand()%4 == 0)
+                        tmp -> gotCash = false;
+                else 
+                        tmp -> gotCash = true;
+
                 tmp -> x = tmp -> prev -> x + tmp -> prev -> len + rand() % 8 + 5;
                 do {
                         tmp -> y = tmp -> prev -> y + rand() % 8 - rand() % 5;
@@ -46,15 +57,15 @@ void Platform::addNode(int h){ // ==============================================
 void Platform::printPlatforms(int ps, int lenS, int versor){ // ===================================
 
         // 1) verifica dell'aggiornamento valore current -------------------------
-                // se sto andando indietro:
+                // se sto andando avanti:
         if(current -> x + current -> len < ps)
                 current = current -> next;
-                // se sto andando in avanti:
+                // se sto andando in dietro:
         else if(current -> prev != NULL && current -> prev -> x + current -> prev -> len >= ps)
                 current = current -> prev;
 
         // 2) stampare da current fino a limite schermo --------------------------
-        p_node iter = current;   void generate(int n);   // genera n nuove platform
+        p_node iter = current;   
 
         while(iter != NULL && iter -> x < ps + lenS){ // cicla fino a che la nuova x di iter è fuori dallo schermo
                 if(versor == 1) mvprintw(iter->y, iter->x + iter->len - ps, " "); 
@@ -74,6 +85,6 @@ void Platform::printPlatforms(int ps, int lenS, int versor){ // ================
 void Platform::generate(int height, int lenS, int ps, int n){
         if(last->x < ps + lenS){ // genera platform se l'ultima entra nello schermo
                 for(int i = 0; i < n; i++)
-                      addNode(height);
+                      addNode(height);                          
         }
 }
