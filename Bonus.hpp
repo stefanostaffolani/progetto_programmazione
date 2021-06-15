@@ -14,6 +14,7 @@ public:
     void addCash(p_node, int);
     void printCash(int, int, int);
     bool findCash(int, int, int, int);
+    int lencash();
 protected:
     p_cash first;
     p_cash last;

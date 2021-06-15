@@ -8,9 +8,13 @@
 using namespace std;
 
 Bonus::Bonus(){
-    first = NULL;
-    last = NULL;
-    current = NULL;
+    first = new cashlist;
+    first->y = -10;
+    first->x = -10;
+    first->prev = NULL;
+    first->next = NULL;
+    last = first;
+    current = first;
 }
 
 void Bonus::addCash(p_node p, int h){
@@ -19,37 +23,25 @@ void Bonus::addCash(p_node p, int h){
             p = p->next;
     }
     
-    int r = rand() % 3;
+    if(!p->gotCash){
+        p_cash tmp = new cashlist;
+        last -> next = tmp;
+        tmp -> prev = last;
+        tmp -> next = NULL;
 
-    if(first == NULL){
-        first = new cashlist;
-        first -> x = p -> x + rand() % p->len - 1; // valore a caso dentro la platform 
-        first -> y = p -> y - 1;
+        if(rand() % 6 == 0) tmp -> y = h;
+        else if(p->y > 2)
+           tmp -> y = p -> y - 1;
+        else tmp->y = h;
 
-        first -> prev = NULL;
-        first -> next = NULL;
-        last = first;
-        current = first;
+        tmp -> x = p -> x + rand() % p->len - 1;
+        
+        last = tmp;
+        tmp = NULL;
+        delete tmp;
+        p->gotCash = true;
     }
-    else { // altrimenti aggiungo in testa  --------------------------------
-        if(!p->gotCash){
-            p_cash tmp = new cashlist;
-            last -> next = tmp;
-            tmp -> prev = last;
-            tmp -> next = NULL;
 
-            if(rand() % 6 == 0) tmp -> y = h;
-            else
-                tmp -> y = p -> y - 1;
-            
-            tmp -> x = p -> x + rand() % p->len - 1;
-           
-            last = tmp;
-            tmp = NULL;
-            delete tmp;
-            p->gotCash = true;
-        }
-    }
 }
 
 
@@ -57,18 +49,20 @@ void Bonus::printCash(int ps, int lenS, int versor){
 
     // 1) verifica dell'aggiornamento valore current -------------------------
                 // se sto andando avanti:
-        if(current -> x < ps && current->next != NULL)
-                current = current -> next;
-                // se sto andando in dietro:
-        else if(current -> prev != NULL && current -> prev -> x >= ps)
-                current = current -> prev;
+        if(current!=NULL){
+            if(current -> x < ps && current->next != NULL)
+                    current = current -> next;
+                    // se sto andando in dietro:
+            else if(current -> prev != NULL && current -> prev -> x >= ps)
+                    current = current -> prev;
+        }
 
         // 2) stampare da current fino a limite schermo --------------------------
         p_cash iter = current;  
 
         while(iter != NULL && iter -> x < ps + lenS){ // cicla fino a che la nuova x di iter è fuori dallo schermo
-                if(versor == 1) mvprintw(iter->y, iter->x - ps, "  "); 
-                else if(versor == -1) mvprintw(iter->y, iter->x - ps - 1, "  ");
+                if(versor == 1) mvprintw(iter->y, iter->x - ps + 1, " "); // premo d 
+                else if(versor == -1) mvprintw(iter->y, iter->x - ps - 1, " "); // premo a
                 if(iter -> x >= ps && iter -> x < ps + lenS - 1){
                     mvprintw(iter -> y, iter -> x - ps, "$");
                 }                
@@ -79,15 +73,28 @@ void Bonus::printCash(int ps, int lenS, int versor){
 
 bool Bonus::findCash(int ps, int lenS, int plx, int ply){
     p_cash iter = current;
+
+    // move(30,10);
+    // mvprintw(20, 20, "plx+ps: %d", plx + ps);
+    // mvprintw(21, 20, "current->x: %d", current->x);    
+
+    // mvprintw(22, 20, "ply: %d", ply);
+    // mvprintw(23, 20, "curr->y: %d", current->y);
+
+
     while(iter != NULL && iter->x < ps+lenS){
-        if(iter->x == plx && iter->y == ply) {
+        if(iter->x == plx + ps && iter->y == ply) {
+            // mvprintw(24, 20, "win");
             if(iter == current){ 
                 if(iter != first)
                     current = iter->prev;
                 else if(iter != last)
                     current = iter -> next;
-                else 
+                else {
                     current = NULL;
+                    last = NULL;
+                    first = NULL;
+                }
             }
             if(iter == last){
                 last = last->prev;
@@ -103,7 +110,6 @@ bool Bonus::findCash(int ps, int lenS, int plx, int ply){
                 iter = NULL;
                 delete iter;
             }
-            mvprintw(ply, plx, " ");
             return true;
         }
         iter = iter->next;
@@ -111,4 +117,14 @@ bool Bonus::findCash(int ps, int lenS, int plx, int ply){
     return false;
 }
 
+
+int Bonus::lencash(){
+    int cont = 0;
+    p_cash iter = first;
+    while(iter != NULL){
+        iter = iter->next;
+        cont++;
+    }
+    return cont;
+}
 

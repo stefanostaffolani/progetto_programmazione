@@ -27,17 +27,17 @@ int main(){
         int c;          // mi serve per immagazzinare quello che digito da tastiera
 
         field->printField(ps);
+        field->upgradeData(100,0);
         Player *player = new Player(lenS, height);
 
         // ciclo in cui di base avviene tutto
         while((c = getch()) != 27){ // 48 è il tasto 0, 27 tasto ESC 
                 // ... qua piazziamo codice tipo per i movimenti del giocatore o altre cose ... 
-                        if(rand()%10 == 0)
-                                b1->addCash(p1->get_current(), height);
+                if(rand()%10 == 0)
+                        b1->addCash(p1->get_current(), height);
 
-                        p1 -> generate(height, lenS, ps, 50);
-                        field->printField(ps);
-			field->upgradeData(100,0);
+                p1 -> generate(height, lenS, ps, 50);
+                field->printField(ps);
                 // parte relativa alla stampa delle platform
                 if(c == 100){ // se premo d ->
                         if (player -> get_x() + 12 > lenS) 
@@ -51,30 +51,24 @@ int main(){
                                 ps--;
                         else
                                 player -> set_x(player->get_x() - 1);
-                        move(5,5);
                         player->set_versor(-1);
                 }
-                player->printPlayer();
-                if(rand()%10000 == 0)
-                        b1->addCash(p1->get_current(), height);
                 
+                player->printPlayer();        
+
                 if(b1->findCash(ps, lenS, player->get_x(), player->get_y())){
-                        cout << "\a";
-                        field->setPoint(10);
+                        field->upgradeData(field->getLife(), field->getPoint() + 10);
+                        field->printField(ps);
+
+                        // soluzione alquanto bruttina ma dio mio
+                        for(int i = 0; i < 100; i++)
+                        mvprintw(player->get_y(), i, " ");
                 }
+                
 
                 b1->printCash(ps, lenS, player->get_versor());
                 p1->printPlatforms(ps, lenS, player->get_versor()); // chiama funzione che gestisce il print delle platform
-                // mvprintw(10, 10, "S"); // a caso, è per stampare l'omino in basso ma forse andrà gestito da un altra parte  
                 move(0,0);      // leva il cursore fuori dai coglioni
-
-                /*
-					
-
-			field->upgradeData(95,0);
-
-                */
-
         }
         
         endwin();
