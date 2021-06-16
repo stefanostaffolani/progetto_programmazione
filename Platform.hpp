@@ -17,7 +17,6 @@ public:
         void addNode(int h);    
         void printPlatforms(int ps, int LenS, int versor); // gli viene passato il puntatore della visuale
         void generate(int height, int lenS, int ps, int n); // genera n nuove platform
-        
         p_node get_current() { return current; }
 
 protected:

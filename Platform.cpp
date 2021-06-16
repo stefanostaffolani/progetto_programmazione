@@ -10,7 +10,6 @@ Platform::Platform(){
         current = NULL;
 }
 
-
 void Platform::addNode(int h){ // ======================================================
         // se non ci sono ancora nodi -------------------------------------------
         if(first == NULL){

@@ -7,11 +7,31 @@
 
 using namespace std;
  
-Player::Player(int lenS, int height){
-    x = lenS / 2; 
-    y = height;
-    versor = 0;
+Player::Player(int lenS, int height, p_node first){
+    x = lenS / 3; 
+    y = height;  // 12
+    versor = 1;
     printPlayer();
+    plat_dx = first;
+    plat_sx = NULL;
+    //len_screen = lenS; da vedere in futuro
+}
+
+void Player::update_platform(){
+    if(this->versor == 1){ // non ci sarà mai un caso NULL
+        if(this->x > ((plat_dx->x + plat_dx->len)/2)){
+            plat_dx = plat_dx->next;
+            if(plat_sx == NULL){
+                plat_sx = plat_dx->prev;
+            }else plat_sx = plat_sx->next;
+        }
+    } else { // gestire caso NULL
+        if(this->x < ((plat_dx->x + plat_dx->len)/2) && (plat_sx != NULL)){
+            plat_sx = plat_sx->prev;
+            plat_dx = plat_dx->prev;
+        }
+    }
+
 }
 
 void Player::printPlayer(){
@@ -28,6 +48,7 @@ int Player::get_versor(){return this->versor;}
 
 void Player::moveLeft() {
     if (this->x > 1) {
+        update_platform();
         mvdelch(this->y, this->x);
         this->x--;
         mvaddch(this->y, this->x, '@');
@@ -64,8 +85,7 @@ void Player::gravity(int x_platform_i, int x_platform_f, int y_platform){
 		mvaddch(this->y, this->x, '@');
 		refresh();
 		arrived = true;	
-	}
-	else{
+	    } else{
         	mvaddch(this->y, this->x, '@');
         	refresh();
         	if ((this->x >= x_platform_i && this->x <= x_platform_f && (this->y == y_platform - 1)) || (this->y == 12)) arrived = true;
