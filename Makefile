@@ -1,4 +1,4 @@
-test: main.cpp Platform.o Field.o Player.o
+test: main.cpp Platform.o Field.o Player.o Bonus.o
 	g++ -o test main.cpp Platform.o Field.o Bonus.o Player.o -lncurses -lpthread
 
 Platform.o: Platform.cpp Platform.hpp
