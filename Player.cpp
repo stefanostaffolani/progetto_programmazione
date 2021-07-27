@@ -213,8 +213,8 @@ void Player::jump(){
         } else{
             hit_something = true;
         }
+        update_platform(); // ci sta
         std::this_thread::sleep_for(std::chrono::milliseconds (100));
-        update_platform();
     }
     gravity();
 }
@@ -222,11 +222,13 @@ void Player::jump(){
 void Player::gravity(){
     bool hit_something = false;
     //int i = 0;
+    if (mvinch(this->y + 1, this->x) != 32) hit_something = true;
+    else hit_something = false;
     while(!(hit_something)){
         if(mvinch(this->y + 1, this->x + versor) != 32){
             hit_something = true;
-            mvprintw(this->y, this->x, " ");
             if (mvinch(this->y + 1, this->x) == 32){
+                mvprintw(this->y, this->x, " ");
                 this->move();
             }//fare il caso che tocca $ (numero 36) e vedere se ne servono altri
         } else{
@@ -234,6 +236,7 @@ void Player::gravity(){
             this->y++;
             move();
         }
+        update_platform();    // ci sta
         std::this_thread::sleep_for(std::chrono::milliseconds (100));
     }
 }
