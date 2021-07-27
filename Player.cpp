@@ -12,13 +12,60 @@ Player::Player(int lenS, int height, p_node first){
     y = height;  // 12
     versor = 1;
     printPlayer();
+    initial = first;
     plat_dx = first;
     plat_sx = NULL;
     plat_cx = NULL;
     //len_screen = lenS; da vedere in futuro
 }
 
+
 void Player::update_platform(){
+    if (this->versor == 1){
+        if (this->x >= plat_dx->x){
+            if (plat_cx == NULL){
+                plat_cx = plat_dx;
+                plat_dx = plat_dx->next;
+            }
+            else{
+                plat_sx = plat_cx;
+                plat_cx = plat_cx -> next;
+                plat_dx = plat_dx -> next;
+            }
+        }
+    }
+    else{
+        if (plat_cx != NULL){
+            if(this->x < plat_cx->x){
+                plat_dx = plat_dx->prev;
+                plat_cx = plat_cx -> prev;
+                if(plat_sx != NULL){
+                    plat_sx = plat_sx->prev;
+                }
+            }
+        }
+    }
+}
+
+/* void Player::update_platform(){
+    if(this->versor == 1){
+        if(this->x >= plat_dx->x){
+            plat_sx = plat_dx;
+            plat_dx = plat_dx->next;
+        }
+    }
+    else{
+        if(plat_sx != NULL){
+            if(this->x <= plat_sx->x+plat_sx->len){
+                plat_dx = plat_sx;
+                plat_sx = plat_sx->prev;
+            }
+        }
+    }
+}
+ */
+
+/* void Player::update_platform(){
     if(this->versor == 1){ // non ci sarà mai un caso NULL
         if(this->x >= plat_dx->x ){
             if(plat_cx != NULL) plat_sx = plat_cx->prev;
@@ -31,7 +78,7 @@ void Player::update_platform(){
         }
     }
 }
-
+ */
 void Player::printPlayer(){
     mvprintw(this->y, this->x, "@");
     if(this->versor == -1)
@@ -39,28 +86,52 @@ void Player::printPlayer(){
     else if(this->versor == 1)
         mvprintw(this->y, this->x - 1, " ");
 }
+/* 
+bool Player:hit_plat_cx(){
+    if(versor == 1){
+        if((this->x < plat_cx->x + plat_cx->len) && (this->x > plat_cx->x)){
+
+        }
+    }
+} */
 
 void Player::set_versor(int i){this->versor = i;}
 
 int Player::get_versor(){return this->versor;}
 
-void Player::moveLeft() {
+/* void Player::moveLeft() {
     if (this->x > 1) {
         update_platform();
-        mvdelch(this->y, this->x);
+        mvprintw(this->y, this->x, " ");
         this->x--;
-        mvaddch(this->y, this->x, '@');
+        mvprintw(this->y, this->x, "@");
         refresh();
     }
 }
 
 void Player::moveRight() {
     if (this->x < 70) {
-        mvdelch(this->y, this->x);
+        mvprintw(this->y, this->x, " ");
         this->x++;    // check for length
-        mvaddch(this->y, this->x, '@');
+        mvprintw(this->y, this->x, "@");
         refresh();
     }
+} */
+
+void Player::move(){
+    if ((versor == -1) && (this->x > INIT_X)){
+        mvprintw(this->y, this->x, " ");
+        this->x--;
+        mvprintw(this->y, this->x, "@");
+        refresh();
+    }
+    else if ((versor == 1) && (this->x < END_X)){
+        mvprintw(this->y, this->x, " ");
+        this->x++;    // check for length
+        mvprintw(this->y, this->x, "@");
+        refresh();
+    }
+    update_platform();
 }
 
 void Player::set_x(int n){ this->x = n; }
@@ -69,10 +140,19 @@ int Player::get_x() { return this->x; }
 
 int Player::get_y() { return this->y; }
 
-void Player::gravity(){  //TODO:remake this function...
+
+/* void Player::gravity(){
     update_platform();
     int x_platform_i,x_platform_f,y_platform;
-    if(versor == 1 && (plat_dx->x + plat_dx->x + plat_dx->len)/2 < this->x){
+    
+
+} */
+
+
+/* void Player::gravity(){  //TODO:remake this function...
+    update_platform();
+    int x_platform_i,x_platform_f,y_platform;
+    if(versor == -1 ){//&& (plat_dx->x + plat_dx->x + plat_dx->len)/2 < this->x){
         x_platform_i = this->plat_dx->x;
         x_platform_f = this->plat_dx->x + this->plat_dx->len;
         y_platform = this->plat_dx->y;
@@ -91,31 +171,114 @@ void Player::gravity(){  //TODO:remake this function...
         this->x = this->x + this->versor;
 	    if (this->y == y_platform && (this->x == x_platform_i || this->x == x_platform_f)){
 		this->y--;
-		mvaddch(this->y, this->x, '@');
+		mvprintw(this->y, this->x, "@");
 		refresh();
 		arrived = true;	
 	    } else{
-        	mvaddch(this->y, this->x, '@');
+        	mvprintw(this->y, this->x, "@");
         	refresh();
         	if ((this->x >= x_platform_i && this->x <= x_platform_f && (this->y == y_platform - 1)) || (this->y == 12)) arrived = true;
 	}
         std::this_thread::sleep_for(std::chrono::milliseconds (100));
     }
+} */
+
+p_node Player::get_platdx(){
+    return plat_dx;
 }
 
+p_node Player::get_platsx(){
+    if (plat_sx == NULL)
+        return plat_dx;
+    else
+        return plat_sx;
+}
 
-void Player::collision_jump(){
+p_node Player::get_platcx(){
+    if (plat_cx == NULL)
+        return plat_dx;
+    else
+        return plat_cx;
+}
+
+void Player::jump(){
+    int i = 0;
+    bool hit_something = false;
+    while((i < Y_JUMP) && !(hit_something)){
+        if (mvinch(this->y - 1, this->x + versor) == 32){
+            mvprintw(this->y, this->x, " ");
+            this->y--;
+            this->move();
+            i++;
+        } else{
+            hit_something = true;
+        }
+        std::this_thread::sleep_for(std::chrono::milliseconds (100));
+        update_platform();
+    }
+    gravity();
+}
+
+void Player::gravity(){
+    bool hit_something = false;
+    //int i = 0;
+    while(!(hit_something)){
+        if(mvinch(this->y + 1, this->x + versor) != 32){
+            hit_something = true;
+            mvprintw(this->y, this->x, " ");
+            if (mvinch(this->y + 1, this->x) == 32){
+                this->move();
+            }//fare il caso che tocca $ (numero 36) e vedere se ne servono altri
+        } else{
+            mvprintw(this->y, this->x, " ");
+            this->y++;
+            move();
+        }
+        std::this_thread::sleep_for(std::chrono::milliseconds (100));
+    }
+}
+
+/* void Player::collision_jump(){
     update_platform();
     int x_platform_i,x_platform_f,y_platform;
-    if(versor == 1 && !(this->x <= this->plat_dx->x+this->plat_dx->len && this->x >= this->plat_dx->x)){
-        x_platform_i = this->plat_dx->x;
-        x_platform_f = this->plat_dx->x + this->plat_dx->len;
-        y_platform = this->plat_dx->y;
-    }else if (this->plat_sx != NULL && !(this->x <= this->plat_sx->x+this->plat_sx->len && this->x >= this->plat_sx->x)){
-        x_platform_i = this->plat_sx->x;
-        x_platform_f = this->plat_sx->x + this->plat_sx->len;
-        y_platform = this->plat_sx->y;
+    if (plat_sx == NULL){
+            x_platform_i = this->plat_dx->x;
+            x_platform_f = this->plat_dx->x + this->plat_dx->len;
+            y_platform = this->plat_dx->y;
+        }
+    else if(versor == 1){
+        if(!(this->x <= this->plat_sx->x+this->plat_sx->len && this->x >= this->plat_sx->x)){
+            x_platform_i = this->plat_dx->x;
+            x_platform_f = this->plat_dx->x + this->plat_dx->len;
+            y_platform = this->plat_dx->y;
+        }
+        else {
+            x_platform_i = this->plat_sx->x;
+            x_platform_f = this->plat_sx->x + this->plat_sx->len;
+            y_platform = this->plat_sx->y;
+        }
+    }else {
+        if (!(this->x <= this->plat_dx->x+this->plat_dx->len && this->x >= this->plat_dx->x)){
+            x_platform_i = this->plat_sx->x;
+            x_platform_f = this->plat_sx->x + this->plat_sx->len;
+            y_platform = this->plat_sx->y;
+        }
+        else{
+            x_platform_i = this->plat_dx->x;
+            x_platform_f = this->plat_dx->x + this->plat_dx->len;
+            y_platform = this->plat_dx->y;
+        }
     }
+    mvprintw(18, 15, "x plat %d", x_platform_i);
+    //mvprintw(18,20, "%d", x_platform_f);
+    //mvprintw(18, 25, "%d",  y_platform);
+    
+    //mvprintw(20, 15, "x player %d", this->x);
+    mvprintw(20,20, "x plat dx %d", plat_dx->x);
+
+    //mvprintw(22, 15, "%d",  plat_sx->y);
+    //mvprintw(22, 20 "%d", plat_sx->y);
+
     int x_player_f = this->x + (6 * this->versor);
     int y_player_f = this->y - 3;
     if ((y_player_f < y_platform) && (this->x < x_platform_i - 2 || this->x > x_platform_f + 2) && (x_player_f >= x_platform_i && x_player_f <= x_platform_f) && (y_player_f > 0) && (x_player_f > 1)){    // può atterrare sulla platform
@@ -124,6 +287,7 @@ void Player::collision_jump(){
             mvprintw(this->y, this->x, " ");
             this->y--;
             this->x = this->x + this->versor;
+            
             mvaddch(this->y, this->x, '@');
             refresh();
             std::this_thread::sleep_for(std::chrono::milliseconds (100));
@@ -142,4 +306,4 @@ void Player::collision_jump(){
         }
         this->gravity();
     }
-}
+} */

@@ -32,6 +32,7 @@ int main(){
 
         // ciclo in cui di base avviene tutto
         while((c = getch()) != 27){ // 48 è il tasto 0, 27 tasto ESC 
+                //cout << "char in posizione 2,2 " << mvinch(5,5)<< endl;
                 // ... qua piazziamo codice tipo per i movimenti del giocatore o altre cose ... 
                 if(rand()%10 == 0)
                         b1->addCash(p1->get_current(), height);
@@ -40,22 +41,22 @@ int main(){
                 field->printField(ps);
                 // parte relativa alla stampa delle platform
                 if(c == 100){ // se premo d ->
+                        player->set_versor(1);
                         if (player -> get_x() + 20 > lenS) 
                                 ps++;
-                        else 
-                                player -> set_x(player->get_x() + 1);
-                        player->set_versor(1);
+                        else  
+                                player -> move();//set_x(player->get_x() + 1);
                         player->gravity();
                 }
                 else if(c==119){
-                        player->collision_jump();
+                        player->jump();
                 }
                 else if(c == 97 && ps >= 0){ // se premo a <-
+                        player->set_versor(-1);
                         if (player -> get_x() - 20 < 0) 
                                 ps--;
                         else
-                                player -> set_x(player->get_x() - 1);
-                        player->set_versor(-1);
+                                player-> move(); //set_x(player->get_x() - 1);
                         player->gravity();
                 }
                 //player->gravity();
@@ -69,6 +70,10 @@ int main(){
                         for(int i = 0; i < 100; i++)
                         mvprintw(player->get_y(), i, " ");
                 }
+               /*  mvprintw(19, 3, "x player %d", player->get_x());
+                mvprintw(23, 5, "plat dx ==> %d", player->get_platdx()->x);
+                mvprintw(25, 5, "plat cx ==> %d", player->get_platcx()->x);
+                mvprintw (27, 5, "plat sx ==> %d", player->get_platsx()->x); */
                 
 
                 b1->printCash(ps, lenS, player->get_versor());
