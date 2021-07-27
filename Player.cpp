@@ -80,7 +80,7 @@ void Player::update_platform(){
 }
  */
 void Player::printPlayer(){
-    mvprintw(this->y, this->x, "@");
+    mvprintw(this->y, this->x, PLAYER_AVATAR);
     if(this->versor == -1)
         mvprintw(this->y, this->x + 1, " ");
     else if(this->versor == 1)
@@ -122,13 +122,13 @@ void Player::move(){
     if ((versor == -1) && (this->x > INIT_X)){
         mvprintw(this->y, this->x, " ");
         this->x--;
-        mvprintw(this->y, this->x, "@");
+        mvprintw(this->y, this->x, PLAYER_AVATAR);
         refresh();
     }
     else if ((versor == 1) && (this->x < END_X)){
         mvprintw(this->y, this->x, " ");
         this->x++;    // check for length
-        mvprintw(this->y, this->x, "@");
+        mvprintw(this->y, this->x, PLAYER_AVATAR);
         refresh();
     }
     update_platform();

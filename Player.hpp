@@ -4,6 +4,7 @@
 #define INIT_X 1
 #define END_X 70
 #define Y_JUMP 5
+#define PLAYER_AVATAR "@"
 
 class Player{
 public:
