@@ -45,6 +45,10 @@ int main(){
                         else 
                                 player -> set_x(player->get_x() + 1);
                         player->set_versor(1);
+                        player->gravity();
+                }
+                else if(c==119){
+                        player->collision_jump();
                 }
                 else if(c == 97 && ps >= 0){ // se premo a <-
                         if (player -> get_x() - 20 < 0) 
@@ -52,10 +56,11 @@ int main(){
                         else
                                 player -> set_x(player->get_x() - 1);
                         player->set_versor(-1);
+                        player->gravity();
                 }
+                //player->gravity();
                 player->update_platform();
                 player->printPlayer();        
-
                 if(b1->findCash(ps, lenS, player->get_x(), player->get_y())){
                         field->upgradeData(field->getLife(), field->getPoint() + 10);
                         field->printField(ps);
