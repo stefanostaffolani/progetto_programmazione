@@ -4,6 +4,8 @@
 #include "Field.hpp"
 #include "Player.hpp"
 #include "Bonus.hpp"
+#include <thread>
+#include <chrono>
 using namespace std;
 
 // dai cazzo
@@ -28,7 +30,7 @@ int main(){
 
         field->printField(ps);
         field->upgradeData(100,0);
-        Player *player = new Player(lenS, height, p1->get_current());
+        Player *player = new Player(lenS, height, ps);
 
         // ciclo in cui di base avviene tutto
         while((c = getch()) != 27){ // 48 è il tasto 0, 27 tasto ESC 
@@ -45,23 +47,26 @@ int main(){
                         if (player -> get_x() + 20 > lenS) 
                                 ps++;
                         else  
-                                player -> move();//set_x(player->get_x() + 1);
-                        player->gravity();
+                                player -> move(p1);//set_x(player->get_x() + 1);
+                        player->gravity(p1);
                 }
                 else if(c==119){
-                        player->jump();
+                        player->jump(p1);
+                }
+                else if(c==32){    //TODO: vedere se necessario l'utilizzo dei thread
+                        player->shoot();
                 }
                 else if(c == 97 && ps >= 0){ // se premo a <-
                         player->set_versor(-1);
                         if (player -> get_x() - 20 < 0) 
                                 ps--;
-                        else
-                                player-> move(); //set_x(player->get_x() - 1);
-                        player->gravity();
+                        else 
+                                player-> move(p1); //set_x(player->get_x() - 1);
+                        player->gravity(p1);
                 }
                 //player->gravity();
-                player->update_platform();
-                player->printPlayer();        
+                //player->update_platform();
+                //player->printPlayer();        
                 if(b1->findCash(ps, lenS, player->get_x(), player->get_y())){
                         field->upgradeData(field->getLife(), field->getPoint() + 10);
                         field->printField(ps);

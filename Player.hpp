@@ -5,23 +5,22 @@
 #define END_X 70
 #define Y_JUMP 5
 #define PLAYER_AVATAR "@"
+#define RANGE 10
+#define BULLET "-"
 
 class Player{
 public:
-    Player(int, int, p_node);
+    Player(int, int, int&);
     void printPlayer();
-    //void moveRight();
-    //void moveLeft();
-    void jump();
-    void move();
+    void jump(Platform*);
+    void move(Platform*);
     void set_x(int);
+    void shoot();
     int get_x();
     int get_y();
-    void collision_jump();
-    void gravity();
+    void gravity(Platform*);
     void set_versor(int);
     int get_versor();
-    bool hit_plat_cx();
     void update_platform();
     p_node get_platdx();
     p_node get_platcx();
@@ -34,4 +33,5 @@ protected:
     p_node plat_dx;
     p_node plat_cx;
     p_node initial;
+    int pointer_screen;
 };
