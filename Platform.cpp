@@ -15,7 +15,7 @@ void Platform::addNode(int h){ // ==============================================
         if(first == NULL){
                 first = new node;
                 first -> x = 40; // un valore a caso che può essere anche k
-                first -> y = rand() % 2 + 2;  // siccome il player deve poterci saltare do valore rand
+                first -> y = rand() % 2 + 10;  // siccome il player deve poterci saltare do valore rand
                 first -> len = 10;
 
                 if(rand()%4 == 0)
@@ -38,9 +38,9 @@ void Platform::addNode(int h){ // ==============================================
                 else 
                         tmp -> gotCash = true;
 
-                tmp -> x = tmp -> prev -> x + tmp -> prev -> len + rand() % 8 + 5;
+                tmp -> x = tmp -> prev -> x + tmp -> prev -> len + rand() % 2 + 5;
                 do {
-                        tmp -> y = tmp -> prev -> y + rand() % 8 - rand() % 5;
+                        tmp -> y = tmp -> prev -> y + rand() % 4 - rand() % 3;
                 } while(tmp -> y < 4 || tmp -> y > h - 2);
                 tmp -> len = rand() % 10 + 5;
                 last = tmp;
