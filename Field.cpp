@@ -4,8 +4,8 @@ using namespace std;
 
 Field::Field(){
 	i = 1;
-	life = 0;
-	points = 0;
+	// life = 0;
+	// points = 0;
 	
 	height = 12;
 	lenS = 75;
