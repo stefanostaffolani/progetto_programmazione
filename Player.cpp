@@ -7,7 +7,7 @@
 
 using namespace std;
  
-Player::Player(int lenS, int height, p_node first, Platform* p1){
+Player::Player(int lenS, int height, p_node first, Platform* p1, Bonus* b1){
     x = lenS / 3; 
     y = height;  // 12
     versor = 1;
@@ -17,6 +17,7 @@ Player::Player(int lenS, int height, p_node first, Platform* p1){
     plat_sx = NULL;
     plat_cx = NULL;
     p2 = p1;
+    b2 = b1;
     
     //len_screen = lenS; da vedere in futuro
 }
@@ -79,6 +80,7 @@ void Player::move(int& ps){
         refresh();
     }
     p2->printPlatforms(ps, 75, this->versor);
+    b2->printCash(ps, 75, versor);
 }
 
 void Player::set_x(int n){ this->x = n; }

@@ -107,9 +107,11 @@ bool Bonus::findCash(int ps, int lenS, int plx, int ply){
             else{
                 iter->prev->next = iter->next;
                 iter->next->prev = iter->prev;
-                iter = NULL;
                 delete iter;
+                iter = NULL;
             }
+            mvprintw(ply, plx, " ");
+            refresh();
             return true;
         }
         iter = iter->next;

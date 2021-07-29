@@ -3,7 +3,7 @@
 //#include "Platform.hpp"
 #include "Field.hpp"
 #include "Player.hpp"
-#include "Bonus.hpp"
+//#include "Bonus.hpp"
 using namespace std;
 
 // dai cazzo
@@ -28,7 +28,7 @@ int main(){
 
         field->printField(ps);
         field->upgradeData(100,0);
-        Player *player = new Player(lenS, height, p1->get_current(), p1);
+        Player *player = new Player(lenS, height, p1->get_current(), p1, b1);
 
         // ciclo in cui di base avviene tutto
         while((c = getch()) != 27){ // 48 è il tasto 0, 27 tasto ESC 
@@ -46,7 +46,7 @@ int main(){
                                 ps++;
                         else  
                                 player -> move(ps);//set_x(player->get_x() + 1);
-                        player->gravity(ps);
+                        
                 }
                 else if(c==119){
                         player->jump(ps);
@@ -57,18 +57,20 @@ int main(){
                                 ps--;
                         else
                                 player-> move(ps); //set_x(player->get_x() - 1);
-                        player->gravity(ps);
+                        //player->gravity(ps);
                 }
                 //player->gravity();
-                player->update_platform();
-                player->printPlayer();        
+                //player->update_platform();
+                //player->printPlayer();        
                 if(b1->findCash(ps, lenS, player->get_x(), player->get_y())){
+                        // mvprintw(player->get_y(), player->get_x(), PLAYER_AVATAR);
+                        // refresh();
                         field->upgradeData(field->getLife(), field->getPoint() + 10);
                         field->printField(ps);
 
                         // soluzione alquanto bruttina ma dio mio
-                        for(int i = 0; i < 100; i++)
-                        mvprintw(player->get_y(), i, " ");
+                        // for(int i = 0; i < 100; i++)
+                        // mvprintw(player->get_y(), i, " ");
                 }
                /*  mvprintw(19, 3, "x player %d", player->get_x());
                 mvprintw(23, 5, "plat dx ==> %d", player->get_platdx()->x);
@@ -78,6 +80,7 @@ int main(){
 
                 b1->printCash(ps, lenS, player->get_versor());
                 p1->printPlatforms(ps, lenS, player->get_versor()); // chiama funzione che gestisce il print delle platform
+                player->gravity(ps);
                 move(0,0);      // leva il cursore fuori dai coglioni
         }
         
