@@ -16,8 +16,11 @@ public:
     void jump(int&);
     void move(int&);
     void set_x(int);
+    void increase_points(int);
     int get_x();
     int get_y();
+    int get_life();
+    int get_points();
     void collision_jump();
     void gravity(int&);
     void set_versor(int);
@@ -31,6 +34,8 @@ public:
 protected:
     int x,y;
     int versor;    // versor = 1 go dx versor = -1 go sx versor = 0 don't move
+    int life;
+    int points;
     p_node plat_sx;
     p_node plat_dx;
     p_node plat_cx;

@@ -11,6 +11,8 @@ Player::Player(int lenS, int height, p_node first, Platform* p1, Bonus* b1){
     x = lenS / 3; 
     y = height;  // 12
     versor = 1;
+    life = 100;
+    points = 0;
     printPlayer();
     initial = first;
     plat_dx = first;
@@ -18,10 +20,14 @@ Player::Player(int lenS, int height, p_node first, Platform* p1, Bonus* b1){
     plat_cx = NULL;
     p2 = p1;
     b2 = b1;
-    
     //len_screen = lenS; da vedere in futuro
 }
 
+int Player::get_life(){return this->life;}
+
+int Player::get_points(){return this->points;}
+
+void Player::increase_points(int n){this->points += n;}
 
 void Player::update_platform(){
     if (this->versor == 1){
@@ -133,11 +139,18 @@ void Player::gravity(int& ps){
     else hit_something = false;
     while(!(hit_something)){
         if(mvinch(this->y + 1, this->x + versor) != 32){
-            hit_something = true;
-            if (mvinch(this->y + 1, this->x) == 32){
-                mvprintw(this->y, this->x, " ");
-                this->move(ps);
-            }//fare il caso che tocca $ (numero 36) e vedere se ne servono altri
+                hit_something = true;
+                if (mvinch(this->y + 1, this->x + versor) == 36){
+                    mvprintw(this->y, this->x, " ");
+                    this->y++;
+                    move(ps);
+                    //increase_points(10);
+                    //if (b2->findCash(ps, 75, this->x, this->y)) increase_points(10);
+                } else if (mvinch(this->y + 1, this->x) == 32){
+                    mvprintw(this->y, this->x, " ");
+                    this->move(ps);
+                }
+            //fare il caso che tocca $ (numero 36) e vedere se ne servono altri
         } else{
             mvprintw(this->y, this->x, " ");
             this->y++;

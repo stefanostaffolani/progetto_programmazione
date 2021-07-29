@@ -42,10 +42,7 @@ int main(){
                 // parte relativa alla stampa delle platform
                 if(c == 100){ // se premo d ->
                         player->set_versor(1);
-                        if (player -> get_x() + 20 > lenS) 
-                                ps++;
-                        else  
-                                player -> move(ps);//set_x(player->get_x() + 1);
+                        player -> move(ps);//set_x(player->get_x() + 1);
                         
                 }
                 else if(c==119){
@@ -53,11 +50,7 @@ int main(){
                 }
                 else if(c == 97 && ps >= 0){ // se premo a <-
                         player->set_versor(-1);
-                        if (player -> get_x() - 20 < 0) 
-                                ps--;
-                        else
-                                player-> move(ps); //set_x(player->get_x() - 1);
-                        //player->gravity(ps);
+                        player-> move(ps); //set_x(player->get_x() - 1);
                 }
                 //player->gravity();
                 //player->update_platform();
@@ -65,7 +58,8 @@ int main(){
                 if(b1->findCash(ps, lenS, player->get_x(), player->get_y())){
                         // mvprintw(player->get_y(), player->get_x(), PLAYER_AVATAR);
                         // refresh();
-                        field->upgradeData(field->getLife(), field->getPoint() + 10);
+                        player->increase_points(10);
+                        field->upgradeData(player->get_life(), player->get_points());
                         field->printField(ps);
 
                         // soluzione alquanto bruttina ma dio mio

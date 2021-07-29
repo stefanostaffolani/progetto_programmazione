@@ -34,7 +34,7 @@ void Bonus::addCash(p_node p, int h){
            tmp -> y = p -> y - 1;
         else tmp->y = h;
 
-        tmp -> x = p -> x + rand() % p->len - 1;
+        tmp -> x = p -> x + rand() % p->len;  // qui c'era un -1 che ho tolto perchè senno stampa i $ a culo
         
         last = tmp;
         tmp = NULL;
@@ -110,7 +110,8 @@ bool Bonus::findCash(int ps, int lenS, int plx, int ply){
                 delete iter;
                 iter = NULL;
             }
-            mvprintw(ply, plx, " ");
+            mvprintw(ply, plx, "@");
+            mvprintw(ply, plx + 1, " ");
             refresh();
             return true;
         }
