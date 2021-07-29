@@ -8,17 +8,17 @@
 
 class Player{
 public:
-    Player(int, int, p_node);
+    Player(int, int, p_node, Platform*);
     void printPlayer();
     //void moveRight();
     //void moveLeft();
-    void jump();
-    void move();
+    void jump(int&);
+    void move(int&);
     void set_x(int);
     int get_x();
     int get_y();
     void collision_jump();
-    void gravity();
+    void gravity(int&);
     void set_versor(int);
     int get_versor();
     bool hit_plat_cx();
@@ -34,4 +34,5 @@ protected:
     p_node plat_dx;
     p_node plat_cx;
     p_node initial;
+    Platform* p2;
 };

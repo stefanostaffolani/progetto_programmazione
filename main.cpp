@@ -28,7 +28,7 @@ int main(){
 
         field->printField(ps);
         field->upgradeData(100,0);
-        Player *player = new Player(lenS, height, p1->get_current());
+        Player *player = new Player(lenS, height, p1->get_current(), p1);
 
         // ciclo in cui di base avviene tutto
         while((c = getch()) != 27){ // 48 è il tasto 0, 27 tasto ESC 
@@ -45,19 +45,19 @@ int main(){
                         if (player -> get_x() + 20 > lenS) 
                                 ps++;
                         else  
-                                player -> move();//set_x(player->get_x() + 1);
-                        player->gravity();
+                                player -> move(ps);//set_x(player->get_x() + 1);
+                        player->gravity(ps);
                 }
                 else if(c==119){
-                        player->jump();
+                        player->jump(ps);
                 }
                 else if(c == 97 && ps >= 0){ // se premo a <-
                         player->set_versor(-1);
                         if (player -> get_x() - 20 < 0) 
                                 ps--;
                         else
-                                player-> move(); //set_x(player->get_x() - 1);
-                        player->gravity();
+                                player-> move(ps); //set_x(player->get_x() - 1);
+                        player->gravity(ps);
                 }
                 //player->gravity();
                 player->update_platform();
