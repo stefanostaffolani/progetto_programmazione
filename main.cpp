@@ -48,7 +48,7 @@ int main(){
                 else if(c==119){
                         player->jump(ps);
                 }
-                else if(c == 97 && ps >= 0){ // se premo a <-
+                else if(c == 97){ // se premo a <-
                         player->set_versor(-1);
                         player-> move(ps); //set_x(player->get_x() - 1);
                 }

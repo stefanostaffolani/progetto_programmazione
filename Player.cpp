@@ -73,7 +73,7 @@ int Player::get_versor(){return this->versor;}
 void Player::move(int& ps){
     if ((versor == -1) && (this->x > INIT_X)){
         mvprintw(this->y, this->x, " ");
-        if(this->x < 20) ps--;
+        if(this->x < 20 && ps > 0) ps--;
         else this->x--;
         mvprintw(this->y, this->x, PLAYER_AVATAR);
         refresh();
@@ -139,19 +139,27 @@ void Player::gravity(int& ps){
     else hit_something = false;
     while(!(hit_something)){
         if(mvinch(this->y + 1, this->x + versor) != 32){
-                hit_something = true;
-                if (mvinch(this->y + 1, this->x + versor) == 36){
-                    mvprintw(this->y, this->x, " ");
-                    this->y++;
-                    move(ps);
+            hit_something = true;
+            if (mvinch(this->y + 1, this->x + versor) == 36){
+                mvprintw(this->y, this->x, " ");
+                this->y++;
+                move(ps);
                     //increase_points(10);
                     //if (b2->findCash(ps, 75, this->x, this->y)) increase_points(10);
-                } else if (mvinch(this->y + 1, this->x) == 32){
-                    mvprintw(this->y, this->x, " ");
-                    this->move(ps);
-                }
+            }else if(mvinch(this->y + 1, this->x + versor) == 124){
+                mvprintw(this->y, this->x, " ");
+                this->y = HEIGHT;
+                this->x = INIT_X;
+                mvprintw(this->y, this->x, PLAYER_AVATAR);
+                refresh();
+            }else if (mvinch(this->y + 1, this->x) == 32){
+                mvprintw(this->y, this->x, " ");
+                this->move(ps);
+            }
             //fare il caso che tocca $ (numero 36) e vedere se ne servono altri
-        } else{
+        }else if (mvinch(this->y + 1, this->x) == 61){
+            hit_something = true;
+        }else{
             mvprintw(this->y, this->x, " ");
             this->y++;
             move(ps);
