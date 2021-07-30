@@ -73,15 +73,11 @@ int Player::get_versor(){return this->versor;}
 void Player::move(int& ps){
     if ((versor == -1) && (this->x > INIT_X)){
         mvprintw(this->y, this->x, " ");
-<<<<<<< HEAD
-        if(this->x < 20 && ps > 0) ps--;
-=======
         if(this->x < 20){
             ps--;
             p2->printPlatforms(ps, 75, this->versor);
             b2->printCash(ps, 75, versor);
         }
->>>>>>> 612f5203e9a6e042a4afc9a150f6570526a47148
         else this->x--;
         mvprintw(this->y, this->x, PLAYER_AVATAR);
         refresh();
