@@ -1,5 +1,6 @@
 #include "Platform.hpp"
 #include "Bonus.hpp"
+#include "Enemy.hpp"
 
 #define HEIGHT 12
 #define INIT_X 1
@@ -9,10 +10,7 @@
 
 class Player{
 public:
-    Player(int, int, p_node, Platform*, Bonus*);
-    void printPlayer();
-    //void moveRight();
-    //void moveLeft();
+    Player(int, int, p_node, Platform*, Bonus*, Enemy*);
     void jump(int&);
     void move(int&);
     void set_x(int);
@@ -42,4 +40,5 @@ protected:
     p_node initial;
     Platform* p2;
     Bonus* b2;
+    Enemy* enem2;
 };

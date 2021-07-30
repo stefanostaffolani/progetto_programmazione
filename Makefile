@@ -1,5 +1,5 @@
-test: main.cpp Platform.o Field.o Player.o Bonus.o
-	g++ -o test main.cpp Platform.o Field.o Bonus.o Player.o -lncurses -lpthread
+test: main.cpp Platform.o Field.o Player.o Bonus.o Enemy.o
+	g++ -o test main.cpp Platform.o Field.o Bonus.o Player.o Enemy.o -lncurses -lpthread
 
 Platform.o: Platform.cpp Platform.hpp
 	g++ -c Platform.cpp
@@ -12,6 +12,9 @@ Bonus.o: Bonus.cpp Bonus.hpp
 
 Field.o: Field.cpp Field.hpp
 	g++ -c Field.cpp
+
+Enemy.o: Enemy.cpp Enemy.hpp
+	g++ -c Enemy.cpp
 
 clean:
 	rm *.o test

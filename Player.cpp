@@ -7,19 +7,19 @@
 
 using namespace std;
  
-Player::Player(int lenS, int height, p_node first, Platform* p1, Bonus* b1){
+Player::Player(int lenS, int height, p_node first, Platform* p1, Bonus* b1, Enemy* enem){
     x = lenS / 3; 
     y = height;  // 12
     versor = 1;
     life = 100;
     points = 0;
-    printPlayer();
     initial = first;
     plat_dx = first;
     plat_sx = NULL;
     plat_cx = NULL;
     p2 = p1;
     b2 = b1;
+    enem2 = enem;
     //len_screen = lenS; da vedere in futuro
 }
 
@@ -56,16 +56,6 @@ void Player::update_platform(){
     }
 }
 
-
-void Player::printPlayer(){
-    mvprintw(this->y, this->x, PLAYER_AVATAR);
-    if(this->versor == -1)
-        mvprintw(this->y, this->x + 1, " ");
-    else if(this->versor == 1)
-        mvprintw(this->y, this->x - 1, " ");
-}
-
-
 void Player::set_versor(int i){this->versor = i;}
 
 int Player::get_versor(){return this->versor;}
@@ -77,6 +67,7 @@ void Player::move(int& ps){
             ps--;
             p2->printPlatforms(ps, 75, this->versor);
             b2->printCash(ps, 75, versor);
+            enem2->printEnemies(ps, 75 ,versor);
         }
         else this->x--;
         mvprintw(this->y, this->x, PLAYER_AVATAR);
@@ -88,6 +79,7 @@ void Player::move(int& ps){
             ps++;
             p2->printPlatforms(ps, 75, this->versor);
             b2->printCash(ps, 75, versor);
+            enem2->printEnemies(ps, 75 ,versor);
         }
         else this->x++;    // check for length
         mvprintw(this->y, this->x, PLAYER_AVATAR);

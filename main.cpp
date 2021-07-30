@@ -1,15 +1,17 @@
 #include <iostream>
 #include <ncurses.h>
+#include <thread>
 //#include "Platform.hpp"
 #include "Field.hpp"
 #include "Player.hpp"
 //#include "Bonus.hpp"
+//#include "Enemy.hpp"
 using namespace std;
 
 // dai cazzo
 
 int main(){
- 
+
         srand(time(NULL));
 	Field *field = new Field();
         Platform *p1 = new Platform();
@@ -28,12 +30,41 @@ int main(){
 
         field->printField(ps);
         field->upgradeData(100,0);
-        Player *player = new Player(lenS, height, p1->get_current(), p1, b1);
+        Enemy *enem = new Enemy();
+        Player *player = new Player(lenS, height, p1->get_current(), p1, b1, enem);
+
+        int addEnem = 0;
+        int spawCount = 0;
+        int difficulty = 1;
+
+        // std::thread t_enem = enem->move_enem_thread(ps,lenS);
+        // t_enem.detach();
 
         // ciclo in cui di base avviene tutto
-        while((c = getch()) != 27){ // 48 è il tasto 0, 27 tasto ESC 
+        while((c = getch()) != 27){ // 48 è il tasto 0, 27 tasto ESC
+
+                // questa prima parte regola lo spawn dei nemici, fatta un po' malaccio =================
+                if(player->get_versor() == 1)
+                        addEnem++;
+
+                // mvprintw(20,10,"difficulty : %d", difficulty);
+                // mvprintw(21,10,"addEnem: %d",addEnem);
+                // mvprintw(22,10,"spawnCount: %d",spawCount);
+
+                if(addEnem >= (10 - difficulty) * (10 + difficulty)){
+                        addEnem = 0;
+                        spawCount++;
+                        enem->addEnemy(p1->get_current(), height, difficulty);
+                        if(spawCount == 5){
+                                spawCount = 0;
+                                if(difficulty < 9)
+                                        difficulty++;
+                        }
+                }
+                // fine parte relativa a spawn nemici ==================================================
+
                 //cout << "char in posizione 2,2 " << mvinch(5,5)<< endl;
-                // ... qua piazziamo codice tipo per i movimenti del giocatore o altre cose ... 
+                // ... qua piazziamo codice tipo per i movimenti del giocatore o altre cose ...
                 if(rand()%10 == 0)
                         b1->addCash(p1->get_current(), height);
 
@@ -43,7 +74,7 @@ int main(){
                 if(c == 100){ // se premo d ->
                         player->set_versor(1);
                         player -> move(ps);//set_x(player->get_x() + 1);
-                        
+
                 }
                 else if(c==119){
                         player->jump(ps);
@@ -54,7 +85,7 @@ int main(){
                 }
                 //player->gravity();
                 //player->update_platform();
-                //player->printPlayer();        
+                //player->printPlayer();
                 if(b1->findCash(ps, lenS, player->get_x(), player->get_y())){
                         // mvprintw(player->get_y(), player->get_x(), PLAYER_AVATAR);
                         // refresh();
@@ -70,14 +101,16 @@ int main(){
                 mvprintw(23, 5, "plat dx ==> %d", player->get_platdx()->x);
                 mvprintw(25, 5, "plat cx ==> %d", player->get_platcx()->x);
                 mvprintw (27, 5, "plat sx ==> %d", player->get_platsx()->x); */
-                
 
+                enem->move_enem(ps, lenS);
+
+                enem->printEnemies(ps,lenS,player->get_versor());
                 b1->printCash(ps, lenS, player->get_versor());
                 p1->printPlatforms(ps, lenS, player->get_versor()); // chiama funzione che gestisce il print delle platform
                 player->gravity(ps);
                 move(0,0);      // leva il cursore fuori dai coglioni
         }
-        
+
         endwin();
 
         return 0;
