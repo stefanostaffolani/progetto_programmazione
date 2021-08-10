@@ -1,25 +1,13 @@
 #include <iostream>
 #include <time.h>
-#include <ncurses.h>
 #include "Player.hpp"
-#include <thread>
-#include <chrono>
 
 using namespace std;
  
-Player::Player(int lenS, int height, p_node first, Platform* p1, Bonus* b1){
-    x = lenS / 3; 
-    y = height;  // 12
-    versor = 1;
+Player::Player(int x, int y, char avatar, Platform* p1, Bonus* b1):Item(x,y,avatar, p1, b1){
     life = 100;
     points = 0;
-    printPlayer();
-    initial = first;
-    plat_dx = first;
-    plat_sx = NULL;
-    plat_cx = NULL;
-    p2 = p1;
-    b2 = b1;
+    mvprintw(this->y, this->x, "%c",avatar);
     //len_screen = lenS; da vedere in futuro
 }
 
@@ -28,99 +16,6 @@ int Player::get_life(){return this->life;}
 int Player::get_points(){return this->points;}
 
 void Player::increase_points(int n){this->points += n;}
-
-void Player::update_platform(){
-    if (this->versor == 1){
-        if (this->x >= plat_dx->x){
-            if (plat_cx == NULL){
-                plat_cx = plat_dx;
-                plat_dx = plat_dx->next;
-            }
-            else{
-                plat_sx = plat_cx;
-                plat_cx = plat_cx -> next;
-                plat_dx = plat_dx -> next;
-            }
-        }
-    }
-    else{
-        if (plat_cx != NULL){
-            if(this->x < plat_cx->x){
-                plat_dx = plat_dx->prev;
-                plat_cx = plat_cx -> prev;
-                if(plat_sx != NULL){
-                    plat_sx = plat_sx->prev;
-                }
-            }
-        }
-    }
-}
-
-
-void Player::printPlayer(){
-    mvprintw(this->y, this->x, PLAYER_AVATAR);
-    if(this->versor == -1)
-        mvprintw(this->y, this->x + 1, " ");
-    else if(this->versor == 1)
-        mvprintw(this->y, this->x - 1, " ");
-}
-
-
-void Player::set_versor(int i){this->versor = i;}
-
-int Player::get_versor(){return this->versor;}
-
-void Player::move(int& ps){
-    if ((versor == -1) && (this->x > INIT_X)){
-        mvprintw(this->y, this->x, " ");
-        if(this->x < 20){
-            ps--;
-            p2->printPlatforms(ps, 75, this->versor);
-            b2->printCash(ps, 75, versor);
-        }
-        else this->x--;
-        mvprintw(this->y, this->x, PLAYER_AVATAR);
-        refresh();
-    }
-    else if ((versor == 1) && (this->x < END_X)){
-        mvprintw(this->y, this->x, " ");
-        if(this->x > 55){ 
-            ps++;
-            p2->printPlatforms(ps, 75, this->versor);
-            b2->printCash(ps, 75, versor);
-        }
-        else this->x++;    // check for length
-        mvprintw(this->y, this->x, PLAYER_AVATAR);
-        refresh();
-    }
-    // p2->printPlatforms(ps, 75, this->versor);
-    // b2->printCash(ps, 75, versor);
-}
-
-void Player::set_x(int n){ this->x = n; }
-
-int Player::get_x() { return this->x; }
-
-int Player::get_y() { return this->y; }
-
-
-p_node Player::get_platdx(){
-    return plat_dx;
-}
-
-p_node Player::get_platsx(){
-    if (plat_sx == NULL)
-        return plat_dx;
-    else
-        return plat_sx;
-}
-
-p_node Player::get_platcx(){
-    if (plat_cx == NULL)
-        return plat_dx;
-    else
-        return plat_cx;
-}
 
 void Player::jump(int& ps){
     int i = 0;
@@ -158,7 +53,7 @@ void Player::gravity(int& ps){
                 mvprintw(this->y, this->x, " ");
                 this->y = HEIGHT;
                 this->x = INIT_X;
-                mvprintw(this->y, this->x, PLAYER_AVATAR);
+                mvprintw(this->y, this->x, "%c", avatar);
                 refresh();
             }else if (mvinch(this->y + 1, this->x) == 32){
                 mvprintw(this->y, this->x, " ");

@@ -1,5 +1,8 @@
-test: main.cpp Platform.o Field.o Player.o Bonus.o
-	g++ -o test main.cpp Platform.o Field.o Bonus.o Player.o -lncurses -lpthread
+test: main.cpp Platform.o Field.o Player.o Bonus.o Item.o
+	g++ -o test main.cpp Platform.o Field.o Bonus.o Item.o Player.o -lncurses -lpthread
+
+Item.o: Item.cpp Item.hpp
+	g++ -c Item.cpp
 
 Platform.o: Platform.cpp Platform.hpp
 	g++ -c Platform.cpp

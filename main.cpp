@@ -28,7 +28,7 @@ int main(){
 
         field->printField(ps);
         field->upgradeData(100,0);
-        Player *player = new Player(lenS, height, p1->get_current(), p1, b1);
+        Player *player = new Player(4, height, '@', p1, b1);
 
         // ciclo in cui di base avviene tutto
         while((c = getch()) != 27){ // 48 è il tasto 0, 27 tasto ESC 
