@@ -7,7 +7,7 @@ using namespace std;
 Player::Player(int x, int y, char avatar, Platform* p1, Bonus* b1):Item(x,y,avatar, p1, b1){
     life = 100;
     points = 0;
-    mvprintw(this->y, this->x, "%c",avatar);
+    mvprintw(this->pos.y, this->pos.x, "%c",avatar);
     //len_screen = lenS; da vedere in futuro
 }
 
@@ -21,9 +21,9 @@ void Player::jump(int& ps){
     int i = 0;
     bool hit_something = false;
     while((i < Y_JUMP) && !(hit_something)){
-        if (mvinch(this->y - 1, this->x + versor) == 32){
-            mvprintw(this->y, this->x, " ");
-            this->y--;
+        if (mvinch(this->pos.y - 1, this->pos.x + versor) == 32){
+            mvprintw(this->pos.y, this->pos.x, " ");
+            this->pos.y--;
             this->move(ps);
             i++;
         } else{
@@ -38,33 +38,33 @@ void Player::jump(int& ps){
 void Player::gravity(int& ps){
     bool hit_something = false;
     //int i = 0;
-    if (mvinch(this->y + 1, this->x) != 32) hit_something = true;
+    if (mvinch(this->pos.y + 1, this->pos.x) != 32) hit_something = true;
     else hit_something = false;
     while(!(hit_something)){
-        if(mvinch(this->y + 1, this->x + versor) != 32){
+        if(mvinch(this->pos.y + 1, this->pos.x + versor) != 32){
             hit_something = true;
-            if (mvinch(this->y + 1, this->x + versor) == 36){
-                mvprintw(this->y, this->x, " ");
-                this->y++;
+            if (mvinch(this->pos.y + 1, this->pos.x + versor) == 36){
+                mvprintw(this->pos.y, this->pos.x, " ");
+                this->pos.y++;
                 move(ps);
                     //increase_points(10);
                     //if (b2->findCash(ps, 75, this->x, this->y)) increase_points(10);
-            }else if(mvinch(this->y + 1, this->x + versor) == 124){
-                mvprintw(this->y, this->x, " ");
-                this->y = HEIGHT;
-                this->x = INIT_X;
-                mvprintw(this->y, this->x, "%c", avatar);
+            }else if(mvinch(this->pos.y + 1, this->pos.x + versor) == 124){
+                mvprintw(this->pos.y, this->pos.x, " ");
+                this->pos.y = HEIGHT;
+                this->pos.x = INIT_X;
+                mvprintw(this->pos.y, this->pos.x, "%c", avatar);
                 refresh();
-            }else if (mvinch(this->y + 1, this->x) == 32){
-                mvprintw(this->y, this->x, " ");
+            }else if (mvinch(this->pos.y + 1, this->pos.x) == 32){
+                mvprintw(this->pos.y, this->pos.x, " ");
                 this->move(ps);
             }
             //fare il caso che tocca $ (numero 36) e vedere se ne servono altri
-        }else if (mvinch(this->y + 1, this->x) == 61){
+        }else if (mvinch(this->pos.y + 1, this->pos.x) == 61){
             hit_something = true;
         }else{
-            mvprintw(this->y, this->x, " ");
-            this->y++;
+            mvprintw(this->pos.y, this->pos.x, " ");
+            this->pos.y++;
             move(ps);
         }
         //update_platform();    // ci sta

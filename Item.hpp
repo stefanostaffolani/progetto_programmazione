@@ -8,6 +8,11 @@
 #define END_X 70
 #define HEIGHT 12
 
+struct position{
+    int x;
+    int y;
+};
+
 
 class Item{
     public:
@@ -20,7 +25,7 @@ class Item{
         int get_versor();
 
     protected:
-        int x,y;
+        position pos;
         int versor;
         char avatar;
         Platform* p2;

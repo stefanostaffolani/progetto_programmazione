@@ -2,45 +2,45 @@
 
 Item::Item(int x, int y, char avatar, Platform* p1, Bonus* b1){
     this->avatar = avatar;
-    this->x = x;
-    this->y = y;
+    this->pos.x = x;
+    this->pos.y = y;
     this->versor = 1;
     p2 = p1;
     b2 = b1;
 }
 
 void Item::move(int& ps){
-    if ((versor == -1) && (this->x > INIT_X)){
-        mvprintw(this->y, this->x, " ");
-        if(this->x < 20 && ps >= 1){
+    if ((versor == -1) && (this->pos.x > INIT_X)){
+        mvprintw(this->pos.y, this->pos.x, " ");
+        if(this->pos.x < 20 && ps >= 1){
             ps--;
             p2->printPlatforms(ps, 75, this->versor);
             b2->printCash(ps, 75, versor);
         }
-        else this->x--;
-        mvprintw(this->y, this->x, "%c",avatar);
+        else this->pos.x--;
+        mvprintw(this->pos.y, this->pos.x, "%c",avatar);
         refresh();
     }
-    else if ((versor == 1) && (this->x < END_X)){
-        mvprintw(this->y, this->x, " ");
-        if(this->x > 55){ 
+    else if ((versor == 1) && (this->pos.x < END_X)){
+        mvprintw(this->pos.y, this->pos.x, " ");
+        if(this->pos.x > 55){ 
             ps++;
             p2->printPlatforms(ps, 75, this->versor);
             b2->printCash(ps, 75, versor);
         }
-        else this->x++;    // check for length
-        mvprintw(this->y, this->x,"%c", avatar);
+        else this->pos.x++;    // check for length
+        mvprintw(this->pos.y, this->pos.x,"%c", avatar);
         refresh();
     }
     // p2->printPlatforms(ps, 75, this->versor);
     // b2->printCash(ps, 75, versor);
 }
 
-void Item::set_x(int n){ this->x = n; }
+void Item::set_x(int n){ this->pos.x = n; }
 
-int Item::get_x() { return this->x; }
+int Item::get_x() { return this->pos.x; }
 
-int Item::get_y() { return this->y; }
+int Item::get_y() { return this->pos.y; }
 
 int Item::get_versor(){ return this->versor;}
 
