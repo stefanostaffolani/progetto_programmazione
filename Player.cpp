@@ -1,10 +1,10 @@
-#include <iostream>
-#include <time.h>
+// #include <iostream>
+// #include <time.h>
 #include "Player.hpp"
 
 using namespace std;
  
-Player::Player(int x, int y, char avatar, Platform* p1, Bonus* b1):Item(x,y,avatar, p1, b1){
+Player::Player(char avatar, Platform* p1, Bonus* b1, int x, int y):Item(avatar, p1, b1, x, y){
     life = 100;
     points = 0;
     mvprintw(this->pos.y, this->pos.x, "%c",avatar);
@@ -17,7 +17,14 @@ int Player::get_points(){return this->points;}
 
 void Player::increase_points(int n){this->points += n;}
 
-void Player::jump(int& ps){
+bool Player::is_hit(){
+    if(mvinch(this->pos.y, this->pos.x - 1) == 45 || mvinch(this->pos.y, this->pos.x + 1) == 45) return true;
+    else return false;
+}
+
+void Player::decrease_life(int n){this->life -= n;}
+
+void Player::jump(int& ps, p_bullet& head){
     int i = 0;
     bool hit_something = false;
     while((i < Y_JUMP) && !(hit_something)){
@@ -29,13 +36,13 @@ void Player::jump(int& ps){
         } else{
             hit_something = true;
         }
-        //update_platform(); // ci sta
+        print_bullet_list(head);
         std::this_thread::sleep_for(std::chrono::milliseconds (100));
     }
-    gravity(ps);
+    gravity(ps, head);
 }
 
-void Player::gravity(int& ps){
+void Player::gravity(int& ps, p_bullet& head){
     bool hit_something = false;
     //int i = 0;
     if (mvinch(this->pos.y + 1, this->pos.x) != 32) hit_something = true;
@@ -67,6 +74,7 @@ void Player::gravity(int& ps){
             this->pos.y++;
             move(ps);
         }
+        print_bullet_list(head);
         //update_platform();    // ci sta
         std::this_thread::sleep_for(std::chrono::milliseconds (100));
     }

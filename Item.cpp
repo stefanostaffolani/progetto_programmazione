@@ -1,6 +1,6 @@
 #include "Item.hpp"
 
-Item::Item(int x, int y, char avatar, Platform* p1, Bonus* b1){
+Item::Item(char avatar, Platform* p1, Bonus* b1,int x = 3, int y = 12){
     this->avatar = avatar;
     this->pos.x = x;
     this->pos.y = y;
@@ -38,9 +38,7 @@ void Item::move(int& ps){
 
 void Item::set_x(int n){ this->pos.x = n; }
 
-int Item::get_x() { return this->pos.x; }
-
-int Item::get_y() { return this->pos.y; }
+position Item::get_position(){ return this->pos;}
 
 int Item::get_versor(){ return this->versor;}
 

@@ -16,11 +16,10 @@ struct position{
 
 class Item{
     public:
-        Item(int, int, char, Platform*, Bonus*);
+        Item(char, Platform*, Bonus*, int, int);
         void move(int&);
         void set_x(int);
-        int get_x();
-        int get_y();
+        position get_position();
         void set_versor(int);
         int get_versor();
 

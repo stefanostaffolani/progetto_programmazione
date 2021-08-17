@@ -1,17 +1,19 @@
-#include "Item.hpp"
+//#include "Item.hpp"
+#include "Shoot.hpp"
 
 #define Y_JUMP 5
 
 class Player : public Item{
 public:
-    Player(int, int, char, Platform*, Bonus*);
+    Player(char, Platform*, Bonus*, int, int);
     void printPlayer();
-    void jump(int&);
+    void jump(int&, p_bullet&);
     void increase_points(int);
+    void decrease_life(int);
+    bool is_hit();
     int get_life();
     int get_points();
-    void collision_jump();
-    void gravity(int&);
+    void gravity(int&, p_bullet&);
 
 
 protected:

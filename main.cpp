@@ -3,10 +3,19 @@
 //#include "Platform.hpp"
 #include "Field.hpp"
 #include "Player.hpp"
+//#include "Shoot.hpp"
 //#include "Bonus.hpp"
 using namespace std;
 
 // dai cazzo
+
+int len_list(p_bullet head){
+        if(head == NULL) return 0;
+        else{
+                mvprintw(16,1,"head : counter = %d", head->counter);
+                return 1 + len_list(head->next);
+        }
+}
 
 int main(){
  
@@ -14,6 +23,7 @@ int main(){
 	Field *field = new Field();
         Platform *p1 = new Platform();
         Bonus *b1 = new Bonus();
+        //Queue Q = Queue();
 
         int lenS = field -> getLenS();
         int height = field -> getHeight();
@@ -25,15 +35,28 @@ int main(){
         noecho();       // fa si che non si vede quello che premo dalla tastiera
         int ps = 0;     // pointer screen, mi dice dove sono, se vado a destra aumenta se vado a sinistra diminuisce
         int c;          // mi serve per immagazzinare quello che digito da tastiera
-
+        p_bullet head = NULL;
         field->printField(ps);
         field->upgradeData(100,0);
-        Player *player = new Player(4, height, '@', p1, b1);
+        Player *player = new Player('@', p1, b1, 4, height);
 
         // ciclo in cui di base avviene tutto
         while((c = getch()) != 27){ // 48 è il tasto 0, 27 tasto ESC 
                 //cout << "char in posizione 2,2 " << mvinch(5,5)<< endl;
                 // ... qua piazziamo codice tipo per i movimenti del giocatore o altre cose ... 
+                //head = update_bullet_list(head)
+                // mvprintw(16, 1, "head è NULL:");
+                // mvprintw(18, 1, "lunghezza lista : %d", len_list(head));
+                // if(head == NULL) mvprintw(16, 15, " y");
+                // else {
+                //         mvprintw(16, 15, " n");
+                //         //if(head->counter > 11) head = NULL;        
+                //         mvprintw(17, 1, "il counter di head è:%d", head->counter);
+                //         // if(head->counter > 11) {
+                //         //         head = NULL;
+                //         // }
+                // }
+                mvprintw(20,1,"lunghezza lista %d", len_list(head));
                 if(rand()%10 == 0)
                         b1->addCash(p1->get_current(), height);
 
@@ -44,37 +67,30 @@ int main(){
                         player->set_versor(1);
                         player -> move(ps);//set_x(player->get_x() + 1);
                         
+                } 
+                else if(c == 101){      // premo e
+                        //Q.enqueue(player->get_versor(), player->get_position());
+                        head = add_bullet(head, player->get_position(), player->get_versor());
                 }
                 else if(c==119){
-                        player->jump(ps);
+                        player->jump(ps, head);
                 }
                 else if(c == 97){ // se premo a <-
                         player->set_versor(-1);
                         player-> move(ps); //set_x(player->get_x() - 1);
                 }
-                //player->gravity();
-                //player->update_platform();
-                //player->printPlayer();        
-                if(b1->findCash(ps, lenS, player->get_x(), player->get_y())){
+                if(b1->findCash(ps, lenS, player->get_position().x, player->get_position().y)){
                         // mvprintw(player->get_y(), player->get_x(), PLAYER_AVATAR);
                         // refresh();
                         player->increase_points(10);
                         field->upgradeData(player->get_life(), player->get_points());
                         field->printField(ps);
-
-                        // soluzione alquanto bruttina ma dio mio
-                        // for(int i = 0; i < 100; i++)
-                        // mvprintw(player->get_y(), i, " ");
                 }
-               /*  mvprintw(19, 3, "x player %d", player->get_x());
-                mvprintw(23, 5, "plat dx ==> %d", player->get_platdx()->x);
-                mvprintw(25, 5, "plat cx ==> %d", player->get_platcx()->x);
-                mvprintw (27, 5, "plat sx ==> %d", player->get_platsx()->x); */
                 
-
+                if (head != NULL) print_bullet_list(head);
                 b1->printCash(ps, lenS, player->get_versor());
                 p1->printPlatforms(ps, lenS, player->get_versor()); // chiama funzione che gestisce il print delle platform
-                player->gravity(ps);
+                player->gravity(ps, head);
                 move(0,0);      // leva il cursore fuori dai coglioni
         }
         
