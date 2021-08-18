@@ -26,8 +26,12 @@ void Player::decrease_life(int n){this->life -= n;}
 
 void Player::jump(int& ps, p_bullet& head){
     int i = 0;
+    char c;
     bool hit_something = false;
     while((i < Y_JUMP) && !(hit_something)){
+        timeout(100);
+        c = getch();
+        if(c == 32) head = add_bullet(head, this->pos, this->versor);
         if (mvinch(this->pos.y - 1, this->pos.x + versor) == 32){
             mvprintw(this->pos.y, this->pos.x, " ");
             this->pos.y--;
@@ -37,7 +41,7 @@ void Player::jump(int& ps, p_bullet& head){
             hit_something = true;
         }
         print_bullet_list(head);
-        std::this_thread::sleep_for(std::chrono::milliseconds (100));
+        //std::this_thread::sleep_for(std::chrono::milliseconds (100));
     }
     gravity(ps, head);
 }
@@ -45,9 +49,13 @@ void Player::jump(int& ps, p_bullet& head){
 void Player::gravity(int& ps, p_bullet& head){
     bool hit_something = false;
     //int i = 0;
+    char c;
     if (mvinch(this->pos.y + 1, this->pos.x) != 32) hit_something = true;
     else hit_something = false;
     while(!(hit_something)){
+        timeout(100);
+        c = getch();
+        if(c == 32) head = add_bullet(head, this->pos, this->versor);
         if(mvinch(this->pos.y + 1, this->pos.x + versor) != 32){
             hit_something = true;
             if (mvinch(this->pos.y + 1, this->pos.x + versor) == 36){
@@ -76,6 +84,6 @@ void Player::gravity(int& ps, p_bullet& head){
         }
         print_bullet_list(head);
         //update_platform();    // ci sta
-        std::this_thread::sleep_for(std::chrono::milliseconds (100));
+        //std::this_thread::sleep_for(std::chrono::milliseconds (100));
     }
 }

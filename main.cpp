@@ -39,9 +39,14 @@ int main(){
         field->printField(ps);
         field->upgradeData(100,0);
         Player *player = new Player('@', p1, b1, 4, height);
+        bool stop = false;
+        curs_set(0);
+
+
+        //(c = getch()) != 27
 
         // ciclo in cui di base avviene tutto
-        while((c = getch()) != 27){ // 48 è il tasto 0, 27 tasto ESC 
+        while(!stop){ // 48 è il tasto 0, 27 tasto ESC 
                 //cout << "char in posizione 2,2 " << mvinch(5,5)<< endl;
                 // ... qua piazziamo codice tipo per i movimenti del giocatore o altre cose ... 
                 //head = update_bullet_list(head)
@@ -56,19 +61,22 @@ int main(){
                 //         //         head = NULL;
                 //         // }
                 // }
-                mvprintw(20,1,"lunghezza lista %d", len_list(head));
+                timeout(200);
+                c = getch();
+                //mvprintw(20,1,"lunghezza lista %d", len_list(head));
                 if(rand()%10 == 0)
                         b1->addCash(p1->get_current(), height);
 
                 p1 -> generate(height, lenS, ps, 50);
                 field->printField(ps);
                 // parte relativa alla stampa delle platform
-                if(c == 100){ // se premo d ->
+                if (c == 27) stop = true;
+                else if(c == 100){ // se premo d ->
                         player->set_versor(1);
                         player -> move(ps);//set_x(player->get_x() + 1);
                         
                 } 
-                else if(c == 101){      // premo e
+                else if(c == 32){      // premo space
                         //Q.enqueue(player->get_versor(), player->get_position());
                         head = add_bullet(head, player->get_position(), player->get_versor());
                 }

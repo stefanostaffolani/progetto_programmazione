@@ -9,14 +9,14 @@ p_bullet update_bullet_list(p_bullet head){   //TODO: pensare a dove mettere que
         while(cur != NULL){
             if((cur->counter <= 0) || (mvinch(cur->pos.y, cur->pos.x + cur->versor) != 32 && mvinch(cur->pos.y, cur->pos.x + cur->versor) != 45)){
                 if(prev == NULL){
-                    mvprintw(19, 1, "dentro if ==> cancellato head");
+                    //mvprintw(19, 1, "dentro if ==> cancellato head");
                     cur = cur->next;
                     delete head;
                     head = cur;
                     //mvprintw(17,1,"%d", cur->counter);
                     //cout << "ok head" << endl;
                 } else{
-                    mvprintw(18,1,"dentro el");
+                    //mvprintw(18,1,"dentro el");
                     prev->next = cur->next;
                     delete cur;
                     cur = prev->next;
