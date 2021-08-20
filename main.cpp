@@ -61,7 +61,7 @@ int main(){
                 //         //         head = NULL;
                 //         // }
                 // }
-                timeout(200);
+                timeout(100);
                 c = getch();
                 //mvprintw(20,1,"lunghezza lista %d", len_list(head));
                 if(rand()%10 == 0)
