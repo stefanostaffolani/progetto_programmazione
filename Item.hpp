@@ -7,7 +7,7 @@
 #define INIT_X 1
 #define END_X 70
 #define HEIGHT 12
-
+ 
 struct position{
     int x;
     int y;
