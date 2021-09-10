@@ -1,26 +1,35 @@
-test: main.cpp Platform.o Field.o Player.o Bonus.o Item.o Shoot.o Enemy.o
-	g++ -o test main.cpp Platform.o Field.o Bonus.o Item.o Player.o Shoot.o Enemy.o -lncurses -lpthread
+CC = g++ 
+INCLUDES = -lncurses
+DIR = ./src
+OBJECTS = main.o Platform.o Field.o Player.o Bonus.o Item.o Shoot.o Enemy.o
 
-Item.o: Item.cpp Item.hpp
-	g++ -c Item.cpp
 
-Platform.o: Platform.cpp Platform.hpp
-	g++ -c Platform.cpp
+test: $(OBJECTS)
+	$(CC) -o test $(OBJECTS) $(INCLUDES)
 
-Player.o: Player.cpp Player.hpp
-	g++ -c Player.cpp
+main.o : $(DIR)/main.cpp
+	$(CC) -c $(DIR)/main.cpp
 
-Bonus.o: Bonus.cpp Bonus.hpp
-	g++ -c Bonus.cpp
+Item.o: $(DIR)/Item.?pp
+	$(CC) -c $(DIR)/Item.cpp
 
-Field.o: Field.cpp Field.hpp
-	g++ -c Field.cpp
+Platform.o: $(DIR)/Platform.?pp
+	$(CC) -c $(DIR)/Platform.cpp
 
-Shoot.o: Shoot.cpp Shoot.hpp
-	g++ -c Shoot.cpp
+Player.o: $(DIR)/Player.?pp
+	$(CC) -c $(DIR)/Player.cpp
 
-Enemy.o: Enemy.cpp Enemy.hpp
-	g++ -c Enemy.cpp
+Bonus.o: $(DIR)/Bonus.?pp
+	$(CC) -c $(DIR)/Bonus.cpp
+
+Field.o: $(DIR)/Field.?pp
+	$(CC) -c $(DIR)/Field.cpp
+
+Shoot.o: $(DIR)/Shoot.?pp
+	$(CC) -c $(DIR)/Shoot.cpp
+
+Enemy.o: $(DIR)/Enemy.?pp
+	$(CC) -c $(DIR)/Enemy.cpp
 
 clean:
 	rm *.o test

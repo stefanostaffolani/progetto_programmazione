@@ -18,7 +18,7 @@ int Player::get_points(){return this->points;}
 void Player::increase_points(int n){this->points += n;}
 
 bool Player::is_hit(){
-    if(mvinch(this->pos.y, this->pos.x - 1) == 45 || mvinch(this->pos.y, this->pos.x + 1) == 45) return true;
+    if(mvinch(this->pos.y, this->pos.x) == 42 || mvinch(this->pos.y, this->pos.x) == 42) return true;
     else return false;
 }
 

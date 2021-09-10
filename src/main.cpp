@@ -99,6 +99,7 @@ int main(){
                 b1->printCash(ps, lenS, player->get_versor());
                 p1->printPlatforms(ps, lenS, player->get_versor()); // chiama funzione che gestisce il print delle platform
                 player->gravity(ps, head);
+                if(player->is_hit()) mvprintw(20,1,"colpito");
                 move(0,0);      // leva il cursore fuori dai coglioni
         }
         

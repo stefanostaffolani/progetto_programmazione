@@ -1,5 +1,4 @@
 #include <iostream>
-#include <thread>
 #include <chrono>
 #include <ncurses.h>
 #include "Item.hpp"
