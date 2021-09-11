@@ -31,5 +31,8 @@ Shoot.o: $(DIR)/Shoot.?pp
 Enemy.o: $(DIR)/Enemy.?pp
 	$(CC) -c $(DIR)/Enemy.cpp
 
+up:
+	./test
+
 clean:
 	rm *.o test

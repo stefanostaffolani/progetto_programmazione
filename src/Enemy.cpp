@@ -4,6 +4,26 @@ Enemy::Enemy(char avatar, Platform* p1, Bonus* b1, int x, int y) : Item(avatar, 
     //generate();
 }
 
+
+void Enemy::generate_on_platform(int x){   // non so se sia necessaria la x come argomento
+    int i = 0;
+    bool found_plat = false;
+    while ((i < HEIGHT) && !(found_plat)){
+        if(mvinch(i,x) == 61) found_plat = true;
+        else i++;
+    }
+    if (found_plat){
+        if(rand() % 2) this->on_plat = true;
+        else this->on_plat = false;
+    }
+    this->pos.y = i;
+}
+
+bool Enemy::check_plat_border(){ //se facendo un movimento cado dalla platform return true
+    if(mvinch(this->pos.y, this->pos.x + this->versor) == 32) return true;
+    else return false;
+}
+
 // Enemy::generate(){
 //     // guarda il valore di ps e stabilisce il livello, all'inizio ci sono più Enemy
 //     // scarsi, più vai avanti più te ne trovi di forti

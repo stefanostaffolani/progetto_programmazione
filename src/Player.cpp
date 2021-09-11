@@ -74,7 +74,7 @@ void Player::gravity(int& ps, p_bullet& head){
                 mvprintw(this->pos.y, this->pos.x, " ");
                 this->move(ps);
             }
-            //fare il caso che tocca $ (numero 36) e vedere se ne servono altri
+            //vedere se ne servono altri
         }else if (mvinch(this->pos.y + 1, this->pos.x) == 61){
             hit_something = true;
         }else{
@@ -83,7 +83,5 @@ void Player::gravity(int& ps, p_bullet& head){
             move(ps);
         }
         print_bullet_list(head);
-        //update_platform();    // ci sta
-        //std::this_thread::sleep_for(std::chrono::milliseconds (100));
     }
 }

@@ -8,7 +8,7 @@ Item::Item(char avatar, Platform* p1, Bonus* b1,int x = 3, int y = 12){
     p2 = p1;
     b2 = b1;
 }
- 
+
 void Item::move(int& ps){
     if ((versor == -1) && (this->pos.x > INIT_X)){
         mvprintw(this->pos.y, this->pos.x, " ");
@@ -32,8 +32,6 @@ void Item::move(int& ps){
         mvprintw(this->pos.y, this->pos.x,"%c", avatar);
         refresh();
     }
-    // p2->printPlatforms(ps, 75, this->versor);
-    // b2->printCash(ps, 75, versor);
 }
 
 void Item::set_x(int n){ this->pos.x = n; }
