@@ -33,15 +33,24 @@ void Player::jump(int& ps, p_bullet& head){
     int i = 0;
     char c;
     bool hit_something = false;
+    position diagonale, sopra;
     while((i < Y_JUMP) && !(hit_something)){
         timeout(100);
         c = getch();
+        diagonale = {this->pos.x+this->versor, this->pos.y - 1};
+        sopra = {this->pos.x, this->pos.y - 1};
         if(c == 32) head = add_bullet(head, this->pos, this->versor);
-        if (mvinch(this->pos.y - 1, this->pos.x + versor) == 32){
+        if (mvinch(diagonale.y, diagonale.x) == 32){
             this->delete_item();
-            //mvprintw(this->pos.y, this->pos.x, " ");
-            this->pos.y--;
-            this->move(ps);
+            if(mvinch(sopra.y, sopra.x) == 32){
+                //mvprintw(this->pos.y, this->pos.x, " ");
+                this->pos.y--;
+                this->move(ps);
+            }else{
+                this->pos.y--;
+                this->pos.x += this->versor;
+                this->print_item();
+            }
             i++;
         } else{
             hit_something = true;
@@ -55,9 +64,9 @@ void Player::gravity(int& ps, p_bullet& head){
     bool hit_something = false;
     //int i = 0;
     char c;
-    if (mvinch(this->pos.y + 1, this->pos.x) != SPACE) hit_something = true;
+    if (mvinch(this->pos.y + 1, this->pos.x) != SPACE && mvinch(this->pos.y + 1, this->pos.x) != DOLLAR) hit_something = true;
     else hit_something = false;
-    position diagonale, sotto;
+    position diagonale, sotto, laterale;
     while(!(hit_something)){
         timeout(100);
         
@@ -67,7 +76,7 @@ void Player::gravity(int& ps, p_bullet& head){
         
         diagonale = {this->pos.x + versor, this->pos.y + 1};
         sotto = {this->pos.x, this->pos.y+1};
-
+        laterale = {this->pos.x+this->versor, this->pos.y};
         if (mvinch(sotto.y, sotto.x) == EQUAL || mvinch(sotto.y, sotto.x) == 45){   // ho qualcosa sotto
             hit_something = true;
         }
@@ -96,12 +105,20 @@ void Player::gravity(int& ps, p_bullet& head){
             //vedere se ne servono altri
         }
         else{
-            this->move(ps);
-            this->delete_item();
-            //mvprintw(this->pos.y, this->pos.x, " ");
-            this->pos.y++;
-            this->print_item();
-        }
+            if(mvinch(laterale.y, laterale.x) == EQUAL){   // perchè potrebbe cancellare lo spigolo della platform
+                this->delete_item();
+                this->pos.x+=versor;
+                this->pos.y++;
+                this->print_item();
+            }
+            else{
+                this->move(ps);
+                this->delete_item();
+                //mvprintw(this->pos.y, this->pos.x, " ");
+                this->pos.y++;
+                this->print_item();
+            }
+    }
         print_bullet_list(head);
     }
 }

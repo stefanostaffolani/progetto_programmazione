@@ -22,6 +22,8 @@ class Item{
         position get_position();
         void set_versor(int);
         int get_versor();
+        void print_item();
+        void delete_item();
 
     protected:
         position pos;

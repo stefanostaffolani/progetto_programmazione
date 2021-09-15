@@ -11,28 +11,36 @@ Item::Item(char avatar, Platform* p1, Bonus* b1,int x = 3, int y = 12){
 
 void Item::move(int& ps){
     if ((versor == -1) && (this->pos.x > INIT_X)){
-        mvprintw(this->pos.y, this->pos.x, " ");
+        this->delete_item();
+        //mvprintw(this->pos.y, this->pos.x, " ");
         if(this->pos.x < 20 && ps >= 1){
             ps--;
             p2->printPlatforms(ps, 75, this->versor);
             b2->printCash(ps, 75, versor);
         }
         else this->pos.x--;
-        mvprintw(this->pos.y, this->pos.x, "%c",avatar);
+        this->print_item();
+        //mvprintw(this->pos.y, this->pos.x, "%c",avatar);
         refresh();
     }
     else if ((versor == 1) && (this->pos.x < END_X)){
-        mvprintw(this->pos.y, this->pos.x, " ");
+        this->delete_item();
+        //mvprintw(this->pos.y, this->pos.x, " ");
         if(this->pos.x > 55){ 
             ps++;
             p2->printPlatforms(ps, 75, this->versor);
             b2->printCash(ps, 75, versor);
         }
         else this->pos.x++;    // check for length
-        mvprintw(this->pos.y, this->pos.x,"%c", avatar);
+        this->print_item();
+        //mvprintw(this->pos.y, this->pos.x,"%c", avatar);
         refresh();
     }
 }
+
+void Item::print_item(){mvprintw(this->pos.y, this->pos.x, "%c", this->avatar);}
+
+void Item::delete_item(){mvprintw(this->pos.y, this->pos.x, " ");}
 
 void Item::set_x(int n){ this->pos.x = n; }
 

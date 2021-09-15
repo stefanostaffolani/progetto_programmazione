@@ -62,11 +62,14 @@ int main(){
                 //         // }
                 // }
                 timeout(100);
+                player->print_item();
+                //b1->printCash(ps, lenS, player->get_versor());
                 c = getch();
                 //mvprintw(20,1,"lunghezza lista %d", len_list(head));
-                if(rand()%10 == 0)
+                if(rand()%10 == 0){
                         b1->addCash(p1->get_current(), height);
-
+                        b1->printCash(ps, lenS, player->get_versor());
+                }
                 p1 -> generate(height, lenS, ps, 50);
                 field->printField(ps);
                 // parte relativa alla stampa delle platform
@@ -96,13 +99,12 @@ int main(){
                 }
                 
                 if (head != NULL) print_bullet_list(head);
-                b1->printCash(ps, lenS, player->get_versor());
                 p1->printPlatforms(ps, lenS, player->get_versor()); // chiama funzione che gestisce il print delle platform
                 player->gravity(ps, head);
                 if(player->is_hit()) mvprintw(20,1,"colpito");
                 move(0,0);      // leva il cursore fuori dai coglioni
         }
-        
+        //TODO:game over
         endwin();
 
         return 0;

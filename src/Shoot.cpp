@@ -34,14 +34,18 @@ p_bullet update_bullet_list(p_bullet head){   //TODO: pensare a dove mettere que
 }
 
 p_bullet add_bullet(p_bullet head, position p, int v){
-    p_bullet tmp = new bullet_struct;
-    tmp->pos.x = p.x + v;
-    tmp->pos.y = p.y;
-    tmp->counter = RANGE;
-    tmp->versor = v;
-    tmp->next = head;
-    return tmp;
+    if (mvinch(p.y, p.x+v) == 32){
+        p_bullet tmp = new bullet_struct;
+        tmp->pos.x = p.x + v;
+        tmp->pos.y = p.y;
+        tmp->counter = RANGE;
+        tmp->versor = v;
+        tmp->next = head;
+        return tmp;
+        }
+    else return head;
 }
+
 
 void print_bullet_list(p_bullet& head){
     p_bullet iter;
