@@ -38,6 +38,7 @@ void Player::move(int& ps){
         ps++;
     }
     else Item::move();
+    this->print_item();
     p2->printPlatforms(ps, 75, this->versor);
     b2->printCash(ps, 75, this->versor);
 }
@@ -61,7 +62,7 @@ void Player::jump(int& ps, p_bullet& head){
                 //mvprintw(this->pos.y, this->pos.x, " ");
                 this->pos.y--;
                 this->move(ps);
-                this->print_item();
+                //this->print_item();
             }else{
                 this->delete_item();
                 this->pos.y--;
