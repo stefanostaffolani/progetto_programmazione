@@ -20,4 +20,3 @@ protected:
     Platform* p2;
     Bonus* b2;
 };
-
