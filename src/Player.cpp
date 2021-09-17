@@ -9,10 +9,12 @@ using namespace std;
 #define DOLLAR 36
 #define PIPE 124
 
-Player::Player(char avatar, Platform* p1, Bonus* b1, int x, int y):Item(avatar, p1, b1, x, y){
+Player::Player(char avatar, Platform* p1, Bonus* b1, int x, int y):Item(avatar, x, y){
     life = 100;
     points = 0;
     mvprintw(this->pos.y, this->pos.x, "%c",avatar);
+    p2 = p1;
+    b2 = b1;
     //len_screen = lenS; da vedere in futuro
 }
 
@@ -25,6 +27,19 @@ void Player::increase_points(int n){this->points += n;}
 bool Player::is_hit(){
     if(mvinch(this->pos.y, this->pos.x) == 42 || mvinch(this->pos.y, this->pos.x) == 42) return true;
     else return false;
+}
+
+void Player::move(int& ps){
+    if((this->versor == -1) && (this->pos.x < 20) && (ps >= 1)){
+        ps--;
+        // p2->printPlatforms(ps, 75, this->versor);
+        // b2->printCash(ps, 75, this->versor);
+    }else if ((this->versor == 1) && (this->pos.x > 55)){
+        ps++;
+    }
+    else Item::move();
+    p2->printPlatforms(ps, 75, this->versor);
+    b2->printCash(ps, 75, this->versor);
 }
 
 void Player::decrease_life(int n){this->life -= n;}
@@ -46,7 +61,9 @@ void Player::jump(int& ps, p_bullet& head){
                 //mvprintw(this->pos.y, this->pos.x, " ");
                 this->pos.y--;
                 this->move(ps);
+                this->print_item();
             }else{
+                this->delete_item();
                 this->pos.y--;
                 this->pos.x += this->versor;
                 this->print_item();

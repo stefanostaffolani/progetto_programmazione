@@ -5,6 +5,7 @@
 #include "Player.hpp"
 //#include "Shoot.hpp"
 //#include "Bonus.hpp"
+#include <unistd.h>
 using namespace std;
 
 // dai cazzo
@@ -18,7 +19,6 @@ int len_list(p_bullet head){
 }
 
 int main(){
- 
         srand(time(NULL));
 	Field *field = new Field();
         Platform *p1 = new Platform();

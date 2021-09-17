@@ -6,7 +6,7 @@
 using namespace std;
 
 #define BULLET '-'
-#define RANGE 10
+#define RANGE 20
 
 // struct position{
 //     int x,y;

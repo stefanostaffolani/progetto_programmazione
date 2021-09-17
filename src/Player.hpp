@@ -7,6 +7,7 @@ class Player : public Item{
 public:
     Player(char, Platform*, Bonus*, int, int);
     void jump(int&, p_bullet&);
+    void move(int&);
     void increase_points(int);
     void decrease_life(int);
     bool is_hit();
@@ -20,5 +21,7 @@ protected:
     // int versor;    // versor = 1 go dx versor = -1 go sx versor = 0 don't move
     int life;
     int points;
+    Platform* p2;
+    Bonus* b2;
     
 };

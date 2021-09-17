@@ -16,5 +16,7 @@ protected:
     bool on_plat;
     Item* listofItem;
     int lvl; // valore 0-2
+    Platform* p2;
+    Bonus* b2;
 };
 

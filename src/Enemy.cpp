@@ -1,7 +1,10 @@
 #include "Enemy.hpp"
+#include <iostream>
 
-Enemy::Enemy(char avatar, Platform* p1, Bonus* b1, int x, int y) : Item(avatar, p1, b1, x, y){
+Enemy::Enemy(char avatar, Platform* p1, Bonus* b1, int x, int y) : Item(avatar, x, y){
     //generate();
+    p2 = p1;
+    b2 = b1;
 }
 
 

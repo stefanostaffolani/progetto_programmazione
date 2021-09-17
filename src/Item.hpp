@@ -16,8 +16,8 @@ struct position{
 
 class Item{
     public:
-        Item(char, Platform*, Bonus*, int, int);
-        void move(int&);
+        Item(char, int, int);
+        void move();
         void set_x(int);
         position get_position();
         void set_versor(int);
@@ -29,6 +29,4 @@ class Item{
         position pos;
         int versor;
         char avatar;
-        Platform* p2;
-        Bonus* b2;
 };
