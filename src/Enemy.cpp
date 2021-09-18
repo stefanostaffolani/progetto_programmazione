@@ -28,7 +28,7 @@ void Enemy::random_move(){
     }
 }
 
-void Enemy::random_shoot(int freq, p_bullet head){
+void Enemy::random_shoot(int freq, p_bullet head){   //su enemies pensare a come settare la frequenza
     if(this->type > 0){
         int n = rand() % freq;
         if(n == 0) add_bullet(head, this->pos, this->versor, '*');
