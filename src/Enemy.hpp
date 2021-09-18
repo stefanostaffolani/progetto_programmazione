@@ -3,9 +3,9 @@
 
 class Enemy : public Item {
 public:
-    Enemy(char, Platform*, Bonus*, int, int);
+    Enemy(char, Platform*, Bonus*, int, int, int);
     bool check_plat_border();
-    void generate_on_platform(int);
+    //void generate_on_platform(int);
 
     /*
     void generate();
@@ -19,12 +19,15 @@ protected:
     // int lvl; // valore 0-2
     Platform* p2;
     Bonus* b2;
+    int type;
+    int damage;
+    void set_damage();
 };
 
 
 
 /*
-    3 nemici
+    3 nemici(type)
     base => sta fermo e fa danno se lo tocchi (0)
     medio => si muove(forse salta) e se lo tocchi ti fa male (1)
     forte => è uguale al medio ma spara(*) (2)

@@ -32,8 +32,6 @@ bool Player::is_hit(){
 void Player::move(int& ps){
     if((this->versor == -1) && (this->pos.x < 20) && (ps >= 1)){
         ps--;
-        // p2->printPlatforms(ps, 75, this->versor);
-        // b2->printCash(ps, 75, this->versor);
     }else if ((this->versor == 1) && (this->pos.x > 55)){
         ps++;
     }

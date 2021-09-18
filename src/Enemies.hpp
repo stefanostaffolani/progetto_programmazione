@@ -11,6 +11,7 @@ class Enemies{
     public:
         Enemies();
         void generate();
+        void generate_on_platform(int);
 
 
     protected:

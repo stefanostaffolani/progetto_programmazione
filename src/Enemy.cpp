@@ -1,25 +1,31 @@
 #include "Enemy.hpp"
 
-Enemy::Enemy(char avatar, Platform* p1, Bonus* b1, int x, int y) : Item(avatar, x, y){
-    //generate();
+Enemy::Enemy(char avatar, Platform* p1, Bonus* b1, int x, int y, int type = 0) : Item(avatar, x, y){
+    this->type = type;
+    set_damage();
     p2 = p1;
     b2 = b1;
 }
 
-
-void Enemy::generate_on_platform(int x){   // non so se sia necessaria la x come argomento
-    int i = 0;
-    bool found_plat = false;
-    while ((i < HEIGHT) && !(found_plat)){
-        if(mvinch(i,x) == 61) found_plat = true;
-        else i++;
-    }
-    if (found_plat){
-        if(rand() % 2) this->on_plat = true;
-        else this->on_plat = false;
-    }
-    this->pos.y = i;
+void Enemy::set_damage(){
+    if(this->type == 0) this->damage = 10;   // nemico base
+    else if(this->type == 1) this->damage = 15;  // nemico medio
+    else this->damage = 20;                     // nemico forte
 }
+
+// void Enemy::generate_on_platform(int x){   // non so se sia necessaria la x come argomento
+//     int i = 0;
+//     bool found_plat = false;
+//     while ((i < HEIGHT) && !(found_plat)){
+//         if(mvinch(i,x) == 61) found_plat = true;
+//         else i++;
+//     }
+//     if (found_plat){
+//         if(rand() % 2) this->on_plat = true;
+//         else this->on_plat = false;
+//     }
+//     this->pos.y = i;
+// }
 
 bool Enemy::check_plat_border(){ //se facendo un movimento cado dalla platform return true
     if(mvinch(this->pos.y, this->pos.x + this->versor) == 32) return true;
