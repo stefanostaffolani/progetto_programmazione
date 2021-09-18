@@ -33,9 +33,10 @@ p_bullet update_bullet_list(p_bullet head){   //TODO: pensare a dove mettere que
     }
 }
 
-p_bullet add_bullet(p_bullet head, position p, int v){
+p_bullet add_bullet(p_bullet head, position p, int v, char bullet){
     if (mvinch(p.y, p.x+v) == 32){
         p_bullet tmp = new bullet_struct;
+        tmp->bullet = bullet;
         tmp->pos.x = p.x + v;
         tmp->pos.y = p.y;
         tmp->counter = RANGE;
@@ -58,7 +59,7 @@ void print_bullet_list(p_bullet& head){
     //mvprintw(15, 15, "ok2");
 
     for(iter = head; iter != NULL; iter=iter->next){
-        mvprintw(iter->pos.y, iter->pos.x, "%c", BULLET);
+        mvprintw(iter->pos.y, iter->pos.x, "%c", iter->bullet);
     }
     // while(head != NULL){
     //     //mvprintw(head->pos.y, head->pos.x, " ");

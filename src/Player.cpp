@@ -53,7 +53,7 @@ void Player::jump(int& ps, p_bullet& head){
         c = getch();
         diagonale = {this->pos.x+this->versor, this->pos.y - 1};
         sopra = {this->pos.x, this->pos.y - 1};
-        if(c == 32) head = add_bullet(head, this->pos, this->versor);
+        if(c == 32) head = add_bullet(head, this->pos, this->versor, '-');
         if (mvinch(diagonale.y, diagonale.x) == 32){
             this->delete_item();
             if(mvinch(sopra.y, sopra.x) == 32){
@@ -88,7 +88,7 @@ void Player::gravity(int& ps, p_bullet& head){
         
         //per sparare
         c = getch();
-        if(c == SPACE) head = add_bullet(head, this->pos, this->versor);
+        if(c == SPACE) head = add_bullet(head, this->pos, this->versor, '-');
         
         diagonale = {this->pos.x + versor, this->pos.y + 1};
         sotto = {this->pos.x, this->pos.y+1};

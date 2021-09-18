@@ -1,10 +1,14 @@
 #include "Item.hpp"
+#include "Shoot.hpp"
 #include <iostream>
 
 class Enemy : public Item {
 public:
     Enemy(char, Platform*, Bonus*, int, int, int);
     bool check_plat_border();
+    int get_damage();
+    void random_move();
+    void random_shoot(int, p_bullet);
     //void generate_on_platform(int);
 
     /*
@@ -22,6 +26,7 @@ protected:
     int type;
     int damage;
     void set_damage();
+    void increase_damage(int);
 };
 
 
