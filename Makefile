@@ -31,6 +31,9 @@ Shoot.o: $(DIR)/Shoot.?pp
 Enemy.o: $(DIR)/Enemy.?pp
 	$(CC) -c $(DIR)/Enemy.cpp
 
+Enemies.o: $(DIR)/Enemies.?pp
+	$(CC) -c $(DIR)/Enemies.cpp
+
 up:
 	./test
 
