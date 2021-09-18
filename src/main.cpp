@@ -1,11 +1,11 @@
-#include <iostream>
+//#include <iostream>
 #include <ncurses.h>
 //#include "Platform.hpp"
+//#include "Enemies.hpp"
 #include "Field.hpp"
 #include "Player.hpp"
 //#include "Shoot.hpp"
 //#include "Bonus.hpp"
-#include <unistd.h>
 using namespace std;
 
 // dai cazzo
@@ -23,7 +23,6 @@ int main(){
 	Field *field = new Field();
         Platform *p1 = new Platform();
         Bonus *b1 = new Bonus();
-        //Queue Q = Queue();
 
         int lenS = field -> getLenS();
         int height = field -> getHeight();
@@ -81,7 +80,7 @@ int main(){
                 } 
                 else if(c == 32){      // premo space
                         //Q.enqueue(player->get_versor(), player->get_position());
-                        head = add_bullet(head, player->get_position(), player->get_versor());
+                        head = add_bullet(head, player->get_position(), player->get_versor(), '-');
                 }
                 else if(c==119){
                         player->jump(ps, head);

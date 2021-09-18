@@ -1,5 +1,5 @@
 #include "Enemy.hpp"
-#include "Platform.hpp"
+//#include "Platform.hpp"
 
 struct enemies{
     Enemy* e;
