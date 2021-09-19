@@ -89,6 +89,9 @@ void Bonus::printCash(int ps, int lenS, int versor){
 }
 
 
+// da cambiare questa funzione! 
+// deve diventare find bonus banalmente e poi a seconda di che bonus 
+// è accadono cose
 bool Bonus::findCash(int ps, int lenS, int plx, int ply){
     p_cash iter = current;
 
