@@ -4,7 +4,7 @@
 #include <string.h>
 #include "Platform.hpp"
 #include "Bonus.hpp"
-
+ 
 using namespace std;
 
 Bonus::Bonus(){
@@ -18,6 +18,11 @@ Bonus::Bonus(){
 }
 
 void Bonus::addCash(p_node p, int h){
+    
+    // p_node puntatore a platform
+    // questo ciclo scorre avatìnti di 6 platform 
+    // per essere sicuro di aggiungere il nuovo bonus
+    // al di fuori dello schermo
     for(int i = 0; i < 6; i++){
         if(p->next != NULL)
             p = p->next;
@@ -29,13 +34,23 @@ void Bonus::addCash(p_node p, int h){
         tmp -> prev = last;
         tmp -> next = NULL;
 
+        // 1/6 di possibilità di generarlo per terra
         if(rand() % 6 == 0) tmp -> y = h;
+        // altrimenti genera sulla platform
         else if(p->y > 2)
            tmp -> y = p -> y - 1;
         else tmp->y = h;
 
+        // poi piazzo la x del bonus a random sulla lunghezza della platform
         tmp -> x = p -> x + rand() % p->len;  // qui c'era un -1 che ho tolto perchè senno stampa i $ a culo
         
+        // infine setto il tipo di bonus
+        // 1/10 delle volte sarà una vita
+        if(rand()%10 == 0)
+            tmp->type = 1;
+        else 
+            tmp->type = 0;
+
         last = tmp;
         tmp = NULL;
         delete tmp;
@@ -64,7 +79,10 @@ void Bonus::printCash(int ps, int lenS, int versor){
                 if(versor == 1) mvprintw(iter->y, iter->x - ps + 1, " "); // premo d 
                 else if(versor == -1) mvprintw(iter->y, iter->x - ps - 1, " "); // premo a
                 if(iter -> x >= ps && iter -> x < ps + lenS - 1){
-                    mvprintw(iter -> y, iter -> x - ps, "$");
+                    if(iter->type == 0)
+                        mvprintw(iter -> y, iter -> x - ps, "$");
+                    else if(iter->type == 1)
+                        mvprintw(iter -> y, iter -> x - ps, "V");
                 }                
                 iter = iter->next;
         }
@@ -121,13 +139,13 @@ bool Bonus::findCash(int ps, int lenS, int plx, int ply){
 }
 
 
-int Bonus::lencash(){
-    int cont = 0;
-    p_cash iter = first;
-    while(iter != NULL){
-        iter = iter->next;
-        cont++;
-    }
-    return cont;
-}
+// int Bonus::lencash(){
+//     int cont = 0;
+//     p_cash iter = first;
+//     while(iter != NULL){
+//         iter = iter->next;
+//         cont++;
+//     }
+//     return cont;
+// }
 
