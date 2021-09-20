@@ -19,9 +19,9 @@ void Platform::addNode(int h){ // ==============================================
                 first -> len = 10;
 
                 if(rand()%4 == 0)
-                        first -> gotCash = false;
+                        first -> gotBonus = false;
                 else    
-                        first -> gotCash = true;
+                        first -> gotBonus = true;
                 
                 first -> prev = NULL;
                 first -> next = NULL;
@@ -34,9 +34,9 @@ void Platform::addNode(int h){ // ==============================================
                 tmp -> prev = last;
                 tmp -> next = NULL;
                 if(rand()%4 == 0)
-                        tmp -> gotCash = false;
+                        tmp -> gotBonus = false;
                 else 
-                        tmp -> gotCash = true;
+                        tmp -> gotBonus = true;
 
                 tmp -> x = tmp -> prev -> x + tmp -> prev -> len + rand() % 2 + 5;
                 do {

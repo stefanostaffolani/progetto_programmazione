@@ -3,7 +3,7 @@ struct node{
         int x;
         int y;
         int len;
-        bool gotCash;
+        bool gotBonus;
         node* next;
         node* prev;
 };

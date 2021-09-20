@@ -38,10 +38,12 @@ void Player::move(int& ps){
     else Item::move();
     this->print_item();
     p2->printPlatforms(ps, 75, this->versor);
-    b2->printCash(ps, 75, this->versor);
+    b2->print_bonus(ps, 75, this->versor);
 }
 
 void Player::decrease_life(int n){this->life -= n;}
+void Player::increase_life(int n){this->life += n;}
+void Player::set_life(int n) {this->life = n;}
 
 void Player::jump(int& ps, p_bullet& head){
     int i = 0;

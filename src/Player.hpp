@@ -11,8 +11,10 @@ public:
     void move(int&);
     void increase_points(int);
     void decrease_life(int);
+    void increase_life(int);
     bool is_hit();
     int get_life();
+    void set_life(int);
     int get_points();
     void gravity(int&, p_bullet&);
 

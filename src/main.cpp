@@ -28,7 +28,7 @@ int main(){
         int height = field -> getHeight();
 
         p1->addNode(height);
-        b1->addCash(p1->get_current(), height);
+        b1->add_bonus(p1->get_current(), height);
 
         initscr();
         noecho();       // fa si che non si vede quello che premo dalla tastiera
@@ -66,8 +66,8 @@ int main(){
                 c = getch();
                 //mvprintw(20,1,"lunghezza lista %d", len_list(head));
                 if(rand()%10 == 0){
-                        b1->addCash(p1->get_current(), height);
-                        b1->printCash(ps, lenS, player->get_versor());
+                        b1->add_bonus(p1->get_current(), height);
+                        b1->print_bonus(ps, lenS, player->get_versor());
                 }
                 p1 -> generate(height, lenS, ps, 50);
                 field->printField(ps);
@@ -89,12 +89,19 @@ int main(){
                         player->set_versor(-1);
                         player-> move(ps); //set_x(player->get_x() - 1);
                 }
-                if(b1->findCash(ps, lenS, player->get_position().x, player->get_position().y)){
-                        // mvprintw(player->get_y(), player->get_x(), PLAYER_AVATAR);
-                        // refresh();
+                int bonus = b1->find_bonus(ps, lenS, player->get_position().x, player->get_position().y);
+                if(bonus == 0){ // trovato $
                         player->increase_points(10);
                         field->upgradeData(player->get_life(), player->get_points());
                         field->printField(ps);
+                }
+                else if(bonus == 1){ // trpvato V
+                        if(player->get_life() + 10 < 100)
+                                player->increase_life(10);
+                        else
+                                player->set_life(100);
+                        field->upgradeData(player->get_life(), player->get_points());
+                        field->printField(ps);        
                 }
                 
                 if (head != NULL) print_bullet_list(head);

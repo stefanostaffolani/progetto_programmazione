@@ -8,7 +8,7 @@
 using namespace std;
 
 Bonus::Bonus(){
-    first = new cashlist;
+    first = new bonuslist();
     first->y = -10;
     first->x = -10;
     first->prev = NULL;
@@ -17,7 +17,7 @@ Bonus::Bonus(){
     current = first;
 }
 
-void Bonus::addCash(p_node p, int h){
+void Bonus::add_bonus(p_node p, int h){
     
     // p_node puntatore a platform
     // questo ciclo scorre avatìnti di 6 platform 
@@ -28,8 +28,8 @@ void Bonus::addCash(p_node p, int h){
             p = p->next;
     }
     
-    if(!p->gotCash){
-        p_cash tmp = new cashlist;
+    if(!p->gotBonus){
+        p_bon tmp = new bonuslist();
         last -> next = tmp;
         tmp -> prev = last;
         tmp -> next = NULL;
@@ -54,13 +54,13 @@ void Bonus::addCash(p_node p, int h){
         last = tmp;
         tmp = NULL;
         delete tmp;
-        p->gotCash = true;
+        p->gotBonus = true;
     }
 
 }
 
 
-void Bonus::printCash(int ps, int lenS, int versor){
+void Bonus::print_bonus(int ps, int lenS, int versor){
 
     // 1) verifica dell'aggiornamento valore current -------------------------
                 // se sto andando avanti:
@@ -73,7 +73,7 @@ void Bonus::printCash(int ps, int lenS, int versor){
         }
 
         // 2) stampare da current fino a limite schermo --------------------------
-        p_cash iter = current;  
+        p_bon iter = current;  
 
         while(iter != NULL && iter -> x < ps + lenS){ // cicla fino a che la nuova x di iter è fuori dallo schermo
                 if(versor == 1) mvprintw(iter->y, iter->x - ps + 1, " "); // premo d 
@@ -92,20 +92,14 @@ void Bonus::printCash(int ps, int lenS, int versor){
 // da cambiare questa funzione! 
 // deve diventare find bonus banalmente e poi a seconda di che bonus 
 // è accadono cose
-bool Bonus::findCash(int ps, int lenS, int plx, int ply){
-    p_cash iter = current;
-
-    // move(30,10);
-    // mvprintw(20, 20, "plx+ps: %d", plx + ps);
-    // mvprintw(21, 20, "current->x: %d", current->x);    
-
-    // mvprintw(22, 20, "ply: %d", ply);
-    // mvprintw(23, 20, "curr->y: %d", current->y);
-
+int Bonus::find_bonus(int ps, int lenS, int plx, int ply){
+    p_bon iter = current;
+    int bonus_type_found = -1;
 
     while(iter != NULL && iter->x < ps+lenS){
         if(iter->x == plx + ps && iter->y == ply) {
             // mvprintw(24, 20, "win");
+            bonus_type_found = iter->type;
             if(iter == current){ 
                 if(iter != first)
                     current = iter->prev;
@@ -134,11 +128,11 @@ bool Bonus::findCash(int ps, int lenS, int plx, int ply){
             mvprintw(ply, plx, "@");
             mvprintw(ply, plx + 1, " ");
             refresh();
-            return true;
+            return bonus_type_found;
         }
         iter = iter->next;
     }
-    return false;
+    return bonus_type_found;
 }
 
 
