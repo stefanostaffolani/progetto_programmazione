@@ -29,7 +29,7 @@ void Enemy::random_move(){
     }
 }
 
-void Enemy::random_shoot(int freq, p_bullet head){   //su enemies pensare a come settare la frequenza
+void Enemy::random_shoot(int freq, p_bullet head){   // freq = 10 - difficoltà
     if(this->type > 0){
         int x_player = player2->get_position().x;
         int dir_shoot;

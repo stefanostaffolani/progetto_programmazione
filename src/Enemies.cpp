@@ -2,16 +2,19 @@
  
 Enemies::Enemies(){       // skeleton, solo alcune possibili funzioni per Enemies
     this->difficulty = 0;
-    this->fattore_incremento = 10;    // valutare poi il fattore di incremento
+    this->fattore_incremento = 200;    // valutare poi il fattore di incremento
 }
 
 void Enemies::increase_difficulty(int ps){    // operazione per aumentare la difficoltà dei nemici lungo il gioco (da valutare)
-    if(this->difficulty < 9){
+    if(this->difficulty < 9 && (this->difficulty < (this->difficulty + (ps / this->fattore_incremento)))){
         this->difficulty = this->difficulty + (ps / this->fattore_incremento);
     }
 }
 
+<<<<<<< HEAD
 void Enemies::printEnemies(int ps, int lenS, int versor){ // ========================
+=======
+>>>>>>> 2782e3e9365b1a70d62ef9c19e343bed4212a20f
 
         // 1) verifica dell'aggiornamento valore current -------------------------
                 // se sto andando avanti:
