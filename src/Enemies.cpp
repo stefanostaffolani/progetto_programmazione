@@ -1,11 +1,10 @@
 #include "Enemies.hpp"
  
-Enemies::Enemies(Platform* plat, Bonus* b, Player* play){       // skeleton, solo alcune possibili funzioni per Enemies
+Enemies::Enemies(Platform* plat, Bonus* b){       // skeleton, solo alcune possibili funzioni per Enemies
     this->difficulty = 0;
     this->fattore_incremento = 200;    // valutare poi il fattore di incremento
     this->p2 = plat;
     this->b2 = b;
-    this->player2 = play;
 }
 
 void Enemies::increase_difficulty(int ps){    // operazione per aumentare la difficoltà dei nemici lungo il gioco (da valutare)
@@ -65,14 +64,14 @@ void Enemies::generate(int n){
 
             first->next = NULL;
             first->prev = NULL;
-            first->e = new Enemy(this->set_avatar(type),p2, b2, player2, x, y, type, on_plat);
+            first->e = new Enemy(this->set_avatar(type),p2, b2, x, y, type, on_plat);
         }
         else{
             p_enem tmp = new enemies;
             tmp->next = NULL;
             tmp->prev = last;
 
-            tmp->e = new Enemy(this->set_avatar(type),p2, b2, player2, x, y, type, on_plat);
+            tmp->e = new Enemy(this->set_avatar(type),p2, b2, x, y, type, on_plat);
 
             last->next = tmp;
             last = tmp;

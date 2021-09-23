@@ -12,7 +12,7 @@ typedef struct enemies* p_enem;
 
 class Enemies{
     public:
-        Enemies(Platform*, Bonus*, Player*);
+        Enemies(Platform*, Bonus*);
         void generate(int);
         void increase_difficulty(int ps);
         void printEnemies(int,int,int);
@@ -26,6 +26,5 @@ class Enemies{
         int difficulty;
         Platform* p2;
         Bonus* b2;
-        Player* player2;
 
 };

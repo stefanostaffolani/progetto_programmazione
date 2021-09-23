@@ -1,11 +1,10 @@
 #include "Enemy.hpp"
  
-Enemy::Enemy(char avatar, Platform* p1, Bonus* b1, Player* player, int x, int y, int type = 0, bool on_plat = false) : Item(avatar, x, y){
+Enemy::Enemy(char avatar, Platform* p1, Bonus* b1, int x, int y, int type = 0, bool on_plat = false) : Item(avatar, x, y){
     this->type = type;
     set_damage();
     p2 = p1;
     b2 = b1;
-    player2 = player;
     this->on_plat = on_plat;
 }
 
@@ -32,9 +31,9 @@ void Enemy::random_move(){
     }
 }
 
-void Enemy::random_shoot(int freq, p_bullet head){   // freq = 10 - difficoltà
+void Enemy::random_shoot(int freq, int x_player, p_bullet head){   // freq = 10 - difficoltà
     if(this->type > 0){
-        int x_player = player2->get_position().x;
+        //int x_player = player2->get_position().x;
         int dir_shoot;
         if((x_player - this->pos.x) < 0) dir_shoot = -1;
         else dir_shoot = 1;

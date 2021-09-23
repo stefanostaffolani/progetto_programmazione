@@ -9,12 +9,13 @@ using namespace std;
 #define DOLLAR 36
 #define PIPE 124
 
-Player::Player(char avatar, Platform* p1, Bonus* b1, int x, int y):Item(avatar, x, y){
+Player::Player(char avatar, Platform* p1, Bonus* b1, Enemies* e1, int x, int y):Item(avatar, x, y){
     life = 100;
     points = 0;
     mvprintw(this->pos.y, this->pos.x, "%c",avatar);
     p2 = p1;
     b2 = b1;
+    e2 = e1;
     //len_screen = lenS; da vedere in futuro
 }
 
@@ -39,6 +40,7 @@ void Player::move(int& ps){
     this->print_item();
     p2->printPlatforms(ps, 75, this->versor);
     b2->print_bonus(ps, 75, this->versor);
+    e2->printEnemies(ps, 75, this->versor);
 }
 
 void Player::decrease_life(int n){this->life -= n;}

@@ -3,8 +3,8 @@
 //#include "Platform.hpp"
 //#include "Enemies.hpp"
 #include "Field.hpp"
-#include "Enemies.hpp"
-//#include "Player.hpp"
+// #include "Enemies.hpp"
+#include "Player.hpp"
 //#include "Shoot.hpp"
 //#include "Bonus.hpp"
 using namespace std;
@@ -38,11 +38,11 @@ int main(){
         p_bullet head = NULL;
         field->printField(ps);
         field->upgradeData(100,0);
-        Player *player = new Player('@', p1, b1, 4, height);
-        Enemies *E = new Enemies(p1, b1, player);
+        //Player *player = new Player('@', p1, b1, 4, height);
+        Enemies *E = new Enemies(p1, b1);
+        Player *player = new Player('@', p1, b1, E, 4, height);
         bool stop = false;
         curs_set(0);
-
 
         //(c = getch()) != 27
 
