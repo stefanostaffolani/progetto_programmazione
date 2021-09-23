@@ -64,6 +64,7 @@ int main(){
                 // }
                 timeout(100);
                 player->print_item();
+                E->printEnemies(ps, lenS, player->get_versor());
                 //b1->printCash(ps, lenS, player->get_versor());
                 c = getch();
                 //mvprintw(20,1,"lunghezza lista %d", len_list(head));
@@ -72,6 +73,7 @@ int main(){
                         b1->print_bonus(ps, lenS, player->get_versor());
                 }
                 p1 -> generate(height, lenS, ps, 50);
+                E->generate(5);
                 field->printField(ps);
                 // parte relativa alla stampa delle platform
                 if (c == 27) stop = true;
