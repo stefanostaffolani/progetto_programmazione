@@ -3,7 +3,8 @@
 //#include "Platform.hpp"
 //#include "Enemies.hpp"
 #include "Field.hpp"
-#include "Player.hpp"
+#include "Enemies.hpp"
+//#include "Player.hpp"
 //#include "Shoot.hpp"
 //#include "Bonus.hpp"
 using namespace std;
@@ -23,7 +24,6 @@ int main(){
 	Field *field = new Field();
         Platform *p1 = new Platform();
         Bonus *b1 = new Bonus();
-        Enemies* E = new Enemies();
 
         int lenS = field -> getLenS();
         int height = field -> getHeight();
@@ -39,8 +39,7 @@ int main(){
         field->printField(ps);
         field->upgradeData(100,0);
         Player *player = new Player('@', p1, b1, 4, height);
-        
-        
+        Enemies* E = new Enemies(p1,b1,player);
         bool stop = false;
         curs_set(0);
 

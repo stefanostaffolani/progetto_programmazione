@@ -1,8 +1,11 @@
 #include "Enemies.hpp"
  
-Enemies::Enemies(){       // skeleton, solo alcune possibili funzioni per Enemies
+Enemies::Enemies(Platform* plat, Bonus* b, Player* play){       // skeleton, solo alcune possibili funzioni per Enemies
     this->difficulty = 0;
     this->fattore_incremento = 200;    // valutare poi il fattore di incremento
+    this->p2 = plat;
+    this->b2 = b;
+    this->player2 = play;
 }
 
 void Enemies::increase_difficulty(int ps){    // operazione per aumentare la difficoltà dei nemici lungo il gioco (da valutare)
@@ -11,10 +14,7 @@ void Enemies::increase_difficulty(int ps){    // operazione per aumentare la dif
     }
 }
 
-<<<<<<< HEAD
 void Enemies::printEnemies(int ps, int lenS, int versor){ // ========================
-=======
->>>>>>> 2782e3e9365b1a70d62ef9c19e343bed4212a20f
 
         // 1) verifica dell'aggiornamento valore current -------------------------
                 // se sto andando avanti:
@@ -50,7 +50,7 @@ void Enemies::generate(){
     int i;
     for(i = 1; i <= 10; i++){
         Enemy* e = new Enemy();
-        
+
     {
 
 
