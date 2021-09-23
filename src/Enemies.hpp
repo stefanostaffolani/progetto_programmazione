@@ -12,12 +12,12 @@ class Enemies{
         Enemies();
         void generate();
         void generate_on_platform(int);
-        void increase_difficult(int ps);
+        void increase_difficulty(int ps);
 
     protected:
         p_enem current;
         p_enem first;
         p_enem last;
         int fattore_incremento;
-        int difficult;
+        int difficulty;
 };
