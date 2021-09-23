@@ -6,17 +6,19 @@
 struct enemies{
     Enemy* e;
     enemies* next;
+    enemies* prev;
 };
 typedef struct enemies* p_enem;
 
 class Enemies{
     public:
         Enemies(Platform*, Bonus*, Player*);
-        void generate();
-        void generate_on_platform(int);
+        void generate(int);
         void increase_difficulty(int ps);
         void printEnemies(int,int,int);
     protected:
+        int set_y(int);
+        char set_avatar(int);
         p_enem current;
         p_enem first;
         p_enem last;

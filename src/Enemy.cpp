@@ -1,11 +1,12 @@
 #include "Enemy.hpp"
  
-Enemy::Enemy(char avatar, Platform* p1, Bonus* b1, Player* player, int x, int y, int type = 0) : Item(avatar, x, y){
+Enemy::Enemy(char avatar, Platform* p1, Bonus* b1, Player* player, int x, int y, int type = 0, bool on_plat = false) : Item(avatar, x, y){
     this->type = type;
     set_damage();
     p2 = p1;
     b2 = b1;
     player2 = player;
+    this->on_plat = on_plat;
 }
 
 void Enemy::set_damage(){
@@ -15,6 +16,8 @@ void Enemy::set_damage(){
 }
 
 int Enemy::get_damage(){return this->get_damage();}
+
+int Enemy::get_type(){return this->type;}
 
 void Enemy::random_move(){
     if(this->type > 0){

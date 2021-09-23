@@ -5,9 +5,10 @@
 
 class Enemy : public Item {
 public:
-    Enemy(char, Platform*, Bonus*, Player*, int, int, int);
+    Enemy(char, Platform*, Bonus*, Player*, int, int, int, bool);
     bool check_plat_border();
     int get_damage();
+    int get_type();
     void random_move();
     void random_shoot(int, p_bullet);
     //void generate_on_platform(int);
