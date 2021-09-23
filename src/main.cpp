@@ -23,6 +23,7 @@ int main(){
 	Field *field = new Field();
         Platform *p1 = new Platform();
         Bonus *b1 = new Bonus();
+        Enemies* E = new Enemies();
 
         int lenS = field -> getLenS();
         int height = field -> getHeight();
@@ -38,6 +39,8 @@ int main(){
         field->printField(ps);
         field->upgradeData(100,0);
         Player *player = new Player('@', p1, b1, 4, height);
+        
+        
         bool stop = false;
         curs_set(0);
 

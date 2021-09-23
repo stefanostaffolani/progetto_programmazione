@@ -13,7 +13,7 @@ class Enemies{
         void generate();
         void generate_on_platform(int);
         void increase_difficulty(int ps);
-
+        void printEnemies(int,int,int);
     protected:
         p_enem current;
         p_enem first;

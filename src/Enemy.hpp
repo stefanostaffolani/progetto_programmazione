@@ -5,7 +5,7 @@
 
 class Enemy : public Item {
 public:
-    Enemy(char, Platform*, Bonus*, Player* player, int, int, int);
+    Enemy(char, Platform*, Bonus*, Player*, int, int, int);
     bool check_plat_border();
     int get_damage();
     void random_move();

@@ -11,11 +11,44 @@ void Enemies::increase_difficulty(int ps){    // operazione per aumentare la dif
     }
 }
 
-<<<<<<< HEAD
+void Enemies::printEnemies(int ps, int lenS, int versor){ // ========================
+
+        // 1) verifica dell'aggiornamento valore current -------------------------
+                // se sto andando avanti:
+        if(current!=NULL){
+            if(current -> x < ps && current->next != NULL)
+                    current = current -> next;
+                    // se sto andando in dietro:
+            else if(current -> prev != NULL && current -> prev -> x >= ps)
+                    current = current -> prev;
+        }
+
+        // 2) stampare da current fino a limite schermo --------------------------
+        p_enem iter = current;  
+
+        while(iter != NULL && iter -> x < ps + lenS){ // cicla fino a che la nuova x di iter è fuori dallo schermo
+                if(versor == 1) mvprintw(iter->y, iter->x - ps + 1, " "); // premo d 
+                else if(versor == -1) mvprintw(iter->y, iter->x - ps - 1, " "); // premo a
+                if(iter -> x >= ps && iter -> x < ps + lenS - 1){
+                    if(iter->type == 0)
+                        mvprintw(iter -> y, iter -> x - ps, "$");
+                    else if(iter->type == 1)
+                        mvprintw(iter -> y, iter -> x - ps, "V");
+                }                
+                iter = iter->next;
+        }
+
+} // fine funzione printEnemies() ==================================================
+
+
 
 void Enemies::generate(){
-    // 
-
+    // genero 10 nemici
+    int i;
+    for(i = 1; i <= 10; i++){
+        Enemy* e = new Enemy();
+        
+    {
 
 
 }
@@ -24,9 +57,6 @@ void Enemies::generate(){
 
 
 //per la frequenza di sparo si potrebbe fare (10 - difficult) (10 livelli di difficoltà), al decimo livello spara sempre
-=======
-//per la frequenza di sparo si potrebbe fare (10 - difficulty) (10 livelli di difficoltà), al decimo livello spara sempre
->>>>>>> 613e192f4b979c0576f9b8917ee194de22519606
 
 //TODO:rifare questa funzione per lavorare con la lista
 // void Enemies::generate_on_platform(int x){   // non so se sia necessaria la x come argomento
