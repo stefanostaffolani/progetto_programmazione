@@ -14,34 +14,34 @@ void Enemies::increase_difficulty(int ps){    // operazione per aumentare la dif
     }
 }
 
-void Enemies::printEnemies(int ps, int lenS, int versor){ // ========================
+// void Enemies::printEnemies(int ps, int lenS, int versor){ // ========================
 
-        // 1) verifica dell'aggiornamento valore current -------------------------
-                // se sto andando avanti:
-        if(current!=NULL){
-            if(current -> x < ps && current->next != NULL)
-                    current = current -> next;
-                    // se sto andando in dietro:
-            else if(current -> prev != NULL && current -> prev -> x >= ps)
-                    current = current -> prev;
-        }
+//         // 1) verifica dell'aggiornamento valore current -------------------------
+//                 // se sto andando avanti:
+//         if(current!=NULL){
+//             if(current -> x < ps && current->next != NULL)
+//                     current = current -> next;
+//                     // se sto andando in dietro:
+//             else if(current -> prev != NULL && current -> prev -> x >= ps)
+//                     current = current -> prev;
+//         }
 
-        // 2) stampare da current fino a limite schermo --------------------------
-        p_enem iter = current;  
+//         // 2) stampare da current fino a limite schermo --------------------------
+//         p_enem iter = current;  
 
-        while(iter != NULL && iter -> x < ps + lenS){ // cicla fino a che la nuova x di iter è fuori dallo schermo
-                if(versor == 1) mvprintw(iter->y, iter->x - ps + 1, " "); // premo d 
-                else if(versor == -1) mvprintw(iter->y, iter->x - ps - 1, " "); // premo a
-                if(iter -> x >= ps && iter -> x < ps + lenS - 1){
-                    if(iter->type == 0)
-                        mvprintw(iter -> y, iter -> x - ps, "$");
-                    else if(iter->type == 1)
-                        mvprintw(iter -> y, iter -> x - ps, "V");
-                }                
-                iter = iter->next;
-        }
+//         while(iter != NULL && iter -> x < ps + lenS){ // cicla fino a che la nuova x di iter è fuori dallo schermo
+//                 if(versor == 1) mvprintw(iter->y, iter->x - ps + 1, " "); // premo d 
+//                 else if(versor == -1) mvprintw(iter->y, iter->x - ps - 1, " "); // premo a
+//                 if(iter -> x >= ps && iter -> x < ps + lenS - 1){
+//                     if(iter->type == 0)
+//                         mvprintw(iter -> y, iter -> x - ps, "$");
+//                     else if(iter->type == 1)
+//                         mvprintw(iter -> y, iter -> x - ps, "V");
+//                 }                
+//                 iter = iter->next;
+//         }
 
-} // fine funzione printEnemies() ==================================================
+// } // fine funzione printEnemies() ==================================================
 
 
 
