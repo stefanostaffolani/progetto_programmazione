@@ -1,6 +1,6 @@
 #include "Enemy.hpp"
 //#include "Platform.hpp"
-
+ 
 struct enemies{
     Enemy* e;
     enemies* next;

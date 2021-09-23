@@ -1,5 +1,5 @@
 #include "Enemy.hpp"
-
+ 
 Enemy::Enemy(char avatar, Platform* p1, Bonus* b1, Player* player, int x, int y, int type = 0) : Item(avatar, x, y){
     this->type = type;
     set_damage();

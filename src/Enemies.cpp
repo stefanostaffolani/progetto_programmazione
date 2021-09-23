@@ -1,5 +1,5 @@
 #include "Enemies.hpp"
-
+ 
 Enemies::Enemies(){       // skeleton, solo alcune possibili funzioni per Enemies
     this->difficult = 0;
     this->fattore_incremento = 10;    // valutare poi il fattore di incremento
@@ -10,6 +10,17 @@ void Enemies::increase_difficult(int ps){    // operazione per aumentare la diff
         this->difficult = this->difficult + (ps / this->fattore_incremento);
     }
 }
+
+
+void Enemies::generate(){
+    // 
+
+
+
+}
+
+
+
 
 //per la frequenza di sparo si potrebbe fare (10 - difficult) (10 livelli di difficoltà), al decimo livello spara sempre
 

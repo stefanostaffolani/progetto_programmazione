@@ -11,7 +11,7 @@ public:
     void random_move();
     void random_shoot(int, p_bullet);
     //void generate_on_platform(int);
-
+ 
     /*
     void generate();
     void move();
