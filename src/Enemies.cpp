@@ -45,16 +45,16 @@ void Enemies::printEnemies(int ps, int lenS, int versor){ // ===================
 
 
 
-void Enemies::generate(){
-    // genero 10 nemici
-    int i;
-    for(i = 1; i <= 10; i++){
-        Enemy* e = new Enemy();
+// void Enemies::generate(){
+//     // genero 10 nemici
+//     int i;
+//     for(i = 1; i <= 10; i++){
+//         Enemy* e = new Enemy();
 
-    {
+//     {
 
 
-}
+// }
 
 
 

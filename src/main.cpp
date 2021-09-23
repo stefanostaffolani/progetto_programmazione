@@ -39,7 +39,7 @@ int main(){
         field->printField(ps);
         field->upgradeData(100,0);
         Player *player = new Player('@', p1, b1, 4, height);
-        Enemies* E = new Enemies(p1,b1,player);
+        Enemies *E = new Enemies(p1, b1, player);
         bool stop = false;
         curs_set(0);
 
