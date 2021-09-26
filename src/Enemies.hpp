@@ -13,9 +13,11 @@ typedef struct enemies* p_enem;
 class Enemies{
     public:
         Enemies(Platform*, Bonus*);
-        void generate(int);
+        void generate(int,int,int);
+        void addNode(int);
         void increase_difficulty(int ps);
-        void printEnemies(int,int,int);
+        void printEnemies(int,int,int,int,p_bullet&);
+        void move_and_shoot(int,int,int, p_bullet&);
     protected:
         int set_y(int);
         char set_avatar(int);

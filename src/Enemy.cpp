@@ -22,20 +22,21 @@ int Enemy::get_damage(){return this->get_damage();}
 
 int Enemy::get_type(){return this->type;}
 
-void Enemy::random_move(){
+void Enemy::random_move(int ps){
     if(this->type > 0){
         int random_dir = rand()%2;     //if random_dir == 0 va a dx else a sx, se può
         if(random_dir) this->set_versor(-1);
         else this->set_versor(1);
+        timeout(300);
         if(this->on_plat && !this->check_plat_border()){
-            this->move();
+            this->move(ps);
         }else if (!this->on_plat){
-            this->move();
+            this->move(ps);
         }
     }
 }
 
-void Enemy::random_shoot(int freq, int x_player, p_bullet head){   // freq = 10 - difficoltà
+void Enemy::random_shoot(int freq, int x_player, p_bullet& head){   // freq = 10 - difficoltà
     if(this->type > 0){
         //int x_player = player2->get_position().x;
         int dir_shoot;

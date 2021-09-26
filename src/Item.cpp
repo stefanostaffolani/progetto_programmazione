@@ -7,22 +7,22 @@ Item::Item(char avatar, int x = 3, int y = 12){
     this->versor = 1;
 }
 
-void Item::move(){
+void Item::move(int ps){
     if ((versor == -1) && (this->pos.x > INIT_X)){
-        this->delete_item();
+        this->delete_item(ps);
         this->pos.x--;
-        this->print_item();
+        this->print_item(ps);
     }else if ((versor == 1) && (this->pos.x < END_X)){
-        this->delete_item();
+        this->delete_item(ps);
         this->pos.x++;
-        this->print_item();
+        this->print_item(ps);
     }
     refresh();
 }
 
-void Item::print_item(){mvprintw(this->pos.y, this->pos.x, "%c", this->avatar);}
+void Item::print_item(int ps){mvprintw(this->pos.y, this->pos.x - ps, "%c", this->avatar);}
 
-void Item::delete_item(){mvprintw(this->pos.y, this->pos.x, " ");}
+void Item::delete_item(int ps){mvprintw(this->pos.y, this->pos.x - ps, " ");}
 
 void Item::set_x(int n){ this->pos.x = n; }
 

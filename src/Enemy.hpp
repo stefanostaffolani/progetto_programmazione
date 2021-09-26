@@ -9,21 +9,16 @@ public:
     bool check_plat_border();
     int get_damage();
     int get_type();
-    void random_move();
-    void random_shoot(int, int, p_bullet);
-    bool check_hit();
-    //void generate_on_platform(int);
- 
+    void random_move(int);
+    void random_shoot(int, int, p_bullet&);
+    bool check_hit(); 
     /*
-    void generate();
     void move();
     */
 
 
 protected:
     bool on_plat;
-    // Item* listofItem;
-    // int lvl; // valore 0-2
     Platform* p2;
     Bonus* b2;
     //Player* player2;

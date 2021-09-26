@@ -11,13 +11,13 @@ using namespace std;
 
 // dai cazzo
 
-int len_list(p_bullet head){
-        if(head == NULL) return 0;
-        else{
-                mvprintw(16,1,"head : counter = %d", head->counter);
-                return 1 + len_list(head->next);
-        }
-}
+// int len_list(p_bullet head){
+//         if(head == NULL) return 0;
+//         else{
+//                 mvprintw(16,1,"head : counter = %d", head->counter);
+//                 return 1 + len_list(head->next);
+//         }
+// }
 
 int main(){
         srand(time(NULL));
@@ -28,7 +28,8 @@ int main(){
         int lenS = field -> getLenS();
         int height = field -> getHeight();
 
-        p1->addNode(height);
+        for(int i = 0; i < 50; i++)
+                p1->addNode(height);
         b1->add_bonus(p1->get_current(), height);
 
         initscr();
@@ -43,7 +44,8 @@ int main(){
         Player *player = new Player('@', p1, b1, E, 4, height);
         bool stop = false;
         curs_set(0);
-
+        for(int i = 0; i < 3; i++)
+                E->addNode(5);
         //(c = getch()) != 27
 
         // ciclo in cui di base avviene tutto
@@ -63,7 +65,7 @@ int main(){
                 //         // }
                 // }
                 timeout(100);
-                player->print_item();
+                player->print_item(0);
                 //E->printEnemies(ps, lenS, player->get_versor());
                 //b1->printCash(ps, lenS, player->get_versor());
                 c = getch();
@@ -71,15 +73,16 @@ int main(){
                 if(rand()%10 == 0){
                         b1->add_bonus(p1->get_current(), height);
                         b1->print_bonus(ps, lenS, player->get_versor());
+                       // E->generate(5);
                 }
                 p1 -> generate(height, lenS, ps, 50);
-                E->generate(5);
+                //E->generate(5);
                 field->printField(ps);
                 // parte relativa alla stampa delle platform
                 if (c == 27) stop = true;
                 else if(c == 100){ // se premo d ->
                         player->set_versor(1);
-                        player -> move(ps);//set_x(player->get_x() + 1);
+                        player -> move(ps, head);//set_x(player->get_x() + 1);
                         
                 } 
                 else if(c == 32){      // premo space
@@ -90,7 +93,7 @@ int main(){
                 }
                 else if(c == 97){ // se premo a <-
                         player->set_versor(-1);
-                        player-> move(ps); //set_x(player->get_x() - 1);
+                        player-> move(ps, head); //set_x(player->get_x() - 1);
                 }
                 int bonus = b1->find_bonus(ps, lenS, player->get_position().x, player->get_position().y);
                 if(bonus == 0){ // trovato $
@@ -106,11 +109,12 @@ int main(){
                         field->upgradeData(player->get_life(), player->get_points());
                         field->printField(ps);        
                 }
-                
+                E->move_and_shoot(lenS, ps, player->get_position().x, head);
                 if (head != NULL) print_bullet_list(head);
                 p1->printPlatforms(ps, lenS, player->get_versor()); // chiama funzione che gestisce il print delle platform
                 player->gravity(ps, head);
-                E->printEnemies(ps, lenS, player->get_versor());
+                E->generate(5, lenS, ps);
+                E->printEnemies(ps, lenS, player->get_versor(), player->get_position().x, head);
                 //if(player->is_hit()) mvprintw(20,1,"colpito");
                 move(0,0);      // leva il cursore fuori dai coglioni
         }

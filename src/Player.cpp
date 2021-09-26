@@ -16,6 +16,7 @@ Player::Player(char avatar, Platform* p1, Bonus* b1, Enemies* e1, int x, int y):
     p2 = p1;
     b2 = b1;
     e2 = e1;
+    
     //len_screen = lenS; da vedere in futuro
 }
 
@@ -29,17 +30,17 @@ bool Player::is_hit(){
     return (mvinch(this->pos.y, this->pos.x + 1) == 42 || mvinch(this->pos.y, this->pos.x - 1) == 42);
 }
 
-void Player::move(int& ps){
+void Player::move(int& ps, p_bullet& head){
     if((this->versor == -1) && (this->pos.x < 20) && (ps >= 1)){
         ps--;
     }else if ((this->versor == 1) && (this->pos.x > 55)){
         ps++;
     }
-    else Item::move();
-    this->print_item();
+    else Item::move(0);
+    this->print_item(0);
     p2->printPlatforms(ps, 75, this->versor);
     b2->print_bonus(ps, 75, this->versor);
-    e2->printEnemies(ps, 75, this->versor);
+    e2->printEnemies(ps, 75, this->versor, this->pos.x, head);
 }
 
 void Player::decrease_life(int n){this->life -= n;}
@@ -58,17 +59,17 @@ void Player::jump(int& ps, p_bullet& head){
         sopra = {this->pos.x, this->pos.y - 1};
         if(c == 32) head = add_bullet(head, this->pos, this->versor, '-');
         if (mvinch(diagonale.y, diagonale.x) == 32){
-            this->delete_item();
+            this->delete_item(0);
             if(mvinch(sopra.y, sopra.x) == 32){
                 //mvprintw(this->pos.y, this->pos.x, " ");
                 this->pos.y--;
-                this->move(ps);
-                //this->print_item();
+                this->move(ps, head);
+                //this->print_item(0);
             }else{
-                this->delete_item();
+                this->delete_item(0);
                 this->pos.y--;
                 this->pos.x += this->versor;
-                this->print_item();
+                this->print_item(0);
             }
             i++;
         } else{
@@ -102,40 +103,40 @@ void Player::gravity(int& ps, p_bullet& head){
         else if(mvinch(diagonale.y, diagonale.x) != SPACE){
             hit_something = true;
             if (mvinch(diagonale.y, diagonale.x) == DOLLAR || mvinch(diagonale.y, diagonale.x) == 86){
-                this->delete_item();
+                this->delete_item(0);
                 //mvprintw(this->pos.y, this->pos.x, " ");
                 this->pos.y++;
-                this->move(ps);
+                this->move(ps, head);
                 //increase_points(10);
                 //if (b2->findCash(ps, 75, this->x, this->y)) increase_points(10);
             }else if(mvinch(diagonale.y, diagonale.x) == PIPE){
-                this->delete_item();
+                this->delete_item(0);
                 //mvprintw(this->pos.y, this->pos.x, " ");
                 this->pos.y = HEIGHT;
                 this->pos.x = INIT_X;
-                this->print_item();
+                this->print_item(0);
                 //mvprintw(this->pos.y, this->pos.x, "%c", avatar);
                 refresh();
             }else if (mvinch(sotto.y, sotto.x) == SPACE){
-                this->delete_item();
+                this->delete_item(0);
                 //mvprintw(this->pos.y, this->pos.x, " ");
-                this->move(ps);
+                this->move(ps, head);
             }
             //vedere se ne servono altri
         }
         else{
             if(mvinch(laterale.y, laterale.x) == EQUAL || mvinch(laterale.y, laterale.x) == 111 || mvinch(laterale.y, laterale.x) == 79){   // perchè potrebbe cancellare lo spigolo della platform
-                this->delete_item();
+                this->delete_item(0);
                 this->pos.x+=versor;
                 this->pos.y++;
-                this->print_item();
+                this->print_item(0);
             }
             else{
-                this->move(ps);
-                this->delete_item();
+                this->move(ps, head);
+                this->delete_item(0);
                 //mvprintw(this->pos.y, this->pos.x, " ");
                 this->pos.y++;
-                this->print_item();
+                this->print_item(0);
             }
     }
         print_bullet_list(head);

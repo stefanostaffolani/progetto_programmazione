@@ -17,13 +17,13 @@ struct position{
 class Item{
     public:
         Item(char, int, int);
-        void move();
+        void move(int);
         void set_x(int);
         position get_position();
         void set_versor(int);
         int get_versor();
-        void print_item();
-        void delete_item();
+        void print_item(int);
+        void delete_item(int);
 
     protected:
         position pos;

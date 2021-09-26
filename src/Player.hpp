@@ -8,7 +8,7 @@ class Player : public Item{
 public:
     Player(char, Platform*, Bonus*, Enemies*, int, int);
     void jump(int&, p_bullet&);
-    void move(int&);
+    void move(int&, p_bullet&);
     void increase_points(int);
     void decrease_life(int);
     void increase_life(int);
