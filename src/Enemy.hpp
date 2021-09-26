@@ -6,11 +6,11 @@
 class Enemy : public Item {
 public:
     Enemy(char, Platform*, Bonus*, int, int, int, bool);
-    bool check_plat_border();
+    bool check_plat_border(int);
     int get_damage();
     int get_type();
     void random_move(int);
-    void random_shoot(int, int, p_bullet&);
+    void random_shoot(int, int, int, p_bullet&);
     bool check_hit(); 
     /*
     void move();

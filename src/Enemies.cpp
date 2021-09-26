@@ -25,7 +25,7 @@ void Enemies::move_and_shoot(int lenS, int ps, int x_player, p_bullet& head){
                 if(iter->e->get_versor() == 1) mvprintw(iter->e->get_position().y, iter->e->get_position().x - ps + 1, " "); // premo d 
                 else if(iter->e->get_versor() == -1) mvprintw(iter->e->get_position().y, iter->e->get_position().x - ps - 1, " "); // premo a
                 iter->e->random_move(ps);
-                iter->e->random_shoot((10-this->difficulty), x_player, head);
+                iter->e->random_shoot((10-this->difficulty), x_player, ps, head);
             }
             iter = iter->next;
         }
@@ -38,9 +38,6 @@ void Enemies::printEnemies(int ps, int lenS, int versor, int x_player, p_bullet&
 
         // 1) verifica dell'aggiornamento valore current -------------------------
                 // se sto andando avanti:
-        
-
-
 
         if(current!=NULL){
             if(current->e->get_position().x < ps && current->next != NULL)
@@ -55,13 +52,10 @@ void Enemies::printEnemies(int ps, int lenS, int versor, int x_player, p_bullet&
         //this->move_and_shoot(lenS, ps, x_player, head);
 
         while(iter != NULL && iter ->e->get_position().x < ps + lenS){ // cicla fino a che la nuova x di iter è fuori dallo schermo
-                if(versor == 1) mvprintw(iter->e->get_position().y, iter->e->get_position().x - ps + 1, " "); // premo d 
-                else if(versor == -1) mvprintw(iter->e->get_position().y, iter->e->get_position().x - ps - 1, " "); // premo a
+                if(versor == 1) iter->e->delete_item(ps-1); // premo d 
+                else if(versor == -1) iter->e->delete_item(ps+1); // premo a
                 if(iter ->e->get_position().x >= ps && iter ->e->get_position().x < ps + lenS - 1){
-                    if(iter->e->get_type() == 0)
-                        mvprintw(iter ->e->get_position().y, iter ->e->get_position().x - ps, "o");
-                    else if(iter->e->get_type() == 1)
-                        mvprintw(iter ->e->get_position().y, iter->e->get_position().x - ps, "O");
+                    iter->e->print_item(ps);
                 }                
                 iter = iter->next;
         }
@@ -99,7 +93,7 @@ void Enemies::addNode(int n){
         y = this->set_y(x);
         
         if(y < HEIGHT) on_plat = true;
-            int type = rand()%2;
+        int type = rand()%2;
 
         p_enem tmp = new enemies;
         tmp->next = NULL;

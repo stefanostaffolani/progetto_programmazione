@@ -8,11 +8,11 @@ Item::Item(char avatar, int x = 3, int y = 12){
 }
 
 void Item::move(int ps){
-    if ((versor == -1) && (this->pos.x > INIT_X)){
+    if ((versor == -1) && ((this->pos.x - ps) > INIT_X)){
         this->delete_item(ps);
         this->pos.x--;
         this->print_item(ps);
-    }else if ((versor == 1) && (this->pos.x < END_X)){
+    }else if ((versor == 1) && ((this->pos.x - ps) < END_X)){
         this->delete_item(ps);
         this->pos.x++;
         this->print_item(ps);

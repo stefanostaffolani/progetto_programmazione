@@ -31,9 +31,9 @@ bool Player::is_hit(){
 }
 
 void Player::move(int& ps, p_bullet& head){
-    if((this->versor == -1) && (this->pos.x < 20) && (ps >= 1)){
+    if((this->versor == -1) && (this->pos.x < 10) && (ps >= 1)){
         ps--;
-    }else if ((this->versor == 1) && (this->pos.x > 55)){
+    }else if ((this->versor == 1) && (this->pos.x > 65)){
         ps++;
     }
     else Item::move(0);
@@ -53,11 +53,13 @@ void Player::jump(int& ps, p_bullet& head){
     bool hit_something = false;
     position diagonale, sopra;
     while((i < Y_JUMP) && !(hit_something)){
-        timeout(100);
+        //timeout(100);
+        e2->move_and_shoot(75,ps,this->pos.x, head);     //per i nemici
+
         c = getch();
         diagonale = {this->pos.x+this->versor, this->pos.y - 1};
         sopra = {this->pos.x, this->pos.y - 1};
-        if(c == 32) head = add_bullet(head, this->pos, this->versor, '-');
+        if(c == 32) head = add_bullet(head, this->pos, this->versor, '-');   //per sparare
         if (mvinch(diagonale.y, diagonale.x) == 32){
             this->delete_item(0);
             if(mvinch(sopra.y, sopra.x) == 32){
@@ -88,8 +90,10 @@ void Player::gravity(int& ps, p_bullet& head){
     else hit_something = false;
     position diagonale, sotto, laterale;
     while(!(hit_something)){
-        timeout(100);
+        //timeout(100);
         
+        e2->move_and_shoot(75,ps,this->pos.x, head);   //per i nemici
+
         //per sparare
         c = getch();
         if(c == SPACE) head = add_bullet(head, this->pos, this->versor, '-');

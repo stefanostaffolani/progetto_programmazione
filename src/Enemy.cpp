@@ -25,10 +25,13 @@ int Enemy::get_type(){return this->type;}
 void Enemy::random_move(int ps){
     if(this->type > 0){
         int random_dir = rand()%2;     //if random_dir == 0 va a dx else a sx, se può
+        mvprintw(15, 1, "%d", random_dir);
         if(random_dir) this->set_versor(-1);
         else this->set_versor(1);
-        timeout(300);
-        if(this->on_plat && !this->check_plat_border()){
+        mvprintw(16, 1, "%d", this->versor);
+        mvprintw(17,1,"%d", this->on_plat);
+        timeout(100);
+        if(this->on_plat && !this->check_plat_border(ps)){
             this->move(ps);
         }else if (!this->on_plat){
             this->move(ps);
@@ -36,11 +39,11 @@ void Enemy::random_move(int ps){
     }
 }
 
-void Enemy::random_shoot(int freq, int x_player, p_bullet& head){   // freq = 10 - difficoltà
+void Enemy::random_shoot(int freq, int x_player, int ps, p_bullet& head){   // freq = 10 - difficoltà
     if(this->type > 0){
         //int x_player = player2->get_position().x;
         int dir_shoot;
-        if((x_player - this->pos.x) < 0) dir_shoot = -1;
+        if((x_player - this->pos.x + ps) < 0) dir_shoot = -1;
         else dir_shoot = 1;
         int n = rand() % freq;
         if(n == 0) add_bullet(head, this->pos, dir_shoot, '*');
@@ -49,7 +52,7 @@ void Enemy::random_shoot(int freq, int x_player, p_bullet& head){   // freq = 10
 
 void Enemy::increase_damage(int inc){this->damage = this->damage + inc;}
 
-bool Enemy::check_plat_border(){ //se facendo un movimento cado dalla platform return true
-    if(mvinch(this->pos.y, this->pos.x + this->versor) == 32) return true;
+bool Enemy::check_plat_border(int ps){ //se facendo un movimento cado dalla platform return true
+    if(mvinch(this->pos.y + 1, this->pos.x + this->versor - ps) == 32) return true;
     else return false;
 }

@@ -5,7 +5,7 @@
 #include <chrono>
 
 #define INIT_X 1
-#define END_X 70
+#define END_X 75
 #define HEIGHT 12
  
 struct position{
