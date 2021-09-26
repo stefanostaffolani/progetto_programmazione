@@ -115,7 +115,8 @@ int main(){
                 player->gravity(ps, head);
                 E->generate(5, lenS, ps);
                 E->printEnemies(ps, lenS, player->get_versor(), player->get_position().x, head);
-                //if(player->is_hit()) mvprintw(20,1,"colpito");
+                if(player->is_hit()) player->decrease_life(15);      //TODO : far funzionare sta roba
+                if(player->hit_enemy()) player->decrease_life(10);
                 move(0,0);      // leva il cursore fuori dai coglioni
         }
         //TODO:game over

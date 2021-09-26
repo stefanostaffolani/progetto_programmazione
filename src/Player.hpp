@@ -17,6 +17,7 @@ public:
     void set_life(int);
     int get_points();
     void gravity(int&, p_bullet&);
+    bool hit_enemy();
 
 
 protected:

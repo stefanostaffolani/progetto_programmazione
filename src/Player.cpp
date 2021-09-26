@@ -30,6 +30,10 @@ bool Player::is_hit(){
     return (mvinch(this->pos.y, this->pos.x + 1) == 42 || mvinch(this->pos.y, this->pos.x - 1) == 42);
 }
 
+bool Player::hit_enemy(){
+    return (mvinch(this->pos.y, this->pos.x) == 79 || mvinch(this->pos.y, this->pos.x) == 111);
+}
+
 void Player::move(int& ps, p_bullet& head){
     if((this->versor == -1) && (this->pos.x < 10) && (ps >= 1)){
         ps--;

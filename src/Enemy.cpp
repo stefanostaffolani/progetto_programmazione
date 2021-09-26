@@ -12,7 +12,7 @@ bool Enemy::check_hit(){
     return (mvinch(this->pos.y, this->pos.x + 1) == 45 || mvinch(this->pos.y, this->pos.x - 1) == 45);
 }
 
-void Enemy::set_damage(){
+void Enemy::set_damage(){    //TODO:togliere un tipo di nemico
     if(this->type == 0) this->damage = 10;   // nemico base
     else if(this->type == 1) this->damage = 15;  // nemico medio
     else this->damage = 20;                     // nemico forte
@@ -46,7 +46,9 @@ void Enemy::random_shoot(int freq, int x_player, int ps, p_bullet& head){   // f
         if((x_player - this->pos.x + ps) < 0) dir_shoot = -1;
         else dir_shoot = 1;
         int n = rand() % freq;
-        if(n == 0) add_bullet(head, this->pos, dir_shoot, '*');
+        mvprintw(20, 1, "%d", n);
+        position traslated_position = {this->pos.x-ps, this->pos.y};
+        if(n == 0) head = add_bullet(head, traslated_position, dir_shoot, '*');
     }
 }
 
