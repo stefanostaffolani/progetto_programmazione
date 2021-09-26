@@ -11,6 +11,7 @@ public:
     int get_type();
     void random_move();
     void random_shoot(int, int, p_bullet);
+    bool check_hit();
     //void generate_on_platform(int);
  
     /*

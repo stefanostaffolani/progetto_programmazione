@@ -94,7 +94,7 @@ int Enemies::set_y(int x){   // non so se sia necessaria la x come argomento
     p_node iter = p2->get_current();
     while(iter->x < x)
         iter = iter->next;
-    if(iter->prev->x + iter->prev->len < x)
+    if(iter->prev->x + iter->prev->len < x)    //TODO:capire perchè con -1 funziona
         return HEIGHT;
     else{
         if(rand()%2)return iter->prev->y - 1;

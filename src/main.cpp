@@ -64,7 +64,7 @@ int main(){
                 // }
                 timeout(100);
                 player->print_item();
-                E->printEnemies(ps, lenS, player->get_versor());
+                //E->printEnemies(ps, lenS, player->get_versor());
                 //b1->printCash(ps, lenS, player->get_versor());
                 c = getch();
                 //mvprintw(20,1,"lunghezza lista %d", len_list(head));
@@ -83,7 +83,6 @@ int main(){
                         
                 } 
                 else if(c == 32){      // premo space
-                        //Q.enqueue(player->get_versor(), player->get_position());
                         head = add_bullet(head, player->get_position(), player->get_versor(), '-');
                 }
                 else if(c==119){
@@ -99,7 +98,7 @@ int main(){
                         field->upgradeData(player->get_life(), player->get_points());
                         field->printField(ps);
                 }
-                else if(bonus == 1){ // trpvato V
+                else if(bonus == 1){ // trovato V
                         if(player->get_life() + 10 < 100)
                                 player->increase_life(10);
                         else
@@ -111,7 +110,8 @@ int main(){
                 if (head != NULL) print_bullet_list(head);
                 p1->printPlatforms(ps, lenS, player->get_versor()); // chiama funzione che gestisce il print delle platform
                 player->gravity(ps, head);
-                if(player->is_hit()) mvprintw(20,1,"colpito");
+                E->printEnemies(ps, lenS, player->get_versor());
+                //if(player->is_hit()) mvprintw(20,1,"colpito");
                 move(0,0);      // leva il cursore fuori dai coglioni
         }
         //TODO:game over

@@ -26,8 +26,7 @@ int Player::get_points(){return this->points;}
 void Player::increase_points(int n){this->points += n;}
 
 bool Player::is_hit(){
-    if(mvinch(this->pos.y, this->pos.x) == 42 || mvinch(this->pos.y, this->pos.x) == 42) return true;
-    else return false;
+    return (mvinch(this->pos.y, this->pos.x + 1) == 42 || mvinch(this->pos.y, this->pos.x - 1) == 42);
 }
 
 void Player::move(int& ps){
@@ -84,7 +83,7 @@ void Player::gravity(int& ps, p_bullet& head){
     bool hit_something = false;
     //int i = 0;
     char c;
-    if (mvinch(this->pos.y + 1, this->pos.x) != SPACE && mvinch(this->pos.y + 1, this->pos.x) != DOLLAR) hit_something = true;
+    if (mvinch(this->pos.y + 1, this->pos.x) != SPACE && mvinch(this->pos.y + 1, this->pos.x) != DOLLAR && mvinch(this->pos.y + 1, this->pos.x) != 86) hit_something = true;
     else hit_something = false;
     position diagonale, sotto, laterale;
     while(!(hit_something)){
@@ -102,7 +101,7 @@ void Player::gravity(int& ps, p_bullet& head){
         }
         else if(mvinch(diagonale.y, diagonale.x) != SPACE){
             hit_something = true;
-            if (mvinch(diagonale.y, diagonale.x) == DOLLAR){
+            if (mvinch(diagonale.y, diagonale.x) == DOLLAR || mvinch(diagonale.y, diagonale.x) == 86){
                 this->delete_item();
                 //mvprintw(this->pos.y, this->pos.x, " ");
                 this->pos.y++;
@@ -125,7 +124,7 @@ void Player::gravity(int& ps, p_bullet& head){
             //vedere se ne servono altri
         }
         else{
-            if(mvinch(laterale.y, laterale.x) == EQUAL){   // perchè potrebbe cancellare lo spigolo della platform
+            if(mvinch(laterale.y, laterale.x) == EQUAL || mvinch(laterale.y, laterale.x) == 111 || mvinch(laterale.y, laterale.x) == 79){   // perchè potrebbe cancellare lo spigolo della platform
                 this->delete_item();
                 this->pos.x+=versor;
                 this->pos.y++;

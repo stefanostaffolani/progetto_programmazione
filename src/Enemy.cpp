@@ -8,6 +8,10 @@ Enemy::Enemy(char avatar, Platform* p1, Bonus* b1, int x, int y, int type = 0, b
     this->on_plat = on_plat;
 }
 
+bool Enemy::check_hit(){
+    return (mvinch(this->pos.y, this->pos.x + 1) == 45 || mvinch(this->pos.y, this->pos.x - 1) == 45);
+}
+
 void Enemy::set_damage(){
     if(this->type == 0) this->damage = 10;   // nemico base
     else if(this->type == 1) this->damage = 15;  // nemico medio
