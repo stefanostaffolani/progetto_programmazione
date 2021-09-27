@@ -1,3 +1,5 @@
+#include "Platform.hpp"
+using namespace std;
 
 struct bonuslist{
         int x;
@@ -8,16 +10,20 @@ struct bonuslist{
 };
  
 typedef struct bonuslist* p_bon;
-
+ 
 class Bonus{
 public:
-    Bonus();
-    void add_bonus(p_node, int);
+    Bonus(Platform*);
+    void generate(int,int,int);
+    void addNode(int);
+    void removeBonus(p_bon);
+
     void print_bonus(int, int, int);
     int find_bonus(int, int, int, int);
-    // int lencash();
 protected:
+    int set_y(int);
     p_bon first;
     p_bon last;
     p_bon current;
+    Platform* p;
 };

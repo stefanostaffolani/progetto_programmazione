@@ -9,7 +9,7 @@ Platform::Platform(){
         last = NULL;
         current = NULL;
 }
-
+ 
 void Platform::addNode(int h){ // ======================================================
         // se non ci sono ancora nodi -------------------------------------------
         if(first == NULL){
@@ -17,11 +17,6 @@ void Platform::addNode(int h){ // ==============================================
                 first -> x = 40; // un valore a caso che può essere anche k
                 first -> y = rand() % 2 + 10;  // siccome il player deve poterci saltare do valore rand
                 first -> len = 10;
-
-                if(rand()%4 == 0)
-                        first -> gotBonus = false;
-                else    
-                        first -> gotBonus = true;
                 
                 first -> prev = NULL;
                 first -> next = NULL;
@@ -33,10 +28,6 @@ void Platform::addNode(int h){ // ==============================================
                 last -> next = tmp;
                 tmp -> prev = last;
                 tmp -> next = NULL;
-                if(rand()%4 == 0)
-                        tmp -> gotBonus = false;
-                else 
-                        tmp -> gotBonus = true;
 
                 tmp -> x = tmp -> prev -> x + tmp -> prev -> len + rand() % 2 + 5;
                 do {
@@ -49,7 +40,6 @@ void Platform::addNode(int h){ // ==============================================
         }
 
 } // fine funzione addNode() ==========================================================
-
 
 
 
@@ -77,7 +67,6 @@ void Platform::printPlatforms(int ps, int lenS, int versor){ // ================
         }
 
 } // fine funzione printPlatforms() ==================================================
-
 
 
 

@@ -1,62 +1,74 @@
-#include <iostream>
-#include <ncurses.h>
-#include <time.h>
-#include <string.h>
-#include "Platform.hpp"
 #include "Bonus.hpp"
- 
-using namespace std;
+#include "time.h"
 
-Bonus::Bonus(){
-    first = new bonuslist();
-    first->y = -10;
-    first->x = -10;
-    first->prev = NULL;
-    first->next = NULL;
-    last = first;
-    current = first;
+Bonus::Bonus(Platform* p){
+    srand(time(NULL));
+    this->first = NULL;
+    this->last = NULL;
+    this->current = NULL;
+    this->p = p;
 }
 
-void Bonus::add_bonus(p_node p, int h){
-    
-    // p_node puntatore a platform
-    // questo ciclo scorre avatìnti di 6 platform 
-    // per essere sicuro di aggiungere il nuovo bonus
-    // al di fuori dello schermo
-    for(int i = 0; i < 6; i++){
-        if(p->next != NULL)
-            p = p->next;
+void Bonus::generate(int n, int lenS, int ps){
+    if(last->x < ps + lenS){
+        for(int i = 0; i < n; i++)
+            addNode(n);
     }
-    
-    if(!p->gotBonus){
+}
+
+void Bonus::addNode(int n){
+
+    if(first == NULL){ // è il primo bonus che genero
+        first = new bonuslist();
+        current = first;
+        last = first;
+
+        first->next = NULL;
+        first->prev = NULL;
+        first->x = rand() % n + 50;
+        first->y = this->set_y(first->x);
+        first->type = (rand()%10 == 0) ? 1 : 0;
+    }
+    else{
         p_bon tmp = new bonuslist();
-        last -> next = tmp;
-        tmp -> prev = last;
-        tmp -> next = NULL;
+        tmp->next = NULL;
+        tmp->prev = last;
+        tmp->x = last->x + 50  + rand() % n * 2;
+        tmp->y = this->set_y(first->x);
 
-        // 1/6 di possibilità di generarlo per terra
-        if(rand() % 6 == 0) tmp -> y = h;
-        // altrimenti genera sulla platform
-        else if(p->y > 2)
-           tmp -> y = p -> y - 1;
-        else tmp->y = h;
-
-        // poi piazzo la x del bonus a random sulla lunghezza della platform
-        tmp -> x = p -> x + rand() % p->len;  // qui c'era un -1 che ho tolto perchè senno stampa i $ a culo
-        
-        // infine setto il tipo di bonus
-        // 1/10 delle volte sarà una vita
-        if(rand()%10 == 0)
-            tmp->type = 1;
-        else 
-            tmp->type = 0;
-
+        last->next = NULL;
         last = tmp;
-        tmp = NULL;
-        delete tmp;
-        p->gotBonus = true;
     }
 
+}
+
+void Bonus::removeBonus(p_bon iter){
+    // verifico se il bonus è current, last, first altirmenti nulla
+    if(iter == current){ 
+        if(iter != first)
+            current = iter->prev;
+        else if(iter != last)
+            current = iter -> next;
+        else {
+            current = NULL;
+            last = NULL;
+            first = NULL;
+        }
+    }
+    if(iter == last){
+        last = last->prev;
+        last->next = NULL;
+    }
+    else if(iter == first){
+        first = first->next;
+        first->prev = NULL;
+    }
+    else{
+        iter->prev->next = iter->next;
+        iter->next->prev = iter->prev;
+        delete iter;
+        iter = NULL;
+    }
 }
 
 
@@ -88,46 +100,27 @@ void Bonus::print_bonus(int ps, int lenS, int versor){
         }
 }
 
-
-// da cambiare questa funzione! 
-// deve diventare find bonus banalmente e poi a seconda di che bonus 
-// è accadono cose
 int Bonus::find_bonus(int ps, int lenS, int plx, int ply){
+    
+    // 1) verifica che il bonus sia stato trovato, 
+    // 2) ritorna il tipo di bonus che ha trovato
+    // 3) cancella dalla lista l'elemento
+    // plx ply -> player position x, player position y
+    
     p_bon iter = current;
     int bonus_type_found = -1;
 
     while(iter != NULL && iter->x < ps+lenS){
+        
         if(iter->x == plx + ps && iter->y == ply) {
-            // mvprintw(24, 20, "win");
+
             bonus_type_found = iter->type;
-            if(iter == current){ 
-                if(iter != first)
-                    current = iter->prev;
-                else if(iter != last)
-                    current = iter -> next;
-                else {
-                    current = NULL;
-                    last = NULL;
-                    first = NULL;
-                }
-            }
-            if(iter == last){
-                last = last->prev;
-                last->next = NULL;
-            }
-            else if(iter == first){
-                first = first->next;
-                first->prev = NULL;
-            }
-            else{
-                iter->prev->next = iter->next;
-                iter->next->prev = iter->prev;
-                delete iter;
-                iter = NULL;
-            }
+            removeBonus(iter);
+
             mvprintw(ply, plx, "@");
             mvprintw(ply, plx + 1, " ");
             refresh();
+
             return bonus_type_found;
         }
         iter = iter->next;
@@ -136,13 +129,15 @@ int Bonus::find_bonus(int ps, int lenS, int plx, int ply){
 }
 
 
-// int Bonus::lencash(){
-//     int cont = 0;
-//     p_cash iter = first;
-//     while(iter != NULL){
-//         iter = iter->next;
-//         cont++;
-//     }
-//     return cont;
-// }
-
+int set_y(int x){
+    p_node iter = p->get_current();
+    if (iter == NULL) return 12;
+    while(iter->next != NULL && iter->x < x)
+        iter = iter->next;
+    if(iter->prev->x + iter->prev->len - 1 < x)    // -1 perchè x + len sborda di 1
+        return 12;
+    else{
+        if(rand()%2)return iter->prev->y - 1;
+        else return 12;
+    }
+}

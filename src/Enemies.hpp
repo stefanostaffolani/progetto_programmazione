@@ -2,7 +2,7 @@
 // #include "Platform.hpp"
 // #include "Bonus.hpp"
 // #include "Player.hpp"
-
+ 
 struct enemies{
     Enemy* e;
     enemies* next;
@@ -15,9 +15,14 @@ class Enemies{
         Enemies(Platform*, Bonus*);
         void generate(int,int,int);
         void addNode(int);
-        void increase_difficulty(int ps);
+        void removeEnemies(p_enem);
+
         void printEnemies(int,int,int,int,p_bullet&);
+        int find_enemy(int,int,int,int);
+
         void move_and_shoot(int,int,int, p_bullet&);
+        void increase_difficulty(int);
+
     protected:
         int set_y(int);
         char set_avatar(int);

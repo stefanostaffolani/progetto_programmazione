@@ -1,15 +1,17 @@
+#include <ncurses.h>
+#include <time.h>
+#include <iostream>
 
 struct node{
         int x;
         int y;
         int len;
-        bool gotBonus;
         node* next;
         node* prev;
 };
 typedef struct node* p_node;
 
-
+ 
 class Platform{
 
 public:

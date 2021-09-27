@@ -1,4 +1,3 @@
-#include "Platform.hpp"
 #include "Bonus.hpp"
 #include <ncurses.h>
 #include <thread>
