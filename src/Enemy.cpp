@@ -1,6 +1,6 @@
 #include "Enemy.hpp"
  
-Enemy::Enemy(char avatar, Platform* p1, Bonus* b1, int x, int y, int type = 0, bool on_plat = false) : Item(avatar, x, y){
+Enemy::Enemy(char avatar, Platform* p1, Bonus* b1, position pos, int type = 0, bool on_plat = false):Item(avatar, pos, 0){
     this->type = type;
     set_damage();
     p2 = p1;
@@ -48,7 +48,7 @@ void Enemy::random_shoot(int freq, int x_player, int ps, p_bullet& head){   // f
         int n = rand() % freq;
         mvprintw(20, 1, "%d", n);
         position traslated_position = {this->pos.x-ps, this->pos.y};
-        if(n == 0) head = add_bullet(head, traslated_position, dir_shoot, '*');
+        if(n == 0) head = add_bullet(head, traslated_position, dir_shoot, '*', this->damage);
     }
 }
 
