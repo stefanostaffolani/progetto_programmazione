@@ -89,7 +89,7 @@ int main(){
                 
 
                 // verifica che il bonus sia stato incontrato e aggiorna valori vita / punti
-                int type = b1->find_bonus(ps, lenS, player->get_position().x, player->get_position().y);
+                int type = b1->find_bonus(ps, lenS, player->get_position().x, player->get_position().y, player->get_versor());
                 if(type == 0){         // ( $ )
                         player->increase_points(10);
                 }
