@@ -56,10 +56,12 @@ void Bonus::removeBonus(p_bon iter){
         else if(iter == first && iter != last){
             first = first->next;
             current = first;
+            first->prev = NULL;
         }
         else if(iter != first && iter == last){
             last = last->prev;
-            current = last;         
+            current = last;  
+            last->next = NULL;       
         }
         else{
             iter->next->prev = iter->prev;
