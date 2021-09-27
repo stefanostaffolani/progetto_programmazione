@@ -184,14 +184,17 @@ int Enemies::set_y(int x){   // non so se sia necessaria la x come argomento
     bool found_plat = false;
 
     p_node iter = p2->get_current();
-    if (iter == NULL) return HEIGHT;
-    while(iter->next != NULL && iter->x < x)
-        iter = iter->next;
-    if(iter->prev->x + iter->prev->len - 1 < x)    // -1 perchè x + len sborda di 1
-        return HEIGHT;
+    if(iter == NULL) return HEIGHT;
+    else if(iter->prev == NULL) return HEIGHT;
     else{
-        if(rand()%2)return iter->prev->y - 1;
-        else return HEIGHT;
+        while(iter->next != NULL && iter->x < x)
+            iter = iter->next;
+        if(iter->prev->x + iter->prev->len - 1 < x)    // -1 perchè x + len sborda di 1
+            return HEIGHT;
+        else{
+            if(rand()%2)return iter->prev->y - 1;
+            else return HEIGHT;
+        }
     }
 }
 
