@@ -38,7 +38,8 @@ void Enemies::addNode(int n){
 
         first->next = NULL;
         first->prev = NULL;
-        first->e = new Enemy(this->set_avatar(type),p2, b2, x, y, type, on_plat);
+        position pos_enemy = {x,y};
+        first->e = new Enemy(this->set_avatar(type),p2, b2, pos_enemy, type, on_plat);
     }
     else{
         x = last->e->get_position().x + 50 + rand() % n; 
@@ -50,8 +51,8 @@ void Enemies::addNode(int n){
         p_enem tmp = new enemies;
         tmp->next = NULL;
         tmp->prev = last;
-
-        tmp->e = new Enemy(this->set_avatar(type),p2, b2, x, y, type, on_plat);
+        position pos_enemy = {x,y};
+        tmp->e = new Enemy(this->set_avatar(type),p2, b2, pos_enemy, type, on_plat);
 
         last->next = tmp;
         last = tmp;

@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Player::Player(char avatar, Platform* p1, Bonus* b1, Enemies* e1, position pos, int versor):Item(avatar, pos, versor){
+Player::Player(char avatar, Platform* p1, Bonus* b1, Enemies* e1, position pos):Item(avatar, pos, 0){
     life = 100;
     points = 0;
     mvprintw(this->pos.y, this->pos.x, "%c",avatar);
