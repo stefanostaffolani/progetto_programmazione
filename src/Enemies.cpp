@@ -1,10 +1,9 @@
 #include "Enemies.hpp"
  
-Enemies::Enemies(Platform* plat, Bonus* b){
+Enemies::Enemies(Platform* plat){
     this->difficulty = 0;
     this->fattore_incremento = 200;    // valutare poi il fattore di incremento
     this->p2 = plat;
-    this->b2 = b;
     this->first = NULL;
     this->last = NULL;
     this->current = NULL;
@@ -39,7 +38,7 @@ void Enemies::addNode(int n){
         first->next = NULL;
         first->prev = NULL;
         position pos_enemy = {x,y};
-        first->e = new Enemy(this->set_avatar(type),p2, b2, pos_enemy, type, on_plat);
+        first->e = new Enemy(this->set_avatar(type),p2, pos_enemy, type, on_plat);
     }
     else{
         x = last->e->get_position().x + 50 + rand() % n; 
@@ -52,7 +51,7 @@ void Enemies::addNode(int n){
         tmp->next = NULL;
         tmp->prev = last;
         position pos_enemy = {x,y};
-        tmp->e = new Enemy(this->set_avatar(type),p2, b2, pos_enemy, type, on_plat);
+        tmp->e = new Enemy(this->set_avatar(type),p2, pos_enemy, type, on_plat);
 
         last->next = tmp;
         last = tmp;
@@ -109,7 +108,7 @@ void Enemies::update_current(int ps, int lenS, int versor){
 }
 
 
-void Enemies::printEnemies(int ps, int lenS, int versor, int x_player, p_bullet& head){ 
+void Enemies::printEnemies(int ps, int lenS, int versor){ 
 
         // 1) verifica dell'aggiornamento valore current -------------------------
         update_current(ps, lenS, versor);
@@ -158,7 +157,7 @@ int Enemies::find_enemy(int ps, int lenS, int plx, int ply){
 
 
 
-void Enemies::move_and_shoot(int lenS, int ps, int x_player, p_bullet& head){
+void Enemies::move_and_shoot(int lenS, int ps, int x_player, Shoot* s2){
     p_enem iter = this->current;
     if(iter != NULL){
         while(iter->next != NULL && iter->e->get_position().x < lenS + ps){
@@ -167,7 +166,7 @@ void Enemies::move_and_shoot(int lenS, int ps, int x_player, p_bullet& head){
                 if(iter->e->get_versor() == 1) mvprintw(iter->e->get_position().y, iter->e->get_position().x - ps + 1, " "); // premo d 
                 else if(iter->e->get_versor() == -1) mvprintw(iter->e->get_position().y, iter->e->get_position().x - ps - 1, " "); // premo a
                 iter->e->random_move(ps);
-                iter->e->random_shoot((10-this->difficulty), x_player, ps, head);
+                iter->e->random_shoot((10-this->difficulty), x_player, ps, s2);
             }
             iter = iter->next;
         }

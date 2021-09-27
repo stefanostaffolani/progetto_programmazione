@@ -14,4 +14,4 @@ class Bullet : public Item{
     protected:
         int counter;
         int damage;
-};
+}; 

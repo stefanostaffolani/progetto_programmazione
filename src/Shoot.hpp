@@ -1,5 +1,4 @@
 #include <iostream>
-#include <chrono>
 #include <ncurses.h>
 #include "Bullet.hpp"
 
@@ -8,20 +7,24 @@ using namespace std;
 //#define BULLET '-'
 #define RANGE 20
 
-// struct position{
-//     int x,y;
-// };
-
-struct bullet_struct{
+struct bullet_list{
     Bullet* b;
-    bullet_struct *next;
+    bullet_list* next;
+    bullet_list* prev;
+};
+ 
+typedef bullet_list* p_bullet;
+
+
+class Shoot{
+    public:
+        Shoot();
+        void update_bullet(p_bullet, int);
+        void add_bullet(position, int, char, int);
+        void print_bullet(int,int,int);
+    protected:
+        p_bullet head;
+        p_bullet tail;
 };
 
-typedef bullet_struct* p_bullet;
-
-p_bullet update_bullet_list(p_bullet);
-
-p_bullet add_bullet(p_bullet, position, int, char, int);
-
-void print_bullet_list(p_bullet&, int);
 

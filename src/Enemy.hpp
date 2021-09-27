@@ -5,12 +5,12 @@
 
 class Enemy : public Item {
 public:
-    Enemy(char, Platform*, Bonus*, position, int, bool);
+    Enemy(char, Platform*, position, int, bool);
     bool check_plat_border(int);
     int get_damage();
     int get_type();
     void random_move(int);
-    void random_shoot(int, int, int, p_bullet&);
+    void random_shoot(int, int, int, Shoot*);
     bool check_hit(); 
     /*
     void move();
@@ -20,7 +20,6 @@ public:
 protected:
     bool on_plat;
     Platform* p2;
-    Bonus* b2;
     //Player* player2;
     int type;
     int damage;

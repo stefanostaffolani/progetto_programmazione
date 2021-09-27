@@ -13,10 +13,12 @@ int main(){
 
         srand(time(NULL));
 	
-        // genero oggeti per classi field platform e bonus
+        // genero oggeti per classi field platform bonus e shoot
         Field *field = new Field();
         Platform *p1 = new Platform();
         Bonus *b1 = new Bonus(p1);
+        Shoot *s1 = new Shoot();
+
 
         // lenS -> lughezza schermo, height -> altezza schermo
         int lenS = field -> getLenS();
@@ -24,8 +26,8 @@ int main(){
 
         // genero oggetti Enemies e Player
         position start = {4,12};
-        Enemies *E = new Enemies(p1, b1);
-        Player *player = new Player('@', p1, b1, E, start);
+        Enemies *E = new Enemies(p1);
+        Player *player = new Player('@', p1, b1, E, s1, start);
 
         //genero 50 platform, 15 nemici e 15 bonus
         for(int i = 0; i < 50; i++)
@@ -58,27 +60,32 @@ int main(){
                 if (c == 27) gameOver = true;
                 else if(c == 100){      // (d)     => destra       
                         player->set_versor(1);
-                        player -> move(ps, head);//set_x(player->get_x() + 1);
+                        player -> move(ps);//set_x(player->get_x() + 1);
                         
                 } 
                 else if(c == 97){       // (a)     => sinistra
                         player->set_versor(-1);
-                        player-> move(ps, head); //set_x(player->get_x() - 1);
+                        player-> move(ps); //set_x(player->get_x() - 1);
                 }
                 else if(c==119)        // (w)      => Salto
-                        player->jump(ps, head);
+                        player->jump(ps);
                 else if(c == 32)       // (SPACE) => sparo
-                        head = add_bullet(head, player->get_position(), player->get_versor(), '-', P_DAMAGE);
+                        s1->add_bullet(player->get_position(), player->get_versor(), '-', P_DAMAGE);
                 // ------------------------------------------------------------         
                 
 
                 // funzioni di stampa sullo schermo
                 field->upgradeData(player->get_life(), player->get_points());
                 field->printField(ps);          // stampa lo schermo e la legenda
-                player->print_item(0);          // stampa player @
                 p1->printPlatforms(ps, lenS, player->get_versor());
                 b1->print_bonus(ps, lenS, player->get_versor());
-                E->printEnemies(ps, lenS, player->get_versor(), player->get_position().x, head);
+                s1->print_bullet(ps, lenS, player->get_versor());
+                E->printEnemies(ps, lenS, player->get_versor());
+                if(player->hit_enemy()) {
+                        player->decrease_life(10);
+                        timeout(1000);
+                }
+                player->print_item(0);          // stampa player @
 
 
                 // generazione di bonus, platform, enemies ----------------------
@@ -110,11 +117,10 @@ int main(){
                 }
 
                 // aggiornamento dinamiche di gioco
-                E->move_and_shoot(lenS, ps, player->get_position().x, head);
-                player->gravity(ps, head);
+                E->move_and_shoot(lenS, ps, player->get_position().x, s1);
+                player->gravity(ps);
                 if(player->is_hit()) player->decrease_life(15);      //TODO : far funzionare sta roba
-                if(player->hit_enemy()) player->decrease_life(10);
-                if (head != NULL) print_bullet_list(head, ps);
+                if (head != NULL) s1->print_bullet(ps, lenS, player->get_versor());
         
         } // fine ciclo di gioco ==========================================================
         //TODO:game over

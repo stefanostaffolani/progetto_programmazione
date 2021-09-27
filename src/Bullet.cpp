@@ -15,4 +15,4 @@ int Bullet::get_counter(){return this->counter;}
 
 bool Bullet::hit_something(){
     return (mvinch(this->pos.y, this->pos.x+this->versor) != (int)' ' || mvinch(this->pos.y, this->pos.x+this->versor) != (int)avatar);
-}
+} 

@@ -4,13 +4,14 @@
 
 using namespace std;
 
-Player::Player(char avatar, Platform* p1, Bonus* b1, Enemies* e1, position pos):Item(avatar, pos, 0){
+Player::Player(char avatar, Platform* p1, Bonus* b1, Enemies* e1, Shoot* s1, position pos):Item(avatar, pos, 0){
     life = 100;
     points = 0;
     mvprintw(this->pos.y, this->pos.x, "%c",avatar);
     p2 = p1;
     b2 = b1;
     e2 = e1;
+    s2 = s1;
     
     //len_screen = lenS; da vedere in futuro
 }
@@ -29,7 +30,7 @@ bool Player::hit_enemy(){
     return (mvinch(this->pos.y, this->pos.x) == 79 || mvinch(this->pos.y, this->pos.x) == 111);
 }
 
-void Player::move(int& ps, p_bullet& head){
+void Player::move(int& ps){
     if((this->versor == -1) && (this->pos.x < 10) && (ps >= 1)){
         ps--;
     }else if ((this->versor == 1) && (this->pos.x > 65)){
@@ -39,32 +40,33 @@ void Player::move(int& ps, p_bullet& head){
     this->print_item(0);
     p2->printPlatforms(ps, 75, this->versor);
     b2->print_bonus(ps, 75, this->versor);
-    e2->printEnemies(ps, 75, this->versor, this->pos.x, head);
+    e2->printEnemies(ps, 75, this->versor);
+    //s2->print_bullet(ps, 75, this->versor);
 }
 
 void Player::decrease_life(int n){this->life -= n;}
 void Player::increase_life(int n){this->life += n;}
 void Player::set_life(int n) {this->life = n;}
 
-void Player::jump(int& ps, p_bullet& head){
+void Player::jump(int& ps){
     int i = 0;
     char c;
     bool hit_something = false;
     position diagonale, sopra;
     while((i < Y_JUMP) && !(hit_something)){
         //timeout(100);
-        e2->move_and_shoot(75,ps,this->pos.x, head);     //per i nemici
+        e2->move_and_shoot(75,ps,this->pos.x,s2);     //per i nemici
 
         c = getch();
         diagonale = {this->pos.x+this->versor, this->pos.y - 1};
         sopra = {this->pos.x, this->pos.y - 1};
-        if(c == 32) head = add_bullet(head, this->pos, this->versor, '-', P_DAMAGE);   //per sparare
+        if(c == 32) s2->add_bullet(this->pos, this->versor, '-', P_DAMAGE);   //per sparare
         if (mvinch(diagonale.y, diagonale.x) == 32){
             this->delete_item(0);
             if(mvinch(sopra.y, sopra.x) == 32){
                 //mvprintw(this->pos.y, this->pos.x, " ");
                 this->pos.y--;
-                this->move(ps, head);
+                this->move(ps);
                 //this->print_item(0);
             }else{
                 this->delete_item(0);
@@ -76,12 +78,12 @@ void Player::jump(int& ps, p_bullet& head){
         } else{
             hit_something = true;
         }
-        print_bullet_list(head, ps);
+        s2->print_bullet(ps, 75, this->versor);
     }
-    gravity(ps, head);
+    gravity(ps);
 }
 
-void Player::gravity(int& ps, p_bullet& head){
+void Player::gravity(int& ps){
     bool hit_something = false;
     //int i = 0;
     char c;
@@ -91,11 +93,11 @@ void Player::gravity(int& ps, p_bullet& head){
     while(!(hit_something)){
         //timeout(100);
         
-        e2->move_and_shoot(75,ps,this->pos.x, head);   //per i nemici
+        e2->move_and_shoot(75,ps,this->pos.x,s2);   //per i nemici
 
         //per sparare
         c = getch();
-        if(c == SPACE) head = add_bullet(head, this->pos, this->versor, '-', P_DAMAGE);
+        if(c == SPACE) s2->add_bullet(this->pos, this->versor, '-', P_DAMAGE);
         
         diagonale = {this->pos.x + versor, this->pos.y + 1};
         sotto = {this->pos.x, this->pos.y+1};
@@ -109,7 +111,7 @@ void Player::gravity(int& ps, p_bullet& head){
                 this->delete_item(0);
                 //mvprintw(this->pos.y, this->pos.x, " ");
                 this->pos.y++;
-                this->move(ps, head);
+                this->move(ps);
                 //increase_points(10);
                 //if (b2->findCash(ps, 75, this->x, this->y)) increase_points(10);
             }else if(mvinch(diagonale.y, diagonale.x) == PIPE){
@@ -123,7 +125,7 @@ void Player::gravity(int& ps, p_bullet& head){
             }else if (mvinch(sotto.y, sotto.x) == SPACE){
                 this->delete_item(0);
                 //mvprintw(this->pos.y, this->pos.x, " ");
-                this->move(ps, head);
+                this->move(ps);
             }
             //vedere se ne servono altri
         }
@@ -135,13 +137,13 @@ void Player::gravity(int& ps, p_bullet& head){
                 this->print_item(0);
             }
             else{
-                this->move(ps, head);
+                this->move(ps);
                 this->delete_item(0);
                 //mvprintw(this->pos.y, this->pos.x, " ");
                 this->pos.y++;
                 this->print_item(0);
             }
     }
-        print_bullet_list(head, ps);
+        s2->print_bullet(ps,75,this->versor);
     }
 }

@@ -6,9 +6,9 @@
  
 class Player : public Item{
 public:
-    Player(char, Platform*, Bonus*, Enemies*, position);
-    void jump(int&, p_bullet&);
-    void move(int&, p_bullet&);
+    Player(char, Platform*, Bonus*, Enemies*, Shoot*, position);
+    void jump(int&);
+    void move(int&);
     void increase_points(int);
     void decrease_life(int);
     void increase_life(int);
@@ -16,7 +16,7 @@ public:
     int get_life();
     void set_life(int);
     int get_points();
-    void gravity(int&, p_bullet&);
+    void gravity(int&);
     bool hit_enemy();
 
 
@@ -28,4 +28,5 @@ protected:
     Platform* p2;
     Bonus* b2;
     Enemies* e2;
+    Shoot* s2;
 };

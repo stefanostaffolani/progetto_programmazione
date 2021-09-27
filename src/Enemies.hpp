@@ -12,16 +12,16 @@ typedef struct enemies* p_enem;
 
 class Enemies{
     public:
-        Enemies(Platform*, Bonus*);
+        Enemies(Platform*);
         void generate(int,int,int);
         void addNode(int);
         void removeEnemies(p_enem);
 
         void update_current(int, int, int);
-        void printEnemies(int,int,int,int,p_bullet&);
+        void printEnemies(int,int,int);
         int find_enemy(int,int,int,int);
 
-        void move_and_shoot(int,int,int, p_bullet&);
+        void move_and_shoot(int,int,int,Shoot*);
         void increase_difficulty(int);
 
     protected:
@@ -33,6 +33,4 @@ class Enemies{
         int fattore_incremento;
         int difficulty;
         Platform* p2;
-        Bonus* b2;
-
 };
