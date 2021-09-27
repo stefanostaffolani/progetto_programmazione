@@ -61,32 +61,41 @@ void Enemies::addNode(int n){
 
 
 void Enemies::removeEnemies(p_enem iter){
-    // verifico se il nemico è current, last, first altirmenti nulla 
-    if(iter == current){ 
-        if(iter != first)
-            current = iter->prev;
-        else if(iter != last)
-            current = iter -> next;
-        else {
-            current = NULL;
-            last = NULL;
+    if(iter == current){
+        if(iter == first && iter == last){
             first = NULL;
+            last = NULL;
+            current = NULL;
         }
-    }
-    if(iter == last){
-        last = last->prev;
-        last->next = NULL;
+        else if(iter == first && iter != last){
+            first = first->next;
+            current = first;
+        }
+        else if(iter != first && iter == last){
+            last = last->prev;
+            current = last;         
+        }
+        else{
+            iter->next->prev = iter->prev;
+            iter->prev->next = iter->next;
+            current = iter->prev;
+        }
     }
     else if(iter == first){
         first = first->next;
         first->prev = NULL;
     }
+    else if(iter == last){
+        last = last->prev;
+        last->next = NULL;
+    }
     else{
         iter->prev->next = iter->next;
         iter->next->prev = iter->prev;
-        delete iter;
-        iter = NULL;
-    } 
+    }
+    
+    delete iter;
+    iter = NULL;
 }
 
 
