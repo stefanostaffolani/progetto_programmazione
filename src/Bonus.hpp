@@ -18,8 +18,9 @@ public:
     void addNode(int);
     void removeBonus(p_bon);
 
+    void update_current(int,int,int);
     void print_bonus(int, int, int);
-    int find_bonus(int, int, int, int);
+    int find_bonus(int, int, int, int, int);
 protected:
     int set_y(int);
     p_bon first;
