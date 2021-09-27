@@ -1,10 +1,9 @@
 #include "Item.hpp"
 
-Item::Item(char avatar, int x = 3, int y = 12){
+Item::Item(char avatar, position pos, int versor=0){
     this->avatar = avatar;
-    this->pos.x = x;
-    this->pos.y = y;
-    this->versor = 1;
+    this->pos = pos;
+    this->versor = versor;
 }
 
 void Item::move(int ps){

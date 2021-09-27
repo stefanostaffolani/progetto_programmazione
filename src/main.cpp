@@ -66,8 +66,8 @@ int main(){
                 }
                 else if(c==119)        // (w)      => Salto
                         player->jump(ps, head);
-                else if(c == 32)       // (SPACE)  => sparo
-                        head = add_bullet(head, player->get_position(), player->get_versor(), '-');
+                else if(c == 32)       // (SPACE) => sparo
+                        head = add_bullet(head, player->get_position(), player->get_versor(), '-', P_DAMAGE);
                 // ------------------------------------------------------------         
                 
 
@@ -113,7 +113,7 @@ int main(){
                 player->gravity(ps, head);
                 if(player->is_hit()) player->decrease_life(15);      //TODO : far funzionare sta roba
                 if(player->hit_enemy()) player->decrease_life(10);
-                if (head != NULL) print_bullet_list(head);
+                if (head != NULL) print_bullet_list(head, ps);
         
         } // fine ciclo di gioco ==========================================================
         //TODO:game over

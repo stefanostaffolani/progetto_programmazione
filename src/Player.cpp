@@ -4,12 +4,7 @@
 
 using namespace std;
 
-#define SPACE 32
-#define EQUAL 61
-#define DOLLAR 36
-#define PIPE 124
-
-Player::Player(char avatar, Platform* p1, Bonus* b1, Enemies* e1, int x, int y):Item(avatar, x, y){
+Player::Player(char avatar, Platform* p1, Bonus* b1, Enemies* e1, position pos, int versor):Item(avatar, pos, versor){
     life = 100;
     points = 0;
     mvprintw(this->pos.y, this->pos.x, "%c",avatar);
@@ -63,7 +58,7 @@ void Player::jump(int& ps, p_bullet& head){
         c = getch();
         diagonale = {this->pos.x+this->versor, this->pos.y - 1};
         sopra = {this->pos.x, this->pos.y - 1};
-        if(c == 32) head = add_bullet(head, this->pos, this->versor, '-');   //per sparare
+        if(c == 32) head = add_bullet(head, this->pos, this->versor, '-', P_DAMAGE);   //per sparare
         if (mvinch(diagonale.y, diagonale.x) == 32){
             this->delete_item(0);
             if(mvinch(sopra.y, sopra.x) == 32){
@@ -81,7 +76,7 @@ void Player::jump(int& ps, p_bullet& head){
         } else{
             hit_something = true;
         }
-        print_bullet_list(head);
+        print_bullet_list(head, ps);
     }
     gravity(ps, head);
 }
@@ -100,7 +95,7 @@ void Player::gravity(int& ps, p_bullet& head){
 
         //per sparare
         c = getch();
-        if(c == SPACE) head = add_bullet(head, this->pos, this->versor, '-');
+        if(c == SPACE) head = add_bullet(head, this->pos, this->versor, '-', P_DAMAGE);
         
         diagonale = {this->pos.x + versor, this->pos.y + 1};
         sotto = {this->pos.x, this->pos.y+1};
@@ -147,6 +142,6 @@ void Player::gravity(int& ps, p_bullet& head){
                 this->print_item(0);
             }
     }
-        print_bullet_list(head);
+        print_bullet_list(head, ps);
     }
 }
