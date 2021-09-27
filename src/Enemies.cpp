@@ -99,17 +99,20 @@ void Enemies::removeEnemies(p_enem iter){
     iter = NULL;
 }
 
+void Enemies::update_current(int ps, int lenS, int versor){
+    if(current!=NULL){
+        if(current->e->get_position().x < ps && current->next != NULL) // se sto andando avanti:
+            current = current -> next;
+        else if(current -> prev != NULL && current -> prev->e->get_position().x >= ps) // se sto andando in dietro:
+            current = current -> prev;
+    }
+}
 
 
 void Enemies::printEnemies(int ps, int lenS, int versor, int x_player, p_bullet& head){ 
 
         // 1) verifica dell'aggiornamento valore current -------------------------
-        if(current!=NULL){
-            if(current->e->get_position().x < ps && current->next != NULL) // se sto andando avanti:
-                    current = current -> next;
-            else if(current -> prev != NULL && current -> prev->e->get_position().x >= ps) // se sto andando in dietro:
-                    current = current -> prev;
-        }
+        update_current(ps, lenS, versor);
 
         // 2) stampare da current fino a limite schermo --------------------------
         p_enem iter = current;  
