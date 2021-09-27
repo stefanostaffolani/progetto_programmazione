@@ -25,7 +25,7 @@ void Bonus::addNode(int n){
 
         first->next = NULL;
         first->prev = NULL;
-        first->x = rand() % n + 30;
+        first->x = p->get_current()->x + rand() % n + 30;
         first->y = this->set_y(first->x);
         first->type = (rand()%10 == 0) ? 1 : 0;
     }
