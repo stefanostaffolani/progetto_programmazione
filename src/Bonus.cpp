@@ -25,7 +25,7 @@ void Bonus::addNode(int n){
 
         first->next = NULL;
         first->prev = NULL;
-        first->x = rand() % n + 50;
+        first->x = rand() % n + 30;
         first->y = this->set_y(first->x);
         first->type = (rand()%10 == 0) ? 1 : 0;
     }
@@ -33,7 +33,7 @@ void Bonus::addNode(int n){
         p_bon tmp = new bonuslist();
         tmp->next = NULL;
         tmp->prev = last;
-        tmp->x = last->x + 50  + rand() % n * 2;
+        tmp->x = last->x + 50  + rand() % n;
         tmp->y = this->set_y(first->x);
 
         last->next = NULL;
@@ -66,9 +66,9 @@ void Bonus::removeBonus(p_bon iter){
     else{
         iter->prev->next = iter->next;
         iter->next->prev = iter->prev;
-        delete iter;
-        iter = NULL;
     }
+    delete iter;
+    iter = NULL;
 }
 
 
@@ -87,16 +87,18 @@ void Bonus::print_bonus(int ps, int lenS, int versor){
         // 2) stampare da current fino a limite schermo --------------------------
         p_bon iter = current;  
 
-        while(iter != NULL && iter -> x < ps + lenS){ // cicla fino a che la nuova x di iter è fuori dallo schermo
-                if(versor == 1) mvprintw(iter->y, iter->x - ps + 1, " "); // premo d 
-                else if(versor == -1) mvprintw(iter->y, iter->x - ps - 1, " "); // premo a
-                if(iter -> x >= ps && iter -> x < ps + lenS - 1){
-                    if(iter->type == 0)
-                        mvprintw(iter -> y, iter -> x - ps, "$");
-                    else if(iter->type == 1)
-                        mvprintw(iter -> y, iter -> x - ps, "V");
-                }                
-                iter = iter->next;
+        if(current != NULL){
+            while(iter != NULL && iter -> x < ps + lenS){ // cicla fino a che la nuova x di iter è fuori dallo schermo
+                    if(versor == 1) mvprintw(iter->y, iter->x - ps + 1, " "); // premo d 
+                    else if(versor == -1) mvprintw(iter->y, iter->x - ps - 1, " "); // premo a
+                    if(iter -> x >= ps && iter -> x < ps + lenS - 1){
+                        if(iter->type == 0)
+                            mvprintw(iter -> y, iter -> x - ps, "$");
+                        else if(iter->type == 1)
+                            mvprintw(iter -> y, iter -> x - ps, "V");
+                    }                
+                    iter = iter->next;
+            }
         }
 }
 
@@ -129,7 +131,7 @@ int Bonus::find_bonus(int ps, int lenS, int plx, int ply){
 }
 
 
-int set_y(int x){
+int Bonus::set_y(int x){
     p_node iter = p->get_current();
     if (iter == NULL) return 12;
     while(iter->next != NULL && iter->x < x)

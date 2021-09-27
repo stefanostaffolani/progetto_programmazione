@@ -33,7 +33,7 @@ int main(){
                 p1->addNode(height);
         for(int i = 0; i < 3; i++){
                 E->addNode(5);
-                b1->addNode(5);
+               // b1->addNode(5);
         }
 
         p_bullet head = NULL;
@@ -77,32 +77,32 @@ int main(){
                 field->upgradeData(player->get_life(), player->get_points());
                 field->printField(ps);          // stampa lo schermo e la legenda
                 p1->printPlatforms(ps, lenS, player->get_versor());
-                b1->print_bonus(ps, lenS, player->get_versor());
+                //b1->print_bonus(ps, lenS, player->get_versor());
                 player->print_item(0);          // stampa player @
                 E->printEnemies(ps, lenS, player->get_versor(), player->get_position().x, head);
 
 
                 // generazione di bonus, platform, enemies ----------------------
                 p1->generate(height, lenS, ps, 50);
-                b1->generate(5, lenS, ps);
+                //b1->generate(5, lenS, ps);
                 E->generate(5, lenS, ps);
                 // --------------------------------------------------------------
                 
 
                 // verifica che il bonus sia stato incontrato e aggiorna valori vita / punti
-                int type = b1->find_bonus(ps, lenS, player->get_position().x, player->get_position().y);
-                if(type == 0){         // ( $ )
-                        player->increase_points(10);
-                }
-                else if(type == 1){    // ( V )
-                        if(player->get_life() + 10 < 100)
-                                player->increase_life(10);
-                        else
-                                player->set_life(100);      
-                } // ---------------------------------------------------------
+                // int type = b1->find_bonus(ps, lenS, player->get_position().x, player->get_position().y);
+                // if(type == 0){         // ( $ )
+                //         player->increase_points(10);
+                // }
+                // else if(type == 1){    // ( V )
+                //         if(player->get_life() + 10 < 100)
+                //                 player->increase_life(10);
+                //         else
+                //                 player->set_life(100);      
+                // } // ---------------------------------------------------------
 
                 // verifica che il nemico sia stato incontrato e aggiorna valori vita / punti
-                type = E->find_enemy(ps, lenS, player->get_position().x, player->get_position().y);
+                int type = E->find_enemy(ps, lenS, player->get_position().x, player->get_position().y);
                 if(type == 0){
                         // ...
                 }
