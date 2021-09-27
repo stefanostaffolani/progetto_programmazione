@@ -57,7 +57,7 @@ void Platform::printPlatforms(int ps, int lenS, int versor){ // ================
         p_node iter = current;   
 
         while(iter != NULL && iter -> x < ps + lenS){ // cicla fino a che la nuova x di iter è fuori dallo schermo
-                if(versor == 1) mvprintw(iter->y, iter->x + iter->len - ps, " "); 
+                if(versor == 1) mvprintw(iter->y, iter->x + iter->len - ps + 1, " "); 
                 else if(versor == -1) mvprintw(iter->y, iter->x - ps - 1, " ");
                 for(int i = 0; i < iter->len; i++){
                         if(iter -> x + i >= ps && iter -> x + i < ps + lenS - 1)

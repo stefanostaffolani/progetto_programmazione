@@ -25,7 +25,7 @@ void Bonus::addNode(int n){
 
         first->next = NULL;
         first->prev = NULL;
-        first->x = rand() % n + 30;
+        first->x = p->get_current()->x + rand() % n + 30;
         first->y = this->set_y(first->x);
         first->type = (rand()%10 == 0) ? 1 : 0;
     }
@@ -33,10 +33,11 @@ void Bonus::addNode(int n){
         p_bon tmp = new bonuslist();
         tmp->next = NULL;
         tmp->prev = last;
-        tmp->x = last->x + 50  + rand() % n;
-        tmp->y = this->set_y(first->x);
+        tmp->x = last->x + 30 + rand() % n;
+        tmp->y = this->set_y(tmp->x);
+        tmp->type = (rand()%10 == 0) ? 1 : 0;
 
-        last->next = NULL;
+        last->next = tmp;
         last = tmp;
     }
 
@@ -44,29 +45,40 @@ void Bonus::addNode(int n){
 
 void Bonus::removeBonus(p_bon iter){
     // verifico se il bonus è current, last, first altirmenti nulla
-    if(iter == current){ 
-        if(iter != first)
-            current = iter->prev;
-        else if(iter != last)
-            current = iter -> next;
-        else {
-            current = NULL;
-            last = NULL;
+    
+    if(iter == current){
+        if(iter == first && iter == last){
             first = NULL;
+            last = NULL;
+            current = NULL;
         }
-    }
-    if(iter == last){
-        last = last->prev;
-        last->next = NULL;
+        else if(iter == first && iter != last){
+            first = first->next;
+            current = first;
+        }
+        else if(iter != first && iter == last){
+            last = last->prev;
+            current = last;         
+        }
+        else{
+            iter->next->prev = iter->prev;
+            iter->prev->next = iter->next;
+            current = iter->prev;
+        }
     }
     else if(iter == first){
         first = first->next;
         first->prev = NULL;
     }
+    else if(iter == last){
+        last = last->prev;
+        last->next = NULL;
+    }
     else{
         iter->prev->next = iter->next;
         iter->next->prev = iter->prev;
     }
+    
     delete iter;
     iter = NULL;
 }
@@ -133,13 +145,17 @@ int Bonus::find_bonus(int ps, int lenS, int plx, int ply){
 
 int Bonus::set_y(int x){
     p_node iter = p->get_current();
-    if (iter == NULL) return 12;
-    while(iter->next != NULL && iter->x < x)
-        iter = iter->next;
-    if(iter->prev->x + iter->prev->len - 1 < x)    // -1 perchè x + len sborda di 1
-        return 12;
+
+    if(iter == NULL) return 12;
+    else if(iter->prev == NULL) return 12;
     else{
-        if(rand()%2)return iter->prev->y - 1;
-        else return 12;
+        while(iter->next != NULL && iter->x < x)
+            iter = iter->next;
+        if(iter->prev->x + iter->prev->len - 1 < x)    // -1 perchè x + len sborda di 1
+            return 12;
+        else{
+            if(rand()%2)return iter->prev->y - 1;
+            else return 12;
+        }
     }
 }

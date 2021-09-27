@@ -61,32 +61,41 @@ void Enemies::addNode(int n){
 
 
 void Enemies::removeEnemies(p_enem iter){
-    // verifico se il nemico è current, last, first altirmenti nulla 
-    if(iter == current){ 
-        if(iter != first)
-            current = iter->prev;
-        else if(iter != last)
-            current = iter -> next;
-        else {
-            current = NULL;
-            last = NULL;
+    if(iter == current){
+        if(iter == first && iter == last){
             first = NULL;
+            last = NULL;
+            current = NULL;
         }
-    }
-    if(iter == last){
-        last = last->prev;
-        last->next = NULL;
+        else if(iter == first && iter != last){
+            first = first->next;
+            current = first;
+        }
+        else if(iter != first && iter == last){
+            last = last->prev;
+            current = last;         
+        }
+        else{
+            iter->next->prev = iter->prev;
+            iter->prev->next = iter->next;
+            current = iter->prev;
+        }
     }
     else if(iter == first){
         first = first->next;
         first->prev = NULL;
     }
+    else if(iter == last){
+        last = last->prev;
+        last->next = NULL;
+    }
     else{
         iter->prev->next = iter->next;
         iter->next->prev = iter->prev;
-        delete iter;
-        iter = NULL;
-    } 
+    }
+    
+    delete iter;
+    iter = NULL;
 }
 
 
@@ -175,14 +184,17 @@ int Enemies::set_y(int x){   // non so se sia necessaria la x come argomento
     bool found_plat = false;
 
     p_node iter = p2->get_current();
-    if (iter == NULL) return HEIGHT;
-    while(iter->next != NULL && iter->x < x)
-        iter = iter->next;
-    if(iter->prev->x + iter->prev->len - 1 < x)    // -1 perchè x + len sborda di 1
-        return HEIGHT;
+    if(iter == NULL) return HEIGHT;
+    else if(iter->prev == NULL) return HEIGHT;
     else{
-        if(rand()%2)return iter->prev->y - 1;
-        else return HEIGHT;
+        while(iter->next != NULL && iter->x < x)
+            iter = iter->next;
+        if(iter->prev->x + iter->prev->len - 1 < x)    // -1 perchè x + len sborda di 1
+            return HEIGHT;
+        else{
+            if(rand()%2)return iter->prev->y - 1;
+            else return HEIGHT;
+        }
     }
 }
 
