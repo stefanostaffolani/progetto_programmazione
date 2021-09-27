@@ -6,7 +6,7 @@
  
 class Player : public Item{
 public:
-    Player(char, Platform*, Bonus*, Enemies*, position, int);
+    Player(char, Platform*, Bonus*, Enemies*, position);
     void jump(int&, p_bullet&);
     void move(int&, p_bullet&);
     void increase_points(int);

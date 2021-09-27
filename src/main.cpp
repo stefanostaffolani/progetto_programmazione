@@ -23,8 +23,9 @@ int main(){
         int height = field -> getHeight();
 
         // genero oggetti Enemies e Player
+        position start = {4,12};
         Enemies *E = new Enemies(p1, b1);
-        Player *player = new Player('@', p1, b1, E, 4, height);
+        Player *player = new Player('@', p1, b1, E, start);
 
         //genero 50 platform, 15 nemici e 15 bonus
         for(int i = 0; i < 50; i++)
