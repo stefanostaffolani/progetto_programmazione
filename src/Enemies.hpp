@@ -17,6 +17,7 @@ class Enemies{
         void addNode(int);
         void removeEnemies(p_enem);
 
+        void update_current(int, int, int);
         void printEnemies(int,int,int,int,p_bullet&);
         int find_enemy(int,int,int,int);
 

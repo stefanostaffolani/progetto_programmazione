@@ -136,7 +136,7 @@ int Bonus::find_bonus(int ps, int lenS, int plx, int ply, int versor){
             if(iter->x == plx + ps && iter->y == ply) {
 
                 bonus_type_found = iter->type;
-                //removeBonus(iter);
+                removeBonus(iter);
                 update_current(ps, lenS, versor);
 
                 mvprintw(ply, plx, "@");
