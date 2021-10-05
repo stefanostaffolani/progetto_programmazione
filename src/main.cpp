@@ -123,7 +123,8 @@ int main(){
                 if (head != NULL) s1->print_bullet(ps, lenS, player->get_versor());
         
         } // fine ciclo di gioco ==========================================================
-        //TODO:game over
+        
+        field->gameOver();
         
         endwin(); // --------------------------------------------------------------------------------------
 
