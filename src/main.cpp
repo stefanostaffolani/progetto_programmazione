@@ -77,7 +77,8 @@ int main(){
                 // funzioni di stampa sullo schermo
                 s1->update_bullet(ps, lenS);
                 E->check_is_hit(ps, lenS, s1);
-                player->check_is_hit();
+                //player->check_is_hit();
+                
                 field->upgradeData(player->get_life(), player->get_points());
                 field->printField(ps);          // stampa lo schermo e la legenda
                 
