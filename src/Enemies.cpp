@@ -10,6 +10,7 @@ Enemies::Enemies(Platform* plat){
 }
 
 void Enemies::generate(int n, int lenS, int ps){
+    if(first == NULL) addNode(5);
     if(last->e->get_position().x < ps + lenS){ // se il nemico ultimo entra nellos schermo
         for(int i = 0; i < n; i++)
             addNode(n);
@@ -58,6 +59,7 @@ void Enemies::addNode(int n){
 }
 
 void Enemies::removeEnemies(p_enem& iter){
+
     if(iter == current){
         if(iter == first && iter == last){
             first = NULL;
@@ -67,10 +69,12 @@ void Enemies::removeEnemies(p_enem& iter){
         else if(iter == first && iter != last){
             first = first->next;
             current = first;
+            first->prev = NULL;
         }
         else if(iter != first && iter == last){
             last = last->prev;
-            current = last;         
+            current = last;    
+            last->next = NULL;     
         }
         else{
             iter->next->prev = iter->prev;
@@ -93,6 +97,7 @@ void Enemies::removeEnemies(p_enem& iter){
     
     delete iter;
     iter = NULL;
+
 }
 
 void Enemies::update_current(int ps, int lenS, int versor){
@@ -111,44 +116,45 @@ void Enemies::printEnemies(int ps, int lenS, int versor){
 
         // 2) stampare da current fino a limite schermo --------------------------
         p_enem iter = current;  
-
-        while(iter != NULL && iter ->e->get_position().x < ps + lenS){ // cicla fino a che la nuova x di iter è fuori dallo schermo
-                if(versor == 1) iter->e->delete_item(ps-1); // premo d 
-                else if(versor == -1) iter->e->delete_item(ps+1); // premo a
-                if(iter ->e->get_position().x >= ps && iter ->e->get_position().x < ps + lenS - 1){
-                    iter->e->print_item(ps);
-                }                
-                iter = iter->next;
+        if(iter != NULL){
+            while(iter->next != NULL && iter ->e->get_position().x < ps + lenS){ // cicla fino a che la nuova x di iter è fuori dallo schermo
+                    if(versor == 1) iter->e->delete_item(ps-1); // premo d 
+                    else if(versor == -1) iter->e->delete_item(ps+1); // premo a
+                    if(iter ->e->get_position().x >= ps && iter ->e->get_position().x < ps + lenS - 1){
+                        iter->e->print_item(ps);
+                    }                
+                    iter = iter->next;
+            }
         }
 
 } 
 
-int Enemies::find_enemy(int ps, int lenS, int plx, int ply){
-    // 1) verifica che il bonus sia stato trovato, 
-    // 2) ritorna il tipo di bonus che ha trovato
-    // plx ply -> player position x, player position y
+// int Enemies::find_enemy(int ps, int lenS, int plx, int ply){
+//     // 1) verifica che il bonus sia stato trovato, 
+//     // 2) ritorna il tipo di bonus che ha trovato
+//     // plx ply -> player position x, player position y
 
-    p_enem iter = current;
-    int enemy_type_found = -1;
+//     p_enem iter = current;
+//     int enemy_type_found = -1;
 
-    while(iter != NULL && iter->e->get_position().x < ps+lenS){
+//     while(iter != NULL && iter->e->get_position().x < ps+lenS){
         
-        if(iter->e->get_position().x == plx + ps && iter->e->get_position().y == ply){
+//         if(iter->e->get_position().x == plx + ps && iter->e->get_position().y == ply){
 
-            enemy_type_found = iter->e->get_type();
+//             enemy_type_found = iter->e->get_type();
             
-            //TODO: da verificare stammerda sotto 
-            iter->e->delete_item(plx);
-            iter->e->delete_item(plx+1);
-            refresh();
+//             //TODO: da verificare stammerda sotto 
+//             iter->e->delete_item(plx);
+//             iter->e->delete_item(plx+1);
+//             refresh();
             
-            return enemy_type_found;
-        }
-        iter = iter->next;
-    }
-    return enemy_type_found;
+//             return enemy_type_found;
+//         }
+//         iter = iter->next;
+//     }
+//     return enemy_type_found;
 
-}
+// }
 
 void Enemies::move_and_shoot(int lenS, int ps, int x_player, Shoot* s2){
     p_enem iter = this->current;

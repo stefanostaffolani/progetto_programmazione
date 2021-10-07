@@ -37,7 +37,7 @@ int main(){
                 b1->addNode(5);
         }
 
-        p_bullet head = NULL;
+        // p_bullet head = NULL;
 
         int ps = 0;             // pointer screen, mi dice dove sono, se vado a destra aumenta se vado a sinistra diminuisce
         int c;                  // mi serve per immagazzinare quello che digito da tastiera
