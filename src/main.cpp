@@ -57,7 +57,7 @@ int main(){
                 c = getch();    
 
                 // verifica di che valore ottiene c da tastiera -----------------
-                if (c == 27) gameOver = true;
+                if (c == 27 || player->get_life() <= 0) gameOver = true;
                 else if(c == 100){      // (d)     => destra       
                         player->set_versor(1);
                         player -> move(ps);//set_x(player->get_x() + 1);
@@ -75,18 +75,26 @@ int main(){
                 
 
                 // funzioni di stampa sullo schermo
+                s1->update_bullet(ps, lenS);
+                E->check_is_hit(ps, lenS, s1);
+                player->check_is_hit();
                 field->upgradeData(player->get_life(), player->get_points());
                 field->printField(ps);          // stampa lo schermo e la legenda
+                
+                s1->print_bullet(ps, lenS);
+                
                 p1->printPlatforms(ps, lenS, player->get_versor());
                 b1->print_bonus(ps, lenS, player->get_versor());
-                s1->print_bullet(ps, lenS, player->get_versor());
                 E->printEnemies(ps, lenS, player->get_versor());
+                
+                
+                //se sono sopra ad un nemico
                 if(player->hit_enemy()) {
                         player->decrease_life(10);
                         timeout(1000);
                 }
                 player->print_item(0);          // stampa player @
-
+                //-----------------
 
                 // generazione di bonus, platform, enemies ----------------------
                 p1->generate(height, lenS, ps, 50);
@@ -107,20 +115,21 @@ int main(){
                                 player->set_life(100);      
                 } // ---------------------------------------------------------
 
-                // verifica che il nemico sia stato incontrato e aggiorna valori vita / punti
-                type = E->find_enemy(ps, lenS, player->get_position().x, player->get_position().y);
-                if(type == 0){
-                        // ...
-                }
-                else if(type == 1){
-                        // ...
-                }
+                // // verifica che il nemico sia stato incontrato e aggiorna valori vita / punti
+                // type = E->find_enemy(ps, lenS, player->get_position().x, player->get_position().y);
+                // if(type == 0){
+                //         // ...
+                // }
+                // else if(type == 1){
+                //         // ...
+                // }
 
                 // aggiornamento dinamiche di gioco
+                //E->check_is_hit()
                 E->move_and_shoot(lenS, ps, player->get_position().x, s1);
                 player->gravity(ps);
-                if(player->is_hit()) player->decrease_life(15);      //TODO : far funzionare sta roba
-                if (head != NULL) s1->print_bullet(ps, lenS, player->get_versor());
+                //if(player->is_hit()) player->decrease_life(15);      //TODO : far funzionare sta roba
+                //if (head != NULL) s1->print_bullet(ps, lenS, player->get_versor());
         
         } // fine ciclo di gioco ==========================================================
         

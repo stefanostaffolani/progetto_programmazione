@@ -5,11 +5,17 @@ Enemy::Enemy(char avatar, Platform* p1, position pos, int type = 0, bool on_plat
     set_damage();
     p2 = p1;
     this->on_plat = on_plat;
+    if(type == 0) life = 20;
+    else life = 50;
 }
 
-bool Enemy::check_hit(){
-    return (mvinch(this->pos.y, this->pos.x + 1) == 45 || mvinch(this->pos.y, this->pos.x - 1) == 45);
-}
+// bool Enemy::check_hit(){
+//     return (mvinch(this->pos.y, this->pos.x + 1) == 45 || mvinch(this->pos.y, this->pos.x - 1) == 45);
+// }
+
+void Enemy::decrease_life(int n){this->life -= n;}
+
+int Enemy::get_life(){return this->life;}
 
 void Enemy::set_damage(){    //TODO:togliere un tipo di nemico
     if(this->type == 0) this->damage = 10;   // nemico base
@@ -27,13 +33,15 @@ void Enemy::random_move(int ps){
         mvprintw(15, 1, "%d", random_dir);
         if(random_dir) this->set_versor(-1);
         else this->set_versor(1);
-        mvprintw(16, 1, "%d", this->versor);
-        mvprintw(17,1,"%d", this->on_plat);
-        timeout(100);
-        if(this->on_plat && !this->check_plat_border(ps)){
-            this->move(ps);
-        }else if (!this->on_plat){
-            this->move(ps);
+        if(mvinch(this->pos.y, this->pos.x + this->versor) == (int)' '){
+            mvprintw(16, 1, "%d", this->versor);
+            mvprintw(17,1,"%d", this->on_plat);
+            timeout(100);
+            if(this->on_plat && !this->check_plat_border(ps)){
+                this->move(ps);
+            }else if (!this->on_plat){
+                this->move(ps);
+            }
         }
     }
 }

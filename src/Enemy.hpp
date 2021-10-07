@@ -11,7 +11,9 @@ public:
     int get_type();
     void random_move(int);
     void random_shoot(int, int, int, Shoot*);
-    bool check_hit(); 
+    //bool check_hit();
+    void decrease_life(int);
+    int get_life();
     /*
     void move();
     */
@@ -20,6 +22,7 @@ public:
 protected:
     bool on_plat;
     Platform* p2;
+    int life;
     //Player* player2;
     int type;
     int damage;

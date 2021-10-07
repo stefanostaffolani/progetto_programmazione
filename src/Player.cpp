@@ -15,19 +15,19 @@ Player::Player(char avatar, Platform* p1, Bonus* b1, Enemies* e1, Shoot* s1, pos
     
     //len_screen = lenS; da vedere in futuro
 }
-
+ 
 int Player::get_life(){return this->life;}
 
 int Player::get_points(){return this->points;}
 
 void Player::increase_points(int n){this->points += n;}
 
-bool Player::is_hit(){
-    return (mvinch(this->pos.y, this->pos.x + 1) == 42 || mvinch(this->pos.y, this->pos.x - 1) == 42);
-}
+// bool Player::is_hit(){
+//     return (mvinch(this->pos.y, this->pos.x + 1) == 42 || mvinch(this->pos.y, this->pos.x - 1) == 42);
+// }
 
 bool Player::hit_enemy(){
-    return (mvinch(this->pos.y, this->pos.x) == 79 || mvinch(this->pos.y, this->pos.x) == 111);
+    return (mvinch(this->pos.y, this->pos.x) == (int)'o' || mvinch(this->pos.y, this->pos.x) == (int)'O');
 }
 
 void Player::move(int& ps){
@@ -47,6 +47,19 @@ void Player::move(int& ps){
 void Player::decrease_life(int n){this->life -= n;}
 void Player::increase_life(int n){this->life += n;}
 void Player::set_life(int n) {this->life = n;}
+
+void Player::check_is_hit(){
+    p_bullet iter = s2->get_head();
+    bool game_over = false;
+    while(iter != NULL && !game_over){
+        if(iter->b->get_position().x == this->pos.x && iter->b->get_position().y == this->pos.y){
+            this->decrease_life(iter->b->get_damage());
+            if(this->get_life() <= 0) game_over = true;
+        }
+        iter = iter->next;
+    }
+
+}
 
 void Player::jump(int& ps){
     int i = 0;
@@ -78,7 +91,7 @@ void Player::jump(int& ps){
         } else{
             hit_something = true;
         }
-        s2->print_bullet(ps, 75, this->versor);
+        s2->update_bullet(ps, 75);   //TODO mettere lenS al posto di 75
     }
     gravity(ps);
 }
@@ -144,6 +157,6 @@ void Player::gravity(int& ps){
                 this->print_item(0);
             }
     }
-        s2->print_bullet(ps,75,this->versor);
+        s2->update_bullet(ps,75);
     }
 }

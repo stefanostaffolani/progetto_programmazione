@@ -12,13 +12,15 @@ public:
     void increase_points(int);
     void decrease_life(int);
     void increase_life(int);
-    bool is_hit();
+    //bool is_hit();
+    void check_is_hit();
     int get_life();
     void set_life(int);
     int get_points();
     void gravity(int&);
     bool hit_enemy();
-
+    
+    
 
 protected:
     // int x,y;

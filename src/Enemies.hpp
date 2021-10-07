@@ -15,7 +15,7 @@ class Enemies{
         Enemies(Platform*);
         void generate(int,int,int);
         void addNode(int);
-        void removeEnemies(p_enem);
+        void removeEnemies(p_enem&);
 
         void update_current(int, int, int);
         void printEnemies(int,int,int);
@@ -23,6 +23,8 @@ class Enemies{
 
         void move_and_shoot(int,int,int,Shoot*);
         void increase_difficulty(int);
+        void check_is_hit(int,int,Shoot*);
+
 
     protected:
         int set_y(int);
