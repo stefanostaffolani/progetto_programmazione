@@ -30,12 +30,12 @@ int Enemy::get_type(){return this->type;}
 void Enemy::random_move(int ps){
     if(this->type > 0){
         int random_dir = rand()%2;     //if random_dir == 0 va a dx else a sx, se può
-        mvprintw(15, 1, "%d", random_dir);
+        //mvprintw(15, 1, "%d", random_dir);
         if(random_dir) this->set_versor(-1);
         else this->set_versor(1);
         if(mvinch(this->pos.y, this->pos.x + this->versor) == (int)' '){
-            mvprintw(16, 1, "%d", this->versor);
-            mvprintw(17,1,"%d", this->on_plat);
+            //mvprintw(16, 1, "%d", this->versor);
+            //mvprintw(17,1,"%d", this->on_plat);
             timeout(100);
             if(this->on_plat && !this->check_plat_border(ps)){
                 this->move(ps);
@@ -53,7 +53,7 @@ void Enemy::random_shoot(int freq, int x_player, int ps, Shoot* s2){   // freq =
         if((x_player - this->pos.x + ps) < 0) dir_shoot = -1;
         else dir_shoot = 1;
         int n = rand() % freq;
-        mvprintw(20, 1, "%d", n);
+        //mvprintw(20, 1, "%d", n);
         position traslated_position = {this->pos.x-ps, this->pos.y};
         if(n == 0) s2->add_bullet(traslated_position, dir_shoot, '*', this->damage);
     }

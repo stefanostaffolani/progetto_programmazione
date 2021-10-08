@@ -31,9 +31,9 @@ bool Player::hit_enemy(){
 }
 
 void Player::move(int& ps){
-    if((this->versor == -1) && (this->pos.x < 10) && (ps >= 1)){
+    if((this->versor == -1) && (this->pos.x < 20) && (ps >= 1)){
         ps--;
-    }else if ((this->versor == 1) && (this->pos.x > 65)){
+    }else if ((this->versor == 1) && (this->pos.x > 55)){
         ps++;
     }
     else Item::move(0);

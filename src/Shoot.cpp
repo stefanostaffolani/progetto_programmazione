@@ -9,7 +9,7 @@ void Shoot::update_bullet(int ps, int lenS){   //TODO: pensare a dove mettere qu
     
     p_bullet iter = head;
     while(iter != NULL){
-        mvprintw(20,20,"counter: %d", iter->b->get_counter());
+        //mvprintw(20,20,"counter: %d", iter->b->get_counter());
         iter->b->decrease_counter();
         if(iter->b->get_counter() < 0 || iter->b->get_hit() || iter->b->get_position().x > lenS || iter->b->get_position().x < 1){
             iter->b->delete_item(0);
