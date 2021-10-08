@@ -11,7 +11,7 @@ using namespace std;
 
 int main(){
 
-        srand(time(NULL));
+        srand(time(NULL)); 
 	
         // genero oggeti per classi field platform bonus e shoot
         Field *field = new Field();
@@ -77,7 +77,7 @@ int main(){
                 // funzioni di stampa sullo schermo
                 s1->update_bullet(ps, lenS);
                 E->check_is_hit(ps, lenS, s1);
-                //player->check_is_hit();
+                player->check_is_hit();
                 
                 field->upgradeData(player->get_life(), player->get_points());
                 field->printField(ps);          // stampa lo schermo e la legenda
@@ -126,7 +126,6 @@ int main(){
                 // }
 
                 // aggiornamento dinamiche di gioco
-                //E->check_is_hit()
                 E->move_and_shoot(lenS, ps, player->get_position().x, s1);
                 player->gravity(ps);
                 //if(player->is_hit()) player->decrease_life(15);      //TODO : far funzionare sta roba

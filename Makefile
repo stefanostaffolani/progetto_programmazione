@@ -1,4 +1,4 @@
-CC = g++ 
+CC = g++
 INCLUDES = -lncurses
 DIR = ./src
 OBJECTS = main.o Platform.o Field.o Player.o Bonus.o Item.o Shoot.o Enemy.o Enemies.o Bullet.o

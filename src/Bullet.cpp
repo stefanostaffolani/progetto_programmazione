@@ -4,7 +4,7 @@ Bullet::Bullet(int versor, position pos, char avatar, int damage) : Item(avatar,
     this->counter = RANGE;
     this->damage = damage;
     this->hit = false;
-}
+} 
 
 void Bullet::set_damage(int n){this->damage = n;}
 
