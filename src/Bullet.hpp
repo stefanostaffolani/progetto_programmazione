@@ -12,6 +12,7 @@ class Bullet : public Item{
         int get_counter();
         int get_damage();
         bool get_hit();
+        char get_avatar();
 
     protected:
         int counter;

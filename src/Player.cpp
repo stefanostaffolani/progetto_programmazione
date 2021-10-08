@@ -38,10 +38,10 @@ void Player::move(int& ps){
     }
     else Item::move(0);
     this->print_item(0);
+    s2->update_bullet(ps, 75);
     p2->printPlatforms(ps, 75, this->versor);
     b2->print_bonus(ps, 75, this->versor);
     e2->printEnemies(ps, 75, this->versor);
-    //s2->print_bullet(ps, 75, this->versor);
 }
 
 void Player::decrease_life(int n){this->life -= n;}
@@ -52,7 +52,7 @@ void Player::check_is_hit(){
     p_bullet iter = s2->get_head();
     bool game_over = false;
     while(iter != NULL && !game_over){
-        if(iter->b->get_position().x == this->pos.x && iter->b->get_position().y == this->pos.y){
+        if(iter->b->get_position().x == this->pos.x && iter->b->get_position().y == this->pos.y && (iter->b->get_avatar() != '-')){
             this->decrease_life(iter->b->get_damage());
             if(this->get_life() <= 0) game_over = true;
         }
