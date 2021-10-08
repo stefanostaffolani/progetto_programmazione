@@ -19,8 +19,7 @@ class Enemies{
 
         void update_current(int, int, int);
         void printEnemies(int,int,int);
-        int find_enemy(int,int,int,int);
-
+        
         void move_and_shoot(int,int,int,Shoot*);
         void increase_difficulty(int);
         void check_is_hit(int,int,Shoot*);

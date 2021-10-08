@@ -129,33 +129,6 @@ void Enemies::printEnemies(int ps, int lenS, int versor){
 
 } 
 
-// int Enemies::find_enemy(int ps, int lenS, int plx, int ply){
-//     // 1) verifica che il bonus sia stato trovato, 
-//     // 2) ritorna il tipo di bonus che ha trovato
-//     // plx ply -> player position x, player position y
-
-//     p_enem iter = current;
-//     int enemy_type_found = -1;
-
-//     while(iter != NULL && iter->e->get_position().x < ps+lenS){
-        
-//         if(iter->e->get_position().x == plx + ps && iter->e->get_position().y == ply){
-
-//             enemy_type_found = iter->e->get_type();
-            
-//             //TODO: da verificare stammerda sotto 
-//             iter->e->delete_item(plx);
-//             iter->e->delete_item(plx+1);
-//             refresh();
-            
-//             return enemy_type_found;
-//         }
-//         iter = iter->next;
-//     }
-//     return enemy_type_found;
-
-// }
-
 void Enemies::move_and_shoot(int lenS, int ps, int x_player, Shoot* s2){
     p_enem iter = this->current;
     if(iter != NULL){
