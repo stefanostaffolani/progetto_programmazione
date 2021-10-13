@@ -1,7 +1,4 @@
 #include "Bonus.hpp"
-#include <ncurses.h>
-#include <thread>
-#include <chrono>
 
 #define INIT_X 1
 #define END_X 75
@@ -17,15 +14,24 @@ struct position{
     int y;
 };
 
+    // versor = 1 go dx versor = -1 go sx 
 
 class Item{
     public:
         Item(char, position, int);
+        
+        // fisica
         void move(int);
+        
+        // set
         void set_x(int);
-        position get_position();
         void set_versor(int);
+
+        // get
+        position get_position();
         int get_versor();
+        
+        // stampa 
         void print_item(int);
         void delete_item(int);
 

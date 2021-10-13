@@ -1,5 +1,3 @@
-// #include <iostream>
-// #include <time.h>
 #include "Player.hpp"
 
 using namespace std;
@@ -7,13 +5,10 @@ using namespace std;
 Player::Player(char avatar, Platform* p1, Bonus* b1, Enemies* e1, Shoot* s1, position pos):Item(avatar, pos, 0){
     life = 100;
     points = 0;
-    mvprintw(this->pos.y, this->pos.x, "%c",avatar);
     p2 = p1;
     b2 = b1;
     e2 = e1;
     s2 = s1;
-    
-    //len_screen = lenS; da vedere in futuro
 }
  
 int Player::get_life(){return this->life;}
@@ -21,10 +16,6 @@ int Player::get_life(){return this->life;}
 int Player::get_points(){return this->points;}
 
 void Player::increase_points(int n){this->points += n;}
-
-// bool Player::is_hit(){
-//     return (mvinch(this->pos.y, this->pos.x + 1) == 42 || mvinch(this->pos.y, this->pos.x - 1) == 42);
-// }
 
 bool Player::hit_enemy(){
     return (mvinch(this->pos.y, this->pos.x) == (int)'o' || mvinch(this->pos.y, this->pos.x) == (int)'O');
@@ -67,20 +58,20 @@ void Player::jump(int& ps){
     bool hit_something = false;
     position diagonale, sopra;
     while((i < Y_JUMP) && !(hit_something)){
-        //timeout(100);
-        e2->move_and_shoot(75,ps,this->pos.x,s2);     //per i nemici
+
+        e2->move_and_shoot(75,ps,this->pos.x,s2);     //aggiorna i nemici
 
         c = getch();
         diagonale = {this->pos.x+this->versor, this->pos.y - 1};
         sopra = {this->pos.x, this->pos.y - 1};
-        if(c == 32) s2->add_bullet(this->pos, this->versor, '-', P_DAMAGE);   //per sparare
-        if (mvinch(diagonale.y, diagonale.x) == 32){
+        
+        if(c == (int)' ') s2->add_bullet(this->pos, this->versor, '-', P_DAMAGE);   //per sparare
+        
+        if (mvinch(diagonale.y, diagonale.x) == (int)' '){
             this->delete_item(0);
-            if(mvinch(sopra.y, sopra.x) == 32){
-                //mvprintw(this->pos.y, this->pos.x, " ");
+            if(mvinch(sopra.y, sopra.x) == (int)' '){   //perchè il move cancella
                 this->pos.y--;
                 this->move(ps);
-                //this->print_item(0);
             }else{
                 this->delete_item(0);
                 this->pos.y--;
@@ -96,15 +87,13 @@ void Player::jump(int& ps){
     gravity(ps);
 }
 
-void Player::gravity(int& ps){
+void Player::gravity(int& ps){   //TODO: gestire caso salto su proiettili (magari mettendo hit_something = true???)
     bool hit_something = false;
-    //int i = 0;
     char c;
     if (mvinch(this->pos.y + 1, this->pos.x) != SPACE && mvinch(this->pos.y + 1, this->pos.x) != DOLLAR && mvinch(this->pos.y + 1, this->pos.x) != 86) hit_something = true;
     else hit_something = false;
     position diagonale, sotto, laterale;
     while(!(hit_something)){
-        //timeout(100);
         
         e2->move_and_shoot(75,ps,this->pos.x,s2);   //per i nemici
 
@@ -115,35 +104,34 @@ void Player::gravity(int& ps){
         diagonale = {this->pos.x + versor, this->pos.y + 1};
         sotto = {this->pos.x, this->pos.y+1};
         laterale = {this->pos.x+this->versor, this->pos.y};
-        if (mvinch(sotto.y, sotto.x) == EQUAL || mvinch(sotto.y, sotto.x) == 45){   // ho qualcosa sotto
+        if (mvinch(sotto.y, sotto.x) == (int)'=' || mvinch(sotto.y, sotto.x) == 45){   // ho qualcosa sotto
             hit_something = true;
         }
         else if(mvinch(diagonale.y, diagonale.x) != SPACE){
             hit_something = true;
-            if (mvinch(diagonale.y, diagonale.x) == DOLLAR || mvinch(diagonale.y, diagonale.x) == 86){
+            if (mvinch(diagonale.y, diagonale.x) == (int)'$' || mvinch(diagonale.y, diagonale.x) == (int)'V'){
                 this->delete_item(0);
-                //mvprintw(this->pos.y, this->pos.x, " ");
                 this->pos.y++;
                 this->move(ps);
-                //increase_points(10);
-                //if (b2->findCash(ps, 75, this->x, this->y)) increase_points(10);
-            }else if(mvinch(diagonale.y, diagonale.x) == PIPE){
+            }else if(mvinch(diagonale.y, diagonale.x) == (int)'|'){
                 this->delete_item(0);
-                //mvprintw(this->pos.y, this->pos.x, " ");
                 this->pos.y = HEIGHT;
                 this->pos.x = INIT_X;
                 this->print_item(0);
-                //mvprintw(this->pos.y, this->pos.x, "%c", avatar);
                 refresh();
-            }else if (mvinch(sotto.y, sotto.x) == SPACE){
+            }else if(mvinch(diagonale.y,diagonale.x) == (int)'o' || mvinch(diagonale.y,diagonale.x) == (int)'O'){
                 this->delete_item(0);
-                //mvprintw(this->pos.y, this->pos.x, " ");
+                this->pos.y++;
+                this->print_item(0);
+                refresh();
+            }else if (mvinch(sotto.y, sotto.x) == (int)' '){
+                this->delete_item(0);
                 this->move(ps);
             }
             //vedere se ne servono altri
         }
         else{
-            if(mvinch(laterale.y, laterale.x) == EQUAL || mvinch(laterale.y, laterale.x) == 111 || mvinch(laterale.y, laterale.x) == 79){   // perchè potrebbe cancellare lo spigolo della platform
+            if(mvinch(laterale.y, laterale.x) == (int)'=' || mvinch(laterale.y, laterale.x) == (int)'o' || mvinch(laterale.y, laterale.x) == (int)'O'){   // perchè potrebbe cancellare lo spigolo della platform
                 this->delete_item(0);
                 this->pos.x+=versor;
                 this->pos.y++;
@@ -152,7 +140,6 @@ void Player::gravity(int& ps){
             else{
                 this->move(ps);
                 this->delete_item(0);
-                //mvprintw(this->pos.y, this->pos.x, " ");
                 this->pos.y++;
                 this->print_item(0);
             }

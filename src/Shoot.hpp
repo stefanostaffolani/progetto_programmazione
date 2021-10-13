@@ -1,10 +1,7 @@
-#include <iostream>
-#include <ncurses.h>
 #include "Bullet.hpp"
 
 using namespace std;
 
-//#define BULLET '-'
 #define RANGE 20
 
 struct bullet_list{

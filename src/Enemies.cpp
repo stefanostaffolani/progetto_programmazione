@@ -134,7 +134,6 @@ void Enemies::move_and_shoot(int lenS, int ps, int x_player, Shoot* s2){
     if(iter != NULL){
         while(iter->next != NULL && iter->e->get_position().x < lenS + ps){
             if(iter->e->get_type()){
-                //iter->e->delete_item();
                 if(iter->e->get_versor() == 1) mvprintw(iter->e->get_position().y, iter->e->get_position().x - ps + 1, " "); // premo d 
                 else if(iter->e->get_versor() == -1) mvprintw(iter->e->get_position().y, iter->e->get_position().x - ps - 1, " "); // premo a
                 iter->e->random_move(ps);
