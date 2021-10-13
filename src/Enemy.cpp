@@ -1,53 +1,57 @@
 #include "Enemy.hpp"
-
-Enemy::Enemy(char avatar, Platform* p1, Bonus* b1, int x, int y, int type = 0) : Item(avatar, x, y){
+ 
+Enemy::Enemy(char avatar, Platform* p1, position pos, int type = 0, bool on_plat = false):Item(avatar, pos, 0){
     this->type = type;
     set_damage();
     p2 = p1;
-    b2 = b1;
+    this->on_plat = on_plat;
+    if(type == 0) life = 20;
+    else life = 50;
 }
 
-void Enemy::set_damage(){
+void Enemy::decrease_life(int n){this->life -= n;}
+
+int Enemy::get_life(){return this->life;}
+
+void Enemy::set_damage(){ 
     if(this->type == 0) this->damage = 10;   // nemico base
-    else if(this->type == 1) this->damage = 15;  // nemico medio
     else this->damage = 20;                     // nemico forte
 }
 
-// void Enemy::generate_on_platform(int x){   // non so se sia necessaria la x come argomento
-//     int i = 0;
-//     bool found_plat = false;
-//     while ((i < HEIGHT) && !(found_plat)){
-//         if(mvinch(i,x) == 61) found_plat = true;
-//         else i++;
-//     }
-//     if (found_plat){
-//         if(rand() % 2) this->on_plat = true;
-//         else this->on_plat = false;
-//     }
-//     this->pos.y = i;
-// }
+int Enemy::get_damage(){return this->damage;}
 
-bool Enemy::check_plat_border(){ //se facendo un movimento cado dalla platform return true
-    if(mvinch(this->pos.y, this->pos.x + this->versor) == 32) return true;
-    else return false;
+int Enemy::get_type(){return this->type;}
+
+void Enemy::random_move(int ps){
+    if(this->type > 0){
+        int random_dir = rand()%2;     //if random_dir == 0 va a dx else a sx, se può
+        if(random_dir) this->set_versor(-1);
+        else this->set_versor(1);
+        if(mvinch(this->pos.y, this->pos.x + this->versor) == (int)' '){
+            timeout(100);
+            if(this->on_plat && !this->check_plat_border(ps)){
+                this->move(ps);
+            }else if (!this->on_plat){
+                this->move(ps);
+            }
+        }
+    }
 }
 
-// Enemy::generate(){
-//     // guarda il valore di ps e stabilisce il livello, all'inizio ci sono più Enemy
-//     // scarsi, più vai avanti più te ne trovi di forti
+void Enemy::random_shoot(int freq, int x_player, int ps, Shoot* s2){   // freq = 10 - difficoltà
+    if(this->type > 0){         //sparano solo i nemici forti
+        int dir_shoot;
+        if((x_player - this->pos.x + ps) < 0) dir_shoot = -1;
+        else dir_shoot = 1;
+        int n = rand() % freq;      // se aumenta la frequenza aumenta la probabilità di sparare
+        position traslated_position = {this->pos.x-ps, this->pos.y};
+        if(n == 0) s2->add_bullet(traslated_position, dir_shoot, '*', this->damage);     //condizione per sparare
+    }
+}
 
-//     if(ps < 1000) 
-//         lvl = 0;
-//     else if(ps >= 1000 && ps < 2000){
-//     if(rand()%2 == 0) 
-//         lvl = 0; 
-//     else 
-//         lvl = 1; 
-//     }
-// }
+void Enemy::increase_damage(int inc){this->damage = this->damage + inc;}
 
-
-/*
-
-
-*/
+bool Enemy::check_plat_border(int ps){ //se facendo un movimento cado dalla platform return true
+    if(mvinch(this->pos.y + 1, this->pos.x + this->versor - ps) == (int)' ') return true;
+    else return false;
+}

@@ -1,28 +1,27 @@
 #include "Item.hpp"
 
-Item::Item(char avatar, int x = 3, int y = 12){
+Item::Item(char avatar, position pos, int versor=0){
     this->avatar = avatar;
-    this->pos.x = x;
-    this->pos.y = y;
-    this->versor = 1;
+    this->pos = pos;
+    this->versor = versor;
 }
 
-void Item::move(){
-    if ((versor == -1) && (this->pos.x > INIT_X)){
-        this->delete_item();
+void Item::move(int ps){
+    if ((versor == -1) && ((this->pos.x - ps) > INIT_X)){
+        this->delete_item(ps);
         this->pos.x--;
-        this->print_item();
-    }else if ((versor == 1) && (this->pos.x < END_X)){
-        this->delete_item();
+        this->print_item(ps);
+    }else if ((versor == 1) && ((this->pos.x - ps) < END_X)){
+        this->delete_item(ps);
         this->pos.x++;
-        this->print_item();
+        this->print_item(ps);
     }
     refresh();
 }
 
-void Item::print_item(){mvprintw(this->pos.y, this->pos.x, "%c", this->avatar);}
+void Item::print_item(int ps){mvprintw(this->pos.y, this->pos.x - ps, "%c", this->avatar);}
 
-void Item::delete_item(){mvprintw(this->pos.y, this->pos.x, " ");}
+void Item::delete_item(int ps){mvprintw(this->pos.y, this->pos.x - ps, " ");}
 
 void Item::set_x(int n){ this->pos.x = n; }
 

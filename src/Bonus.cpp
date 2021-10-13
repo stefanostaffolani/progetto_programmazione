@@ -1,133 +1,170 @@
-#include <iostream>
-#include <ncurses.h>
-#include <time.h>
-#include <string.h>
-#include "Platform.hpp"
 #include "Bonus.hpp"
+#include "time.h"
 
-using namespace std;
-
-Bonus::Bonus(){
-    first = new cashlist;
-    first->y = -10;
-    first->x = -10;
-    first->prev = NULL;
-    first->next = NULL;
-    last = first;
-    current = first;
+Bonus::Bonus(Platform* p){
+    srand(time(NULL));
+    this->first = NULL;
+    this->last = NULL;
+    this->current = NULL;
+    this->p = p;
 }
 
-void Bonus::addCash(p_node p, int h){
-    for(int i = 0; i < 6; i++){
-        if(p->next != NULL)
-            p = p->next;
+void Bonus::generate(int n, int lenS, int ps){
+    if(first == NULL) addNode(n);
+    if(last->x < ps + lenS){
+        for(int i = 0; i < n; i++)
+            addNode(n);
+    }
+}
+
+void Bonus::addNode(int n){
+
+    if(first == NULL){ // è il primo bonus che genero
+        first = new bonuslist();
+        current = first;
+        last = first;
+
+        first->next = NULL;
+        first->prev = NULL;
+        first->x = p->get_current()->x + rand() % n + 30;
+        first->y = this->set_y(first->x);
+        first->type = (rand()%10 == 0) ? 1 : 0;
+    }
+    else{
+        p_bon tmp = new bonuslist();
+        tmp->next = NULL;
+        tmp->prev = last;
+        tmp->x = last->x + 30 + rand() % n;
+        tmp->y = this->set_y(tmp->x);
+        tmp->type = (rand()%10 == 0) ? 1 : 0;
+
+        last->next = tmp;
+        last = tmp;
+    }
+
+}
+
+void Bonus::removeBonus(p_bon iter){
+    // verifico se il bonus è current, last, first altirmenti nulla
+    
+    if(iter == current){
+        if(iter == first && iter == last){
+            first = NULL;
+            last = NULL;
+            current = NULL;
+        }
+        else if(iter == first && iter != last){
+            first = first->next;
+            current = first;
+            first->prev = NULL;
+        }
+        else if(iter != first && iter == last){
+            last = last->prev;
+            current = last;  
+            last->next = NULL;       
+        }
+        else{
+            iter->next->prev = iter->prev;
+            iter->prev->next = iter->next;
+            current = iter->prev;
+        }
+    }
+    else if(iter == first){
+        first = first->next;
+        first->prev = NULL;
+    }
+    else if(iter == last){
+        last = last->prev;
+        last->next = NULL;
+    }
+    else{
+        iter->prev->next = iter->next;
+        iter->next->prev = iter->prev;
     }
     
-    if(!p->gotCash){
-        p_cash tmp = new cashlist;
-        last -> next = tmp;
-        tmp -> prev = last;
-        tmp -> next = NULL;
-
-        if(rand() % 6 == 0) tmp -> y = h;
-        else if(p->y > 2)
-           tmp -> y = p -> y - 1;
-        else tmp->y = h;
-
-        tmp -> x = p -> x + rand() % p->len;  // qui c'era un -1 che ho tolto perchè senno stampa i $ a culo
-        
-        last = tmp;
-        tmp = NULL;
-        delete tmp;
-        p->gotCash = true;
-    }
-
+    delete iter;
+    iter = NULL;
 }
 
+void Bonus::update_current(int ps, int lenS, int versor){
+    if(current!=NULL){
+        if(current -> x < ps && current->next != NULL)
+                current = current -> next;
+                // se sto andando in dietro:
+        else if(current -> prev != NULL && current -> prev -> x >= ps)
+                current = current -> prev;
+    }
+}
 
-void Bonus::printCash(int ps, int lenS, int versor){
+void Bonus::print_bonus(int ps, int lenS, int versor){
 
     // 1) verifica dell'aggiornamento valore current -------------------------
                 // se sto andando avanti:
-        if(current!=NULL){
-            if(current -> x < ps && current->next != NULL)
-                    current = current -> next;
-                    // se sto andando in dietro:
-            else if(current -> prev != NULL && current -> prev -> x >= ps)
-                    current = current -> prev;
-        }
+    update_current(ps, lenS, versor);
 
-        // 2) stampare da current fino a limite schermo --------------------------
-        p_cash iter = current;  
+    // 2) stampare da current fino a limite schermo --------------------------
+    p_bon iter = current;  
 
+    if(current != NULL){
         while(iter != NULL && iter -> x < ps + lenS){ // cicla fino a che la nuova x di iter è fuori dallo schermo
-                if(versor == 1) mvprintw(iter->y, iter->x - ps + 1, " "); // premo d 
-                else if(versor == -1) mvprintw(iter->y, iter->x - ps - 1, " "); // premo a
-                if(iter -> x >= ps && iter -> x < ps + lenS - 1){
+            if(versor == 1) mvprintw(iter->y, iter->x - ps + 1, " "); // premo d 
+            else if(versor == -1) mvprintw(iter->y, iter->x - ps - 1, " "); // premo a
+            if(iter -> x >= ps && iter -> x < ps + lenS - 1){
+                if(iter->type == 0)
                     mvprintw(iter -> y, iter -> x - ps, "$");
-                }                
-                iter = iter->next;
+                else if(iter->type == 1)
+                    mvprintw(iter -> y, iter -> x - ps, "V");
+            }                
+            iter = iter->next;
         }
+    }
 }
 
+int Bonus::find_bonus(int ps, int lenS, int plx, int ply, int versor){
+    
+    // 1) verifica che il bonus sia stato trovato, 
+    // 2) ritorna il tipo di bonus che ha trovato
+    // 3) cancella dalla lista l'elemento
+    // plx ply -> player position x, player position y
+    
+    p_bon iter = current;
+    int bonus_type_found = -1;
 
-bool Bonus::findCash(int ps, int lenS, int plx, int ply){
-    p_cash iter = current;
+    if(iter!=NULL){
+        while(iter != NULL && iter->x < ps+lenS){
+            
+            if(iter->x == plx + ps && iter->y == ply) {
 
-    // move(30,10);
-    // mvprintw(20, 20, "plx+ps: %d", plx + ps);
-    // mvprintw(21, 20, "current->x: %d", current->x);    
+                bonus_type_found = iter->type;
+                removeBonus(iter);
+                update_current(ps, lenS, versor);
 
-    // mvprintw(22, 20, "ply: %d", ply);
-    // mvprintw(23, 20, "curr->y: %d", current->y);
+                mvprintw(ply, plx, "@");
+                mvprintw(ply, plx + 1, " ");
+                refresh();
 
-
-    while(iter != NULL && iter->x < ps+lenS){
-        if(iter->x == plx + ps && iter->y == ply) {
-            // mvprintw(24, 20, "win");
-            if(iter == current){ 
-                if(iter != first)
-                    current = iter->prev;
-                else if(iter != last)
-                    current = iter -> next;
-                else {
-                    current = NULL;
-                    last = NULL;
-                    first = NULL;
-                }
+                return bonus_type_found;
             }
-            if(iter == last){
-                last = last->prev;
-                last->next = NULL;
-            }
-            else if(iter == first){
-                first = first->next;
-                first->prev = NULL;
-            }
-            else{
-                iter->prev->next = iter->next;
-                iter->next->prev = iter->prev;
-                delete iter;
-                iter = NULL;
-            }
-            mvprintw(ply, plx, "@");
-            mvprintw(ply, plx + 1, " ");
-            refresh();
-            return true;
+            iter = iter->next;
         }
-        iter = iter->next;
     }
-    return false;
+    return bonus_type_found;
 }
 
 
-int Bonus::lencash(){
-    int cont = 0;
-    p_cash iter = first;
-    while(iter != NULL){
-        iter = iter->next;
-        cont++;
-    }
-    return cont;
-}
+int Bonus::set_y(int x){
+    p_node iter = p->get_current();
 
+    if(iter == NULL) return 12;
+    else if(iter->prev == NULL) return 12;
+    else{
+        while(iter->next != NULL && iter->x < x)
+            iter = iter->next;
+        if(iter->prev->x + iter->prev->len - 1 < x)    // -1 perchè x + len sborda di 1
+            return 12;
+        else{
+            if(rand()%2)return iter->prev->y - 1;
+            else return 12;
+        }
+    }
+}

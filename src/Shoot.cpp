@@ -1,73 +1,80 @@
 #include "Shoot.hpp"
 
-p_bullet update_bullet_list(p_bullet head){   //TODO: pensare a dove mettere questa funzione
-    if (head == NULL) return NULL;
+Shoot::Shoot(){
+    this->head = NULL;
+    this->tail = NULL;
+}
+
+void Shoot::update_bullet(int ps, int lenS){
+    
+    p_bullet iter = head;
+    while(iter != NULL){
+        iter->b->decrease_counter();
+        if(iter->b->get_counter() < 0 || iter->b->get_hit() || iter->b->get_position().x > lenS || iter->b->get_position().x < 1){
+            iter->b->delete_item(0);
+            remove_bullet(iter);
+        }
+        else{
+            iter->b->hit_something();
+            iter->b->move(0);
+        }
+        if(iter != NULL)
+            iter = iter->next;
+    }
+
+}
+
+void Shoot::add_bullet(position p, int v, char avatar, int damage){ 
+    if(head == NULL){ // primo proiettile in giro
+        head = new bullet_list;
+        head->next = NULL;
+        head->prev = NULL;
+        tail = head;
+        head->b = new Bullet(v, p, avatar, damage);
+    }
     else{
-        //cout << "ok else" << endl;
-        p_bullet cur = head;
-        p_bullet prev = NULL;
-        while(cur != NULL){
-            if((cur->counter <= 0) || (mvinch(cur->pos.y, cur->pos.x + cur->versor) != 32 && mvinch(cur->pos.y, cur->pos.x + cur->versor) != 45)){
-                if(prev == NULL){
-                    //mvprintw(19, 1, "dentro if ==> cancellato head");
-                    cur = cur->next;
-                    delete head;
-                    head = cur;
-                    //mvprintw(17,1,"%d", cur->counter);
-                    //cout << "ok head" << endl;
-                } else{
-                    //mvprintw(18,1,"dentro el");
-                    prev->next = cur->next;
-                    delete cur;
-                    cur = prev->next;
-                }
-            } else{
-                cur->pos.x += cur->versor;
-                cur->counter--;
-                prev = cur;
-                cur = cur->next;
-                //cout << "ok switch cur prev" << endl;
-            }
-        }
-        return head;
+        p_bullet tmp = new bullet_list;
+        tail->next = tmp;
+        tmp->next = NULL;
+        tmp->prev = tail;
+        tail = tmp;
+        tail->b = new Bullet(v, p, avatar, damage);
     }
 }
 
-p_bullet add_bullet(p_bullet head, position p, int v){
-    if (mvinch(p.y, p.x+v) == 32){
-        p_bullet tmp = new bullet_struct;
-        tmp->pos.x = p.x + v;
-        tmp->pos.y = p.y;
-        tmp->counter = RANGE;
-        tmp->versor = v;
-        tmp->next = head;
-        return tmp;
-        }
-    else return head;
+ 
+void Shoot::print_bullet(int ps, int lenS){   //TODO: capire se serve
+    p_bullet iter = head;  
+    while(iter != NULL){
+        iter->b->print_item(0);
+        iter = iter->next;
+    }
 }
 
 
-void print_bullet_list(p_bullet& head){
-    p_bullet iter;
-    for(iter = head; iter != NULL; iter=iter->next){
-        mvprintw(iter->pos.y, iter->pos.x, " ");
-    }
-    //mvprintw(15, 15, "ok1");
-    //cout << "ok 1 ciclo print" << endl;
-    head = update_bullet_list(head);
-    //mvprintw(15, 15, "ok2");
+p_bullet Shoot::get_head(){return this->head;}
 
-    for(iter = head; iter != NULL; iter=iter->next){
-        mvprintw(iter->pos.y, iter->pos.x, "%c", BULLET);
-    }
-    // while(head != NULL){
-    //     //mvprintw(head->pos.y, head->pos.x, " ");
-    //     mvprintw(head->pos.y, head->pos.x, "%c", BULLET);
-    //     //std::this_thread::sleep_for(std::chrono::milliseconds (100));
-    //     //mvprintw(head->pos.y, head->pos.x, " ");
-    //     head = head->next;
-    // }
-    //mvprintw(15, 15, "ok3");
 
-    //cout << "ok 2 ciclo print" << endl;
+void Shoot::remove_bullet(p_bullet& iter){
+    if(iter == head){
+        if(head->next == NULL){
+            head = NULL;
+            tail = NULL;
+        }
+        else{
+            head = head->next;
+            head->prev = NULL;
+        }
+    }
+    else if(iter == tail){
+        tail = tail->prev;
+        tail->next = NULL;
+    }
+    else{
+        iter->prev->next = iter->next;
+        iter->next->prev = iter->prev;
+    }
+    
+    delete iter;
+    iter = NULL;
 }

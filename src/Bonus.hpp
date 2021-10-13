@@ -1,22 +1,30 @@
+#include "Platform.hpp"
+using namespace std;
 
-struct cashlist{
+struct bonuslist{
         int x;
         int y;
-        cashlist* next;
-        cashlist* prev;
+        int type; // 0 -> $, 1 -> Vita
+        bonuslist* next;
+        bonuslist* prev;
 };
-
-typedef struct cashlist* p_cash;
-
+ 
+typedef struct bonuslist* p_bon;
+ 
 class Bonus{
 public:
-    Bonus();
-    void addCash(p_node, int);
-    void printCash(int, int, int);
-    bool findCash(int, int, int, int);
-    int lencash();
+    Bonus(Platform*);
+    void generate(int,int,int);
+    void addNode(int);
+    void removeBonus(p_bon);
+
+    void update_current(int,int,int);
+    void print_bonus(int, int, int);
+    int find_bonus(int, int, int, int, int);
 protected:
-    p_cash first;
-    p_cash last;
-    p_cash current;
+    int set_y(int);
+    p_bon first;
+    p_bon last;
+    p_bon current;
+    Platform* p;
 };
