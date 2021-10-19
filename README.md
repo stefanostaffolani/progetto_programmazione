@@ -15,7 +15,7 @@ The project was developed in C++ with `ncurses` library.
 
 ## How to play
 
-The project is a simply *ASCII Platform Game*, the map is generated while you are moving and is illimitated, you can go forward or come back and everything will remain in the same condition you left. There are two types of enemy, the easy enemy `o` and the hard enemy `O`, the first is simply an obstacle, while the second can move and shoot to you. The more you advance in the map, the more game become difficult. Difficulty is expressed by the frequency of enemy shoot.
+The project is a simply *ASCII Platform Game*, the map is generated while you are moving and is illimitated, you can go forward or come back and everything will remain in the same condition you left. There are two types of enemy, the easy enemy `o` and the hard enemy `O`, the first is simply an obstacle, while the second can move and shoot to you. The more you advance in the map, the more game become difficult. Difficulty is expressed by the frequency of enemy's shoot.
 
 ### Commands
 
