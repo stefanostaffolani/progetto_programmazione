@@ -36,7 +36,13 @@ void Player::move(int& ps){
 }
 
 void Player::decrease_life(int n){this->life -= n;}
-void Player::increase_life(int n){this->life += n;}
+
+void Player::increase_life(int n){
+    this->life = (this->life + n > 100) ? 100 : this->life+n;
+    // if(this->life + n > 100) set_life(100);
+    // else this->life += n;
+    }
+
 void Player::set_life(int n) {this->life = n;}
 
 void Player::check_is_hit(){

@@ -110,10 +110,10 @@ int main(){
                         player->increase_points(10);
                 }
                 else if(type == 1){    // ( V )
-                        if(player->get_life() + 10 < 100)
+                        //if(player->get_life() + 10 < 100)
                                 player->increase_life(10);
-                        else
-                                player->set_life(100);      
+                        // else
+                        //         player->set_life(100);      
                 } // ---------------------------------------------------------
 
                 // // verifica che il nemico sia stato incontrato e aggiorna valori vita / punti

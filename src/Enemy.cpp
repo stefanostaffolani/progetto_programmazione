@@ -24,9 +24,10 @@ int Enemy::get_type(){return this->type;}
 
 void Enemy::random_move(int ps){
     if(this->type > 0){
-        int random_dir = rand()%2;     //if random_dir == 0 va a dx else a sx, se può
-        if(random_dir) this->set_versor(-1);
-        else this->set_versor(1);
+        this->set_versor((rand()%2)? 1 : -1);
+        // int random_dir = rand()%2;     //if random_dir == 0 va a dx else a sx, se può
+        // if(random_dir) this->set_versor(-1);
+        // else this->set_versor(1);
         if(mvinch(this->pos.y, this->pos.x + this->versor) == (int)' '){
             timeout(100);
             if(this->on_plat && !this->check_plat_border(ps)){
@@ -43,9 +44,9 @@ void Enemy::random_shoot(int freq, int x_player, int ps, Shoot* s2){   // freq =
         int dir_shoot;
         if((x_player - this->pos.x + ps) < 0) dir_shoot = -1;
         else dir_shoot = 1;
-        int n = rand() % freq;      // se aumenta la frequenza aumenta la probabilità di sparare
+        //int n = rand() % freq;      // se aumenta la frequenza aumenta la probabilità di sparare
         position traslated_position = {this->pos.x-ps, this->pos.y};
-        if(n == 0) s2->add_bullet(traslated_position, dir_shoot, '*', this->damage);     //condizione per sparare
+        if(rand()%freq == 0) s2->add_bullet(traslated_position, dir_shoot, '*', this->damage);     //condizione per sparare
     }
 }
 
