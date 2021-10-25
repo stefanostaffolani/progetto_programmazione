@@ -82,7 +82,7 @@ int main(){
                 field->upgradeData(player->get_life(), player->get_points());
                 field->printField(ps);          // stampa lo schermo e la legenda
                 
-                s1->print_bullet(ps, lenS);
+                //s1->print_bullet(ps, lenS);
                 
                 p1->printPlatforms(ps, lenS, player->get_versor());
                 b1->print_bonus(ps, lenS, player->get_versor());

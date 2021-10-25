@@ -11,6 +11,7 @@ void Shoot::update_bullet(int ps, int lenS){
     while(iter != NULL){
         iter->b->decrease_counter();
         if(iter->b->get_counter() < 0 || iter->b->get_hit() || iter->b->get_position().x > lenS || iter->b->get_position().x < 1){
+            mvprintw(20, 1, "colpito =");
             iter->b->delete_item(0);
             remove_bullet(iter);
         }

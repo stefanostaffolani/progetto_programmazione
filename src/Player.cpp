@@ -87,10 +87,10 @@ void Player::jump(int& ps){
     gravity(ps);
 }
 
-void Player::gravity(int& ps){   //TODO: gestire caso salto su proiettili (magari mettendo hit_something = true???)
+void Player::gravity(int& ps){   //TODO: gestire caso salto su proiettili (magari mettendo hit_something = false???)
     bool hit_something = false;
     char c;
-    if (mvinch(this->pos.y + 1, this->pos.x) != SPACE && mvinch(this->pos.y + 1, this->pos.x) != DOLLAR && mvinch(this->pos.y + 1, this->pos.x) != 86) hit_something = true;
+    if (mvinch(this->pos.y + 1, this->pos.x) != SPACE && mvinch(this->pos.y + 1, this->pos.x) != DOLLAR && mvinch(this->pos.y + 1, this->pos.x) != 86) hit_something = true;  //controllare 
     else hit_something = false;
     position diagonale, sotto, laterale;
     while(!(hit_something)){
@@ -104,12 +104,19 @@ void Player::gravity(int& ps){   //TODO: gestire caso salto su proiettili (magar
         diagonale = {this->pos.x + versor, this->pos.y + 1};
         sotto = {this->pos.x, this->pos.y+1};
         laterale = {this->pos.x+this->versor, this->pos.y};
-        if (mvinch(sotto.y, sotto.x) == (int)'=' || mvinch(sotto.y, sotto.x) == 45){   // ho qualcosa sotto
+        if (mvinch(sotto.y, sotto.x) == (int)'=' || this->pos.y == HEIGHT){   // ho qualcosa sotto
             hit_something = true;
         }
         else if(mvinch(diagonale.y, diagonale.x) != SPACE){
             hit_something = true;
-            if (mvinch(diagonale.y, diagonale.x) == (int)'$' || mvinch(diagonale.y, diagonale.x) == (int)'V'){
+            if(mvinch(diagonale.y, diagonale.x) == (int)'-' || mvinch(diagonale.y, diagonale.x) == (int)'*'){
+                hit_something = false;
+                this->delete_item(0);
+                this->pos.x += versor;
+                this->pos.y++;
+                this->print_item(0);
+            }
+            else if (mvinch(diagonale.y, diagonale.x) == (int)'$' || mvinch(diagonale.y, diagonale.x) == (int)'V'){
                 this->delete_item(0);
                 this->pos.y++;
                 this->move(ps);
@@ -143,7 +150,8 @@ void Player::gravity(int& ps){   //TODO: gestire caso salto su proiettili (magar
                 this->pos.y++;
                 this->print_item(0);
             }
-    }
+    }        
         s2->update_bullet(ps,75);
+        //p2->printPlatforms(ps, 75, versor);
     }
 }
