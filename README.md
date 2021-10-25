@@ -8,10 +8,9 @@ The project was developed in C++ with `ncurses` library.
 
 ## Building/Running
 
-1. Go into dir 
-2. Run `make` for compiling
-3. Run `make up` for running
-4. Run `make clean` for cleaning dir
+1. Run `make` for compiling
+2. Run `make up` for running
+3. Run `make clean` for cleaning dir
 
 ## How to play
 
