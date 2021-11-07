@@ -83,6 +83,8 @@ void Player::jump(int& ps){
             hit_something = true;
         }
         s2->update_bullet(ps, 75);   //TODO mettere lenS al posto di 75
+        p2->printPlatforms(ps,75,versor);
+
     }
     gravity(ps);
 }
@@ -150,8 +152,8 @@ void Player::gravity(int& ps){   //TODO: gestire caso salto su proiettili (magar
                 this->pos.y++;
                 this->print_item(0);
             }
-    }        
+        }      
         s2->update_bullet(ps,75);
-        //p2->printPlatforms(ps, 75, versor);
+        p2->printPlatforms(ps, 75, versor);
     }
 }

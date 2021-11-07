@@ -144,10 +144,10 @@ void Enemies::move_and_shoot(int lenS, int ps, int x_player, Shoot* s2){
     }
 }
 
+int Enemies::get_difficulty(){return difficulty;}
+
 void Enemies::increase_difficulty(int ps){    // operazione per aumentare la difficoltà dei nemici lungo il gioco (da valutare)
-    if(this->difficulty < 9 && (this->difficulty < (this->difficulty + (ps / this->fattore_incremento)))){
-        this->difficulty = this->difficulty + (ps / this->fattore_incremento);
-    }
+    if(this->difficulty < 9) this->difficulty = ps / this->fattore_incremento;
 }
 
 //per la frequenza di sparo si potrebbe fare (10 - difficult) (10 livelli di difficoltà), al decimo livello spara sempre

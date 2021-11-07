@@ -24,6 +24,8 @@ class Enemies{
         void increase_difficulty(int);
         void check_is_hit(int,int,Shoot*);
 
+        int get_difficulty();
+
 
     protected:
         int set_y(int);

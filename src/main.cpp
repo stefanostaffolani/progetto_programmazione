@@ -32,7 +32,7 @@ int main(){
         //genero 50 platform, 15 nemici e 15 bonus
         for(int i = 0; i < 50; i++)
                 p1->addNode(height);
-        for(int i = 0; i < 3; i++){
+        for(int i = 0; i < 3; i++){   //TODO: pulire sta cosa
                 E->addNode(5);
                 b1->addNode(5);
         }
@@ -58,18 +58,18 @@ int main(){
 
                 // verifica di che valore ottiene c da tastiera -----------------
                 if (c == 27 || player->get_life() <= 0) gameOver = true;
-                else if(c == 100){      // (d)     => destra       
+                else if(c == (int)'d'){      // (d)     => destra       
                         player->set_versor(1);
                         player -> move(ps);//set_x(player->get_x() + 1);
                         
                 } 
-                else if(c == 97){       // (a)     => sinistra
+                else if(c == (int)'a'){       // (a)     => sinistra
                         player->set_versor(-1);
                         player-> move(ps); //set_x(player->get_x() - 1);
                 }
-                else if(c==119)        // (w)      => Salto
+                else if(c==(int)'w')        // (w)      => Salto
                         player->jump(ps);
-                else if(c == 32)       // (SPACE) => sparo
+                else if(c == (int)' ')       // (SPACE) => sparo
                         s1->add_bullet(player->get_position(), player->get_versor(), '-', P_DAMAGE);
                 // ------------------------------------------------------------         
                 
@@ -128,6 +128,9 @@ int main(){
                 // aggiornamento dinamiche di gioco
                 E->move_and_shoot(lenS, ps, player->get_position().x, s1);
                 player->gravity(ps);
+                E->increase_difficulty(ps);
+                mvprintw(18,1,"ps=%d",ps);
+                mvprintw(19,1,"difficoltà=%d", E->get_difficulty());
                 //if(player->is_hit()) player->decrease_life(15);      //TODO : far funzionare sta roba
                 //if (head != NULL) s1->print_bullet(ps, lenS, player->get_versor());
         
