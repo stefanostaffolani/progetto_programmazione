@@ -1,17 +1,11 @@
-//#include "Shoot.hpp"
-//#include "Bonus.hpp"
-//#include "Enemies.hpp"
-//#include <iostream>
-
 #include <ncurses.h>
 #include "Field.hpp"
 #include "Player.hpp"
 using namespace std;
 
-
 int main(){
 
-        srand(time(NULL)); 
+        srand(time(NULL));
 	
         // genero oggeti per classi field platform bonus e shoot
         Field *field = new Field();
@@ -36,8 +30,6 @@ int main(){
                 E->addNode(5);
                 b1->addNode(5);
         }
-
-        // p_bullet head = NULL;
 
         int ps = 0;             // pointer screen, mi dice dove sono, se vado a destra aumenta se vado a sinistra diminuisce
         int c;                  // mi serve per immagazzinare quello che digito da tastiera
@@ -77,7 +69,7 @@ int main(){
                 // funzioni di stampa sullo schermo
                 s1->update_bullet(ps, lenS);
                 E->check_is_hit(ps, lenS, s1);
-                player->check_is_hit();
+                player->check_is_hit();    // se viene preso da un bullet nemico
                 
                 field->upgradeData(player->get_life(), player->get_points());
                 field->printField(ps);          // stampa lo schermo e la legenda
@@ -92,7 +84,7 @@ int main(){
                 //se sono sopra ad un nemico
                 if(player->hit_enemy()) {
                         player->decrease_life(10);
-                        timeout(1000);
+                        //timeout(100);
                 }
                 player->print_item(0);          // stampa player @
                 //-----------------

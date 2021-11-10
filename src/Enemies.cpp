@@ -151,7 +151,7 @@ void Enemies::increase_difficulty(int ps){    // operazione per aumentare la dif
 }
 
 //per la frequenza di sparo si potrebbe fare (10 - difficult) (10 livelli di difficoltà), al decimo livello spara sempre
-int Enemies::set_y(int x){   // non so se sia necessaria la x come argomento
+int Enemies::set_y(int x){   //TODO: controllare questa funzione e rifarla
     bool found_plat = false;
 
     p_node iter = p2->get_current();

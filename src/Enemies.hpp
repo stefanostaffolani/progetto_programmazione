@@ -1,7 +1,4 @@
 #include "Enemy.hpp"
-// #include "Platform.hpp"
-// #include "Bonus.hpp"
-// #include "Player.hpp"
  
 struct enemies{
     Enemy* e;

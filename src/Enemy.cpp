@@ -22,14 +22,17 @@ int Enemy::get_damage(){return this->damage;}
 
 int Enemy::get_type(){return this->type;}
 
-void Enemy::random_move(int ps){
+void Enemy::random_move(int ps){  //TODO: controllare questa funzione sulle platform
     if(this->type > 0){
+        mvprintw(22,1,"%d,%d",pos.x,pos.y);
         int random_dir = rand()%2;     //if random_dir == 0 va a dx else a sx, se può
         if(random_dir) this->set_versor(-1);
         else this->set_versor(1);
         if(mvinch(this->pos.y, this->pos.x + this->versor) == (int)' '){
             timeout(100);
+            mvprintw(21, 20, "è sulla plat:%d",on_plat);
             if(this->on_plat && !this->check_plat_border(ps)){
+                mvprintw(21,1,"ok si muove");
                 this->move(ps);
             }else if (!this->on_plat){
                 this->move(ps);
