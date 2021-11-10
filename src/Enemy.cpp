@@ -28,7 +28,7 @@ void Enemy::random_move(int ps){  //TODO: controllare questa funzione sulle plat
         int random_dir = rand()%2;     //if random_dir == 0 va a dx else a sx, se può
         if(random_dir) this->set_versor(-1);
         else this->set_versor(1);
-        if(mvinch(this->pos.y, this->pos.x + this->versor) == (int)' '){
+        if(mvinch(this->pos.y, this->pos.x + this->versor - ps) == (int)' '){
             timeout(100);
             mvprintw(21, 20, "è sulla plat:%d",on_plat);
             if(this->on_plat && !this->check_plat_border(ps)){
