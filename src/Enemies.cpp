@@ -158,7 +158,7 @@ int Enemies::set_y(int x){   //TODO: controllare questa funzione e rifarla
     if(iter == NULL) return HEIGHT;
     else if(iter->prev == NULL) return HEIGHT;
     else{
-        while(iter->next != NULL && iter->x < x)
+        while(iter->next != NULL && iter->x < x)  // arriva fino alla piattaforma dopo x
             iter = iter->next;
         if(iter->prev->x + iter->prev->len - 1 < x)    // -1 perchè x + len sborda di 1
             return HEIGHT;
