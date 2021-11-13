@@ -174,6 +174,24 @@ char Enemies::set_avatar(int type){
     else return 'O';
 } 
 
+void Enemies::delete_base_enemy(position player_pos, int ps){
+    p_enem iter = this->current;
+    //bool out_of_screen = false;
+    bool found = false;
+    int x_enem,y_enem;
+    
+    while(iter != NULL && !found){
+        x_enem = iter->e->get_position().x - ps;
+        y_enem = iter->e->get_position().y;
+        if((x_enem == player_pos.x) && (y_enem == player_pos.y)){
+            found = true;
+            this->removeEnemies(iter);
+        }else {
+            iter = iter->next;
+        }
+    }
+}
+
 void Enemies::check_is_hit(int ps, int lenS, Shoot* s){
     p_enem iter = this->current;
     bool end_of_screen = false;

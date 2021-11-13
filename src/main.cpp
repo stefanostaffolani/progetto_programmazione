@@ -84,6 +84,7 @@ int main(){
                 //se sono sopra ad un nemico
                 if(player->hit_enemy()) {
                         player->decrease_life(10);
+                        E->delete_base_enemy(player->get_position(), ps);
                         //timeout(100);
                 }
                 player->print_item(0);          // stampa player @

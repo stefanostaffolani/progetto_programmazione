@@ -13,6 +13,7 @@ class Enemies{
         void generate(int,int,int);
         void addNode(int);
         void removeEnemies(p_enem&);
+        void delete_base_enemy(position, int);
 
         void update_current(int, int, int);
         void printEnemies(int,int,int);
