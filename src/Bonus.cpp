@@ -90,6 +90,7 @@ void Bonus::removeBonus(p_bon iter){
     iter = NULL;
 }
 
+// aggiorna il valore del puntatore current, viene chiamata dalla funzione stampa
 void Bonus::update_current(int ps, int lenS, int versor){
     if(current!=NULL){
         if(current -> x < ps && current->next != NULL)

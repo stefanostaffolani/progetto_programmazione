@@ -8,6 +8,7 @@ Field::Field(){
 	lenS = 75;
 } 
 
+// stampa i contorni dello schermo con il punteggio e la vita
 void Field::printField(int ps){	
 	for (int i = 1; i <= lenS; i++){
 		
@@ -33,7 +34,7 @@ void Field::printField(int ps){
 	mvprintw(0,44, "%d",points);
 }
 
-//
+// aggiorna i valori vita e punteggio
 void Field::upgradeData(int plLife, int plPoints){
 	life = plLife;
 	points = plPoints;

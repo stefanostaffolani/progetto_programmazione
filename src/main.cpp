@@ -73,9 +73,7 @@ int main(){
                 
                 field.upgradeData(player.get_life(), player.get_points());
                 field.printField(ps);          // stampa lo schermo e la legenda
-                
-                //s1.print_bullet(ps, lenS);
-                
+                                
                 p1.printPlatforms(ps, lenS, player.get_versor());
                 b1.print_bonus(ps, lenS, player.get_versor());
                 E.printEnemies(ps, lenS, player.get_versor());
@@ -85,7 +83,6 @@ int main(){
                 if(player.hit_enemy()) {
                         player.decrease_life(10);
                         E.delete_base_enemy(player.get_position(), ps);
-                        //timeout(100);
                 }
                 player.print_item(0);          // stampa player @
                 //-----------------
@@ -109,24 +106,13 @@ int main(){
                                 player.set_life(100);      
                 } // ---------------------------------------------------------
 
-                // // verifica che il nemico sia stato incontrato e aggiorna valori vita / punti
-                // type = E.find_enemy(ps, lenS, player.get_position().x, player.get_position().y);
-                // if(type == 0){
-                //         // ...
-                // }
-                // else if(type == 1){
-                //         // ...
-                // }
-
                 // aggiornamento dinamiche di gioco
                 E.move_and_shoot(lenS, ps, player.get_position().x, &s1);
                 player.gravity(ps);
                 E.increase_difficulty(ps);
                 mvprintw(18,1,"ps=%d",ps);
                 mvprintw(19,1,"difficoltà=%d", E.get_difficulty());
-                //if(player.is_hit()) player.decrease_life(15);      //TODO : far funzionare sta roba
-                //if (head != NULL) s1.print_bullet(ps, lenS, player.get_versor());
-        
+                
         } // fine ciclo di gioco ==========================================================
         
         field.gameOver();
