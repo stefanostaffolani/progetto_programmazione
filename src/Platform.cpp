@@ -10,6 +10,7 @@ Platform::Platform(){
         current = NULL;
 }
  
+// aggiunge una platform nella lista
 void Platform::addNode(int h){ // ======================================================
         // se non ci sono ancora nodi -------------------------------------------
         if(first == NULL){
@@ -42,7 +43,7 @@ void Platform::addNode(int h){ // ==============================================
 } // fine funzione addNode() ==========================================================
 
 
-
+// funzione di stampa per le platforms
 void Platform::printPlatforms(int ps, int lenS, int versor){ // ===================================
 
         // 1) verifica dell'aggiornamento valore current -------------------------
@@ -69,7 +70,8 @@ void Platform::printPlatforms(int ps, int lenS, int versor){ // ================
 } // fine funzione printPlatforms() ==================================================
 
 
-
+// se l'ultima platform che è stata generata entra nello schermo
+// chiama per n volte la funzione addNode che aggiunge un nuovo bonus 
 void Platform::generate(int height, int lenS, int ps, int n){
         if(last->x < ps + lenS){ // genera platform se l'ultima entra nello schermo
                 for(int i = 0; i < n; i++)

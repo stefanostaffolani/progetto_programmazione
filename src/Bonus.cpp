@@ -9,6 +9,8 @@ Bonus::Bonus(Platform* p){
     this->p = p;
 }
 
+// se l'ultimo bonus che è stato generato entra nello schermo
+// chiama per n volte la funzione addNode che aggiunge un nuovo bonus 
 void Bonus::generate(int n, int lenS, int ps){
     if(first == NULL) addNode(n);
     if(last->x < ps + lenS){
@@ -17,6 +19,7 @@ void Bonus::generate(int n, int lenS, int ps){
     }
 }
 
+// aggiunge un bonus nella lista dei bonus
 void Bonus::addNode(int n){
 
     if(first == NULL){ // è il primo bonus che genero
@@ -44,6 +47,7 @@ void Bonus::addNode(int n){
 
 }
 
+// rimuove un bonus dalla lista dei bonus
 void Bonus::removeBonus(p_bon iter){
     // verifico se il bonus è current, last, first altirmenti nulla
     

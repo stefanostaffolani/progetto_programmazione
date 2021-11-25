@@ -9,6 +9,8 @@ Enemies::Enemies(Platform* plat){
     this->current = NULL;
 } 
 
+// se l'ultimo nemico che è stato generato entra nello schermo
+// chiama per n volte la funzione addNode che aggiunge un nuovo nemico 
 void Enemies::generate(int n, int lenS, int ps){
     if(first == NULL) addNode(5);
     if(last->e->get_position().x < ps + lenS){ // se il nemico ultimo entra nellos schermo
@@ -17,6 +19,7 @@ void Enemies::generate(int n, int lenS, int ps){
     }
 }
 
+// aggiungie un nemico nella lista di nemici
 void Enemies::addNode(int n){
     // genero 10 nemici
     int x;
@@ -58,6 +61,7 @@ void Enemies::addNode(int n){
 
 }
 
+// rimuove un nemico dalla lista dei nemici
 void Enemies::removeEnemies(p_enem& iter){
 
     if(iter == current){
@@ -100,6 +104,7 @@ void Enemies::removeEnemies(p_enem& iter){
 
 }
 
+// aggiorna il valore del puntatore current, viene chiamata prima della stampa
 void Enemies::update_current(int ps, int lenS, int versor){
     if(current!=NULL){
         if(current->e->get_position().x < ps && current->next != NULL) // se sto andando avanti:
