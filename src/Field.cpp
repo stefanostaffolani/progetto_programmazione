@@ -1,7 +1,4 @@
-#include <ncurses.h>
-#include <iostream>
 #include "Field.hpp"
-using namespace std;
 
 Field::Field(){
 	height = 12;
@@ -33,6 +30,11 @@ void Field::printField(int ps){
 	mvprintw(0,14, "%d",life);
 	mvprintw(0,44, "%d",points);
 }
+
+int Field::getLenS() { return lenS; }
+int Field::getHeight() { return height; }
+int Field::getPoint() { return points; }
+int Field::getLife() { return life; }
 
 // aggiorna i valori vita e punteggio
 void Field::upgradeData(int plLife, int plPoints){
