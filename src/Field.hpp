@@ -1,17 +1,15 @@
-#include "Player.hpp"
-
 class Field{
 public:
 	Field();
-	void printField(int);
-	void upgradeData(int, int);
+	void printField(int ps);
+	void upgradeData(int plLife, int plPoints);
 	void gameOver();
 
-	int getLenS();
-	int getHeight();
-	int getPoint();
-	int getLife();
-	
+	int getLenS() { return lenS; }
+	int getHeight() { return height; }
+	int getPoint() { return points; }
+	int getLife() { return life; }
+		 
 protected:
 	int life;
 	int points;
