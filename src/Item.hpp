@@ -9,6 +9,7 @@
 #define DOLLAR 36
 #define PIPE 124
 #define P_DAMAGE 10
+#define LIFE 100
 
 struct position{
     int x;

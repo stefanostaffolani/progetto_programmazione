@@ -39,7 +39,7 @@ void Game::game_loop(){
 }
 
 void Game::game_print(){
-    this->s1->update_bullet(this->ps, LENGTH);
+    this->s1->update_bullet(this->ps);
     this->E->check_is_hit(this->ps, LENGTH, s1);
     this->player->check_is_hit();    // se viene preso da un bullet nemico
                 

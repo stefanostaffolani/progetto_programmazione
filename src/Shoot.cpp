@@ -5,14 +5,14 @@ Shoot::Shoot(){
     this->tail = NULL;
 }
 
-void Shoot::update_bullet(int ps, int lenS){
+void Shoot::update_bullet(int ps){
     
     p_bullet iter = head;
     while(iter != NULL){
         iter->b->decrease_counter();  
         
         //cancella se tocca qualcosa o esce dallo schermo o finisce il contatore
-        if(iter->b->get_counter() < 0 || iter->b->get_hit() || iter->b->get_position().x > lenS || iter->b->get_position().x < 1){
+        if(iter->b->get_counter() < 0 || iter->b->get_hit() || iter->b->get_position().x > LENGTH || iter->b->get_position().x < 1){
             iter->b->delete_item(0);
             remove_bullet(iter);
         }
