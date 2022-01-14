@@ -14,7 +14,7 @@ typedef struct bonuslist* p_bon;
 class Bonus{
 public:
     Bonus(Platform*);
-    void generate(int,int,int);
+    void generate(int,int);
     void addNode();
     void removeBonus(p_bon);
 
