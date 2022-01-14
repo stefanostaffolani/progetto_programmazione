@@ -11,9 +11,9 @@ Platform::Platform(){
 }
  
 // aggiunge una platform nella lista
-void Platform::addNode(int h){ // ======================================================
+void Platform::addNode(int h){ 
 
-        // se non ci sono ancora nodi -------------------------------------------
+        // se non ci sono ancora nodi 
         if(first == NULL){ 
                
                 first = new node;               // il primo nodo(first), prima nullo, punta a un nuovo nodo 
@@ -30,7 +30,7 @@ void Platform::addNode(int h){ // ==============================================
                 current = first;
         
         }
-        else { // altrimenti aggiungo in testa  --------------------------------
+        else { // altrimenti aggiungo in testa  
                 
                 p_node tmp = new node;         
 
@@ -55,13 +55,12 @@ void Platform::addNode(int h){ // ==============================================
                 delete tmp;
         }
 
-} // fine funzione addNode() ==========================================================
-
+} 
 
 // funzione di stampa per le platforms
-void Platform::printPlatforms(int ps, int lenS, int versor){ // ===================================
+void Platform::printPlatforms(int ps, int lenS, int versor){ 
 
-        // 1) verifica dell'aggiornamento valore current ----------------------------------------
+        // 1) verifica dell'aggiornamento valore current 
                 // se sto andando avanti:
         if(current -> x + current -> len < ps)          // verifico se il valore x+len di current è fuori dallo schermo a sinistra
                 current = current -> next;              // se è fuori dallo schermo lo aggiorno al prossimo
@@ -87,8 +86,7 @@ void Platform::printPlatforms(int ps, int lenS, int versor){ // ================
                 iter = iter->next;
         }
 
-} // fine funzione printPlatforms() ==================================================
-
+} 
 
 /* se l'ultima platform che è stata generata entra nello schermo
 *  chiama per n volte la funzione addNode che aggiunge un nuovo bonus 

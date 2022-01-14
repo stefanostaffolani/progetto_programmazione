@@ -10,27 +10,27 @@ Field::Field(){
 
 // stampa i contorni dello schermo con il punteggio e la vita
 void Field::printField(int ps){	
-	for (int i = 1; i <= lenS; i++){
-		
-		mvprintw(1,i,"-");
-		if(i < height && ps == 0){
-			mvprintw(i+1,0,"|");		
-		}
-		else if(ps > 0)
-			mvprintw(i+1, 0, " ");
 
-		mvprintw(height + 1,i,"-");
+	for(int i = 1; i <= lenS; i++){
+		mvprintw(1,i,"-");				// stampo ------ sulla linea y = 1
+		mvprintw(height + 1,i,"-");		// srampo ------ sulla linea y = height + 1
 	}
+	for(int i = 2; i <= height; i++){	
+		if(ps == 0) mvprintw(i, 0, "|");	// stampo il muro '|' a inizio schermo se ps è uguale a 0 
+		else 		mvprintw(i, 0, " ");	// cancello l'eventuale muro se ps è maggiore di 0
+	}		
 
-	mvprintw(0,8,"LIFE:");
-	mvprintw(0,35,"POINTS:");
 
+	// cancella i precedenti valori numerici stampati
 	for(int i = 0; i < 8; i++){
 		mvprintw(0,14 + i, " ");
 		mvprintw(0,44 + i, " ");	
 	}
 
+	// stampa target life e points
+	mvprintw(0,8,"LIFE:");
 	mvprintw(0,14, "%d",life);
+	mvprintw(0,35,"POINTS:");
 	mvprintw(0,44, "%d",points);
 }
 
@@ -40,6 +40,7 @@ void Field::upgradeData(int plLife, int plPoints){
 	points = plPoints;
 }
 
+// stampa un avviso di game over e mostra il punteggio ottenuto
 void Field::gameOver(){
 	clear();
 	mvprintw(2, 0, "  _____ _____ _____ _____    _____ _____ _____ _____ \n |   __|  _  |     |   __|  |     |  |  |   __| __  |\n |  |  |     | | | |   __|  |  |  |  |  |   __|    -|\n |_____|__|__|_|_|_|_____|  |_____| ___/|_____|__|__|\n");
