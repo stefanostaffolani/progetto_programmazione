@@ -48,20 +48,20 @@ void Game::game_print(){
                                 
     this->p1->printPlatforms(this->ps, this->player->get_versor());
     this->b1->print_bonus(this->ps, this->player->get_versor());
-    this->E->printEnemies(this->ps, this->field->getLenS(), this->player->get_versor());
+    this->E->printEnemies(this->ps, HEIGHT, this->player->get_versor());
 }
 
 void Game::game_generate(){
     // generazione di bonus, platform, enemies ----------------------
     this->p1->generate(this->ps, 50);
     this->b1->generate(10, this->ps);
-    this->E->generate(5, this->field->getLenS(), this->ps);
+    this->E->generate(5, HEIGHT, this->ps);
     // --------------------------------------------------------------
 }
 
 void Game::game_dynamics(){
 // aggiornamento dinamiche di gioco
-    this->E->move_and_shoot(this->field->getLenS(), this->ps, this->player->get_position().x, s1);
+    this->E->move_and_shoot(HEIGHT, this->ps, this->player->get_position().x, s1);
     this->player->gravity(this->ps);
     this->E->increase_difficulty(this->ps);
 }

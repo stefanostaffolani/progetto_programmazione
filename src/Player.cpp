@@ -3,7 +3,7 @@
 using namespace std;
 
 Player::Player(char avatar, Platform* p1, Bonus* b1, Enemies* e1, Shoot* s1, position pos):Item(avatar, pos, 0){
-    life = 100;
+    life = LIFE;
     points = 0;
     p2 = p1;
     b2 = b1;

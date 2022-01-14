@@ -9,13 +9,14 @@ void Shoot::update_bullet(int ps, int lenS){
     
     p_bullet iter = head;
     while(iter != NULL){
-        iter->b->decrease_counter();
+        iter->b->decrease_counter();  
+        
+        //cancella se tocca qualcosa o esce dallo schermo o finisce il contatore
         if(iter->b->get_counter() < 0 || iter->b->get_hit() || iter->b->get_position().x > lenS || iter->b->get_position().x < 1){
-            mvprintw(20, 1, "colpito =");
             iter->b->delete_item(0);
             remove_bullet(iter);
         }
-        else{
+        else{   // else muove il bullet con move
             iter->b->hit_something();
             iter->b->move(0);
         }
@@ -43,18 +44,7 @@ void Shoot::add_bullet(position p, int v, char avatar, int damage){
     }
 }
 
- 
-void Shoot::print_bullet(int ps, int lenS){   //TODO: capire se serve
-    p_bullet iter = head;  
-    while(iter != NULL){
-        iter->b->print_item(0);
-        iter = iter->next;
-    }
-}
-
-
 p_bullet Shoot::get_head(){return this->head;}
-
 
 void Shoot::remove_bullet(p_bullet& iter){
     if(iter == head){
