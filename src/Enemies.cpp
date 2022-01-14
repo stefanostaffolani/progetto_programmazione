@@ -2,7 +2,7 @@
  
 Enemies::Enemies(Platform* plat){
     this->difficulty = 0;
-    this->fattore_incremento = 20;    // valutare poi il fattore di incremento
+    this->fattore_incremento = 200;    // valutare poi il fattore di incremento
     this->p2 = plat;
     this->first = NULL;
     this->last = NULL;
@@ -123,8 +123,8 @@ void Enemies::printEnemies(int ps, int versor){
         p_enem iter = current;  
         if(iter != NULL){
             while(iter->next != NULL && iter ->e->get_position().x < ps + LENGTH){ // cicla fino a che la nuova x di iter è fuori dallo schermo
-                    if(versor == 1) iter->e->delete_item(ps-1); // premo d 
-                    else if(versor == -1) iter->e->delete_item(ps+1); // premo a
+                    if(versor == 1) iter->e->delete_item(ps-1); // premo d, vado a dx ==> avevo incrementato ps
+                    else if(versor == -1) iter->e->delete_item(ps+1); // premo a, vado a sx ==> avevo decrementato ps
                     if(iter ->e->get_position().x >= ps && iter ->e->get_position().x < ps + LENGTH - 1){
                         iter->e->print_item(ps);
                     }                
@@ -134,15 +134,15 @@ void Enemies::printEnemies(int ps, int versor){
 
 } 
 
-void Enemies::move_and_shoot(int ps, int x_player, Shoot* s2){
+void Enemies::move_and_shoot(int ps, int x_player, Shoot* s2){     //scorre la lista dei nemici e li fa muovere e sparare
     p_enem iter = this->current;
     if(iter != NULL){
         while(iter->next != NULL && iter->e->get_position().x < LENGTH + ps){
-            if(iter->e->get_type()){
-                if(iter->e->get_versor() == 1) mvprintw(iter->e->get_position().y, iter->e->get_position().x - ps + 1, " "); // premo d 
-                else if(iter->e->get_versor() == -1) mvprintw(iter->e->get_position().y, iter->e->get_position().x - ps - 1, " "); // premo a
+            if(iter->e->get_type()){   // se il nemico non e' base
+                if(iter->e->get_versor() == 1) mvprintw(iter->e->get_position().y, iter->e->get_position().x - ps + 1, " "); // premo d, quindi vado a dx  ==> avevo incremento ps
+                else if(iter->e->get_versor() == -1) mvprintw(iter->e->get_position().y, iter->e->get_position().x - ps - 1, " "); // premo a, quindi vado a sx ==> avevo decrementato ps
                 iter->e->random_move(ps);
-                iter->e->random_shoot((11-this->difficulty), x_player, ps, s2);
+                iter->e->random_shoot((11-this->difficulty), x_player, ps, s2);   // 11 - diff ==> probabilita' di sparo fino a 50%
             }
             iter = iter->next;
         }
@@ -155,7 +155,7 @@ void Enemies::increase_difficulty(int ps){    // operazione per aumentare la dif
     if(this->difficulty < 9) this->difficulty = ps / this->fattore_incremento;
 }
 
-int Enemies::set_y(int x){
+int Enemies::set_y(int x){    
     bool found_plat = false;
 
     p_node iter = p2->get_current();
@@ -167,7 +167,7 @@ int Enemies::set_y(int x){
         if(iter->prev->x + iter->prev->len - 1 < x)    // -1 perchè x + len sborda di 1
             return HEIGHT;
         else{
-            if(rand()%2)return iter->prev->y - 1;
+            if(rand()%2)return iter->prev->y - 1;    //50% possibilita' su plat 50% possibilita' su terra
             else return HEIGHT;
         }
     }
@@ -186,7 +186,7 @@ void Enemies::delete_base_enemy(position player_pos, int ps){
     while(iter != NULL && !found){
         x_enem = iter->e->get_position().x - ps;
         y_enem = iter->e->get_position().y;
-        if((x_enem == player_pos.x) && (y_enem == player_pos.y)){
+        if((x_enem == player_pos.x) && (y_enem == player_pos.y)){   //se e' il nemico in posizione richiesta cancella
             found = true;
             this->removeEnemies(iter);
         }else {
