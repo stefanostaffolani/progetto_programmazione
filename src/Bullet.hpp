@@ -6,7 +6,7 @@ class Bullet : public Item{
     public:
         Bullet(int, position, char, int);
 
-        // inc-dec
+        // incr-decr
         void decrease_counter();
         void increase_damage(int);
 
