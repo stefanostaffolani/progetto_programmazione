@@ -1,6 +1,7 @@
 #include <ncurses.h>
 #include <time.h>
 #include <iostream>
+#include "Macro.hpp"
 
 /*
 *       se scrivessimo qua tipo 
