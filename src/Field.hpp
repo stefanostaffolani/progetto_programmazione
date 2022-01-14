@@ -1,3 +1,5 @@
+#include "Player.hpp"
+
 class Field{
 public:
 	Field();
