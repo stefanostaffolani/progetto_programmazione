@@ -30,9 +30,7 @@ void Enemy::random_move(int ps){  //TODO: controllare questa funzione sulle plat
         else this->set_versor(1);
         if(mvinch(this->pos.y, this->pos.x + this->versor - ps) == (int)' '){
             timeout(100);
-            mvprintw(21, 20, "è sulla plat:%d",on_plat);
             if(this->on_plat && !this->check_plat_border(ps)){
-                mvprintw(21,1,"ok si muove");
                 this->move(ps);
             }else if (!this->on_plat){
                 this->move(ps);

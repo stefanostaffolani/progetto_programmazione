@@ -35,7 +35,7 @@ protected:
 /*
     2 nemici(type)
     base => sta fermo e fa danno se lo tocchi (0)
-    forte => è uguale al base ma spara(*) (2)
+    forte => si muove e spara(*) (2)
 */
 
 /* cosa deve avere Enemy:

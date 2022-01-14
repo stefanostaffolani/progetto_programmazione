@@ -11,9 +11,9 @@ Enemies::Enemies(Platform* plat){
 
 // se l'ultimo nemico che è stato generato entra nello schermo
 // chiama per n volte la funzione addNode che aggiunge un nuovo nemico 
-void Enemies::generate(int n, int lenS, int ps){
+void Enemies::generate(int n, int ps){
     if(first == NULL) addNode(5);
-    if(last->e->get_position().x < ps + lenS){ // se il nemico ultimo entra nellos schermo
+    if(last->e->get_position().x < ps + LENGTH){ // se il nemico ultimo entra nellos schermo
         for(int i = 0; i < n; i++)
             addNode(n);
     }
@@ -105,7 +105,7 @@ void Enemies::removeEnemies(p_enem& iter){
 }
 
 // aggiorna il valore del puntatore current, viene chiamata prima della stampa
-void Enemies::update_current(int ps, int lenS, int versor){
+void Enemies::update_current(int ps, int versor){
     if(current!=NULL){
         if(current->e->get_position().x < ps && current->next != NULL) // se sto andando avanti:
             current = current -> next;
@@ -114,18 +114,18 @@ void Enemies::update_current(int ps, int lenS, int versor){
     }
 }
 
-void Enemies::printEnemies(int ps, int lenS, int versor){ 
+void Enemies::printEnemies(int ps, int versor){ 
 
         // 1) verifica dell'aggiornamento valore current -------------------------
-        update_current(ps, lenS, versor);
+        update_current(ps, versor);
 
         // 2) stampare da current fino a limite schermo --------------------------
         p_enem iter = current;  
         if(iter != NULL){
-            while(iter->next != NULL && iter ->e->get_position().x < ps + lenS){ // cicla fino a che la nuova x di iter è fuori dallo schermo
+            while(iter->next != NULL && iter ->e->get_position().x < ps + LENGTH){ // cicla fino a che la nuova x di iter è fuori dallo schermo
                     if(versor == 1) iter->e->delete_item(ps-1); // premo d 
                     else if(versor == -1) iter->e->delete_item(ps+1); // premo a
-                    if(iter ->e->get_position().x >= ps && iter ->e->get_position().x < ps + lenS - 1){
+                    if(iter ->e->get_position().x >= ps && iter ->e->get_position().x < ps + LENGTH - 1){
                         iter->e->print_item(ps);
                     }                
                     iter = iter->next;
@@ -134,10 +134,10 @@ void Enemies::printEnemies(int ps, int lenS, int versor){
 
 } 
 
-void Enemies::move_and_shoot(int lenS, int ps, int x_player, Shoot* s2){
+void Enemies::move_and_shoot(int ps, int x_player, Shoot* s2){
     p_enem iter = this->current;
     if(iter != NULL){
-        while(iter->next != NULL && iter->e->get_position().x < lenS + ps){
+        while(iter->next != NULL && iter->e->get_position().x < LENGTH + ps){
             if(iter->e->get_type()){
                 if(iter->e->get_versor() == 1) mvprintw(iter->e->get_position().y, iter->e->get_position().x - ps + 1, " "); // premo d 
                 else if(iter->e->get_versor() == -1) mvprintw(iter->e->get_position().y, iter->e->get_position().x - ps - 1, " "); // premo a
@@ -197,13 +197,13 @@ void Enemies::delete_base_enemy(position player_pos, int ps){
     }
 }
 
-void Enemies::check_is_hit(int ps, int lenS, Shoot* s){
+void Enemies::check_is_hit(int ps, Shoot* s){
     p_enem iter = this->current;
     bool end_of_screen = false;
     bool stop;
     p_bullet iter_b;
     while(iter != NULL && !end_of_screen){
-        if(iter->e->get_position().x < (ps + lenS)){
+        if(iter->e->get_position().x < (ps + LENGTH)){
             iter_b = s->get_head();
             stop = false;
             while(iter_b != NULL && !stop){

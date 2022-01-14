@@ -1,6 +1,5 @@
 #include <ncurses.h>
 #include "Field.hpp"
-//#include "Player.hpp"
 using namespace std;
 
 class Game{
