@@ -53,4 +53,5 @@ void Field::gameOver(){
 
 }
 
-
+int Field::getPoint(){ return this->points; }
+int Field::getLife(){ return this->life; }

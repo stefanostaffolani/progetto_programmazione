@@ -23,13 +23,16 @@ void Bonus::generate(int n, int ps){
 void Bonus::addNode(int n){
 
     if(first == NULL){ // è il primo bonus che genero
-        first = new bonuslist();
+
+        // essendoci un solo nodo i puntatori a current last e first puntano tutti allo stesso
+        first = new bonuslist();    
         current = first;
         last = first;
 
         first->next = NULL;
         first->prev = NULL;
-        first->x = p->get_current()->x + rand() % n + 30;
+
+        first->x = p->get_current()->x + rand() % n + 30;      
         first->y = this->set_y(first->x);
         first->type = (rand()%10 == 0) ? 1 : 0;
     }
