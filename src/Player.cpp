@@ -32,7 +32,7 @@ void Player::move(int& ps){
     s2->update_bullet(ps);
     p2->printPlatforms(ps, this->versor);    // ristampo tutto per fare il refresh
     b2->print_bonus(ps, this->versor);
-    e2->printEnemies(ps, LENGTH, this->versor);
+    e2->printEnemies(ps, this->versor);
 }
 
 void Player::decrease_life(int n){this->life -= n;}
@@ -62,7 +62,7 @@ void Player::jump(int& ps){
     position diagonale, sopra;
     while((i < Y_JUMP) && !(hit_something)){   // salta finche' non colpisce qualcosa o per un max di 5 in altezza
 
-        e2->move_and_shoot(75,ps,this->pos.x,s2);     //aggiorna i nemici
+        e2->move_and_shoot(ps,this->pos.x,s2);     //aggiorna i nemici
 
         c = getch();
         diagonale = {this->pos.x+this->versor, this->pos.y - 1};
@@ -99,7 +99,7 @@ void Player::gravity(int& ps){
     position diagonale, sotto, laterale;
     while(!(hit_something)){
         
-        e2->move_and_shoot(75,ps,this->pos.x,s2);   //per i nemici
+        e2->move_and_shoot(ps,this->pos.x,s2);   //per i nemici
 
         //per sparare
         c = getch();

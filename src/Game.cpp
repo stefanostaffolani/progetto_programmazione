@@ -40,7 +40,7 @@ void Game::game_loop(){
 
 void Game::game_print(){
     this->s1->update_bullet(this->ps);
-    this->E->check_is_hit(this->ps, LENGTH, s1);
+    this->E->check_is_hit(this->ps, s1);
     this->player->check_is_hit();    // se viene preso da un bullet nemico
                 
     this->field->upgradeData(this->player->get_life(), this->player->get_points());
@@ -48,20 +48,20 @@ void Game::game_print(){
                                 
     this->p1->printPlatforms(this->ps, this->player->get_versor());
     this->b1->print_bonus(this->ps, this->player->get_versor());
-    this->E->printEnemies(this->ps, HEIGHT, this->player->get_versor());
+    this->E->printEnemies(this->ps, this->player->get_versor());
 }
 
 void Game::game_generate(){
     // generazione di bonus, platform, enemies ----------------------
     this->p1->generate(this->ps, 50);
     this->b1->generate(10, this->ps);
-    this->E->generate(5, HEIGHT, this->ps);
+    this->E->generate(5, this->ps);
     // --------------------------------------------------------------
 }
 
 void Game::game_dynamics(){
 // aggiornamento dinamiche di gioco
-    this->E->move_and_shoot(HEIGHT, this->ps, this->player->get_position().x, s1);
+    this->E->move_and_shoot(this->ps, this->player->get_position().x, s1);
     this->player->gravity(this->ps);
     this->E->increase_difficulty(this->ps);
 }
