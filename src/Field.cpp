@@ -1,6 +1,8 @@
 #include <ncurses.h>
 #include <iostream>
 #include "Field.hpp"
+
+
 using namespace std;
 
 // stampa i contorni dello schermo con il punteggio e la vita

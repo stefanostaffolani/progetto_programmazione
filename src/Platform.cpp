@@ -2,6 +2,8 @@
 #include <ncurses.h>
 #include <time.h>
 #include "Platform.hpp"
+#include "Macro.hpp"
+
 using namespace std;
 
 Platform::Platform(){
