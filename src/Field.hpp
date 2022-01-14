@@ -1,6 +1,6 @@
 class Field{
 public:
-	Field();
+	Field(){}
 	void printField(int ps);
 	void upgradeData(int plLife, int plPoints);
 	void gameOver();
