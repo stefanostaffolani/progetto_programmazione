@@ -2,6 +2,22 @@
 #include <time.h>
 #include <iostream>
 
+/*
+*       se scrivessimo qua tipo 
+*       Platform:
+*       e ci scrivi la descrizione della classe fatta bene che copiamo 
+*       e incolliamo dalla relazione
+*
+*       
+*
+*
+*      e verrà tipo lungo così
+*      così non dobbiamo scrivere mille commenti inutili in giro ma solo
+*      quelli relativi a cose importanti logiche..
+*
+*
+*/     
+
 struct node{
         int x;
         int y;
