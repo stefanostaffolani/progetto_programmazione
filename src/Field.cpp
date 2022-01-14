@@ -4,6 +4,7 @@
 
 
 using namespace std;
+Field::Field(){}
 
 // stampa i contorni dello schermo con il punteggio e la vita
 void Field::printField(int ps){	
