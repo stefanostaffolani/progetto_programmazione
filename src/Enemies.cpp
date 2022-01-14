@@ -205,9 +205,10 @@ void Enemies::check_is_hit(int ps, Shoot* s){
             iter_b = s->get_head();
             stop = false;
             while(iter_b != NULL && !stop){
-                if(iter->e->get_position().x - ps == iter_b->b->get_position().x 
+                if(iter->e->get_position().x - ps == iter_b->b->get_position().x \
                 && iter->e->get_position().y == iter_b->b->get_position().y && \
                 (iter_b->b->get_avatar() != '*')){  //TODO:in caso poi fare utils
+                    
                     iter->e->decrease_life(iter_b->b->get_damage());
                     if(iter->e->get_life() <= 0) this->removeEnemies(iter);
                     stop = true;
