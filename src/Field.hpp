@@ -7,9 +7,8 @@ public:
 	void upgradeData(int plLife, int plPoints);
 	void gameOver();
 
-	int getPoint() { return points; }
-	int getLife() { return life; }
-		 
+	int getPoint();
+	int getLife();		 
 protected:
 	int life;
 	int points;
