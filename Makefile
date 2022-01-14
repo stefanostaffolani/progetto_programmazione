@@ -1,7 +1,7 @@
 CC = g++
 INCLUDES = -lncurses
 DIR = ./src
-OBJECTS = main.o Platform.o Field.o Player.o Bonus.o Item.o Shoot.o Enemy.o Enemies.o Bullet.o
+OBJECTS = main.o Platform.o Field.o Player.o Bonus.o Item.o Shoot.o Enemy.o Enemies.o Bullet.o Game.o
 
 
 test: $(OBJECTS)
@@ -9,6 +9,9 @@ test: $(OBJECTS)
 
 main.o : $(DIR)/main.cpp
 	$(CC) -c $(DIR)/main.cpp
+
+Game.o : $(DIR)/Game.?pp
+	$(CC) -c $(DIR)/Game.cpp
 
 Item.o: $(DIR)/Item.?pp
 	$(CC) -c $(DIR)/Item.cpp
