@@ -5,15 +5,10 @@ public:
 	void upgradeData(int plLife, int plPoints);
 	void gameOver();
 
-	int getLenS() { return lenS; }
-	int getHeight() { return height; }
 	int getPoint() { return points; }
 	int getLife() { return life; }
 		 
 protected:
 	int life;
 	int points;
-	
-	int lenS; // length screen
-	int height; // height of the screen
 };

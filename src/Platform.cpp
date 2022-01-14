@@ -11,7 +11,7 @@ Platform::Platform(){
 }
  
 // aggiunge una platform nella lista
-void Platform::addNode(int h){ 
+void Platform::addNode(){ 
 
         // se non ci sono ancora nodi 
         if(first == NULL){ 
@@ -42,12 +42,13 @@ void Platform::addNode(int h){
 
                 // la x del nuovo nodo è uguale alla x del precedente più la lunghezza e un valore random 
                 tmp -> x = tmp -> prev -> x + tmp -> prev -> len + rand() % 2 + 5; 
+
                 // la y del nuovo nodo è uguale alla y del precedente più un range randomico anche negativo 
                 do {
                         tmp -> y = tmp -> prev -> y + rand() % 4 - rand() % 3;
                 
                 // finchè il valore che ho trovato entra nello schermo 
-                } while(tmp -> y < 4 || tmp -> y > h - 2);
+                } while(tmp -> y < 4 || tmp -> y > HEIGHT - 2);
 
                 tmp -> len = rand() % 10 + 5;   // lunghezza len della platform [ 01..===t ] len = t
                 
@@ -58,7 +59,7 @@ void Platform::addNode(int h){
 } 
 
 // funzione di stampa per le platforms
-void Platform::printPlatforms(int ps, int lenS, int versor){ 
+void Platform::printPlatforms(int ps, int versor){ 
 
         // 1) verifica dell'aggiornamento valore current 
                 // se sto andando avanti:
@@ -72,7 +73,7 @@ void Platform::printPlatforms(int ps, int lenS, int versor){
         // 2) stampo le platform da current fino a che o finisco o trovo una x fuori dallo schermo
         p_node iter = current;   
 
-        while(iter != NULL && iter -> x < ps + lenS){ 
+        while(iter != NULL && iter -> x < ps + LENGTH){ 
 
                 // a seconda della direzione(versor) cancello la = della platform degli estremi poichè lo schermo si è mosso  
                 if(versor == 1) mvprintw(iter->y, iter->x + iter->len - ps, " "); 
@@ -80,7 +81,7 @@ void Platform::printPlatforms(int ps, int lenS, int versor){
                 
                 // stampo = della platform da x fino a x+len controllando che non esca dallo schermo
                 for(int i = 0; i < iter->len; i++){
-                        if(iter -> x + i >= ps && iter -> x + i < ps + lenS - 1)
+                        if(iter -> x + i >= ps && iter -> x + i < ps + LENGTH - 1)
                                 mvprintw(iter -> y, iter -> x + i - ps, "=");
                 }
                 iter = iter->next;
@@ -91,9 +92,9 @@ void Platform::printPlatforms(int ps, int lenS, int versor){
 /* se l'ultima platform che è stata generata entra nello schermo
 *  chiama per n volte la funzione addNode che aggiunge un nuovo bonus 
 */
-void Platform::generate(int height, int lenS, int ps, int n){
-        if(last->x < ps + lenS){ 
+void Platform::generate(int ps, int n){
+        if(last->x < ps + LENGTH){ 
                 for(int i = 0; i < n; i++)
-                      addNode(height);                          
+                      addNode();                          
         }
 }

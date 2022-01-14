@@ -3,19 +3,14 @@
 #include "Field.hpp"
 using namespace std;
 
-Field::Field(){
-	height = 12;
-	lenS = 75;
-} 
-
 // stampa i contorni dello schermo con il punteggio e la vita
 void Field::printField(int ps){	
 
-	for(int i = 1; i <= lenS; i++){
+	for(int i = 1; i <= LENGTH; i++){
 		mvprintw(1,i,"-");				// stampo ------ sulla linea y = 1
-		mvprintw(height + 1,i,"-");		// srampo ------ sulla linea y = height + 1
+		mvprintw(HEIGHT + 1,i,"-");		// srampo ------ sulla linea y = HEIGHT + 1
 	}
-	for(int i = 2; i <= height; i++){	
+	for(int i = 2; i <= HEIGHT; i++){	
 		if(ps == 0) mvprintw(i, 0, "|");	// stampo il muro '|' a inizio schermo se ps è uguale a 0 
 		else 		mvprintw(i, 0, " ");	// cancello l'eventuale muro se ps è maggiore di 0
 	}		

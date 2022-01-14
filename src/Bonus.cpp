@@ -11,9 +11,9 @@ Bonus::Bonus(Platform* p){
 
 // se l'ultimo bonus che è stato generato entra nello schermo
 // chiama per n volte la funzione addNode che aggiunge un nuovo bonus 
-void Bonus::generate(int n, int lenS, int ps){
+void Bonus::generate(int n, int ps){
     if(first == NULL) addNode(n);
-    if(last->x < ps + lenS){
+    if(last->x < ps + LENGTH){
         for(int i = 0; i < n; i++)
             addNode(n);
     }
@@ -91,7 +91,7 @@ void Bonus::removeBonus(p_bon iter){
 }
 
 // aggiorna il valore del puntatore current, viene chiamata dalla funzione stampa
-void Bonus::update_current(int ps, int lenS, int versor){
+void Bonus::update_current(int ps, int versor){
     if(current!=NULL){
         if(current -> x < ps && current->next != NULL)
                 current = current -> next;
@@ -101,20 +101,20 @@ void Bonus::update_current(int ps, int lenS, int versor){
     }
 }
 
-void Bonus::print_bonus(int ps, int lenS, int versor){
+void Bonus::print_bonus(int ps, int versor){
 
     // 1) verifica dell'aggiornamento valore current -------------------------
                 // se sto andando avanti:
-    update_current(ps, lenS, versor);
+    update_current(ps, versor);
 
     // 2) stampare da current fino a limite schermo --------------------------
     p_bon iter = current;  
 
     if(current != NULL){
-        while(iter != NULL && iter -> x < ps + lenS){ // cicla fino a che la nuova x di iter è fuori dallo schermo
+        while(iter != NULL && iter -> x < ps + LENGTH){ // cicla fino a che la nuova x di iter è fuori dallo schermo
             if(versor == 1) mvprintw(iter->y, iter->x - ps + 1, " "); // premo d 
             else if(versor == -1) mvprintw(iter->y, iter->x - ps - 1, " "); // premo a
-            if(iter -> x >= ps && iter -> x < ps + lenS - 1){
+            if(iter -> x >= ps && iter -> x < ps + LENGTH - 1){
                 if(iter->type == 0)
                     mvprintw(iter -> y, iter -> x - ps, "$");
                 else if(iter->type == 1)
@@ -125,7 +125,7 @@ void Bonus::print_bonus(int ps, int lenS, int versor){
     }
 }
 
-int Bonus::find_bonus(int ps, int lenS, int plx, int ply, int versor){
+int Bonus::find_bonus(int ps, int plx, int ply, int versor){
     
     // 1) verifica che il bonus sia stato trovato, 
     // 2) ritorna il tipo di bonus che ha trovato
@@ -136,13 +136,13 @@ int Bonus::find_bonus(int ps, int lenS, int plx, int ply, int versor){
     int bonus_type_found = -1;
 
     if(iter!=NULL){
-        while(iter != NULL && iter->x < ps+lenS){
+        while(iter != NULL && iter->x < ps+LENGTH){
             
             if(iter->x == plx + ps && iter->y == ply) {
 
                 bonus_type_found = iter->type;
                 removeBonus(iter);
-                update_current(ps, lenS, versor);
+                update_current(ps, versor);
 
                 mvprintw(ply, plx, "@");
                 mvprintw(ply, plx + 1, " ");

@@ -13,7 +13,7 @@ Game::Game(){
     this->gameOver = false;
     //genero 50 platform, 15 nemici e 15 bonus
     for(int i = 0; i < 50; i++)
-        this->p1->addNode(this->field->getHeight());
+        this->p1->addNode();
     for(int i = 0; i < 3; i++){   //TODO: pulire sta cosa
         this->E->addNode(5);
         this->b1->addNode(5);
@@ -39,22 +39,22 @@ void Game::game_loop(){
 }
 
 void Game::game_print(){
-    this->s1->update_bullet(this->ps, this->field->getLenS());
-    this->E->check_is_hit(this->ps, this->field->getLenS(), s1);
+    this->s1->update_bullet(this->ps, LENGTH);
+    this->E->check_is_hit(this->ps, LENGTH, s1);
     this->player->check_is_hit();    // se viene preso da un bullet nemico
                 
     this->field->upgradeData(this->player->get_life(), this->player->get_points());
     this->field->printField(this->ps);          // stampa lo schermo e la legenda
                                 
-    this->p1->printPlatforms(this->ps, this->field->getLenS(), this->player->get_versor());
-    this->b1->print_bonus(this->ps, this->field->getLenS(), this->player->get_versor());
+    this->p1->printPlatforms(this->ps, this->player->get_versor());
+    this->b1->print_bonus(this->ps, this->player->get_versor());
     this->E->printEnemies(this->ps, this->field->getLenS(), this->player->get_versor());
 }
 
 void Game::game_generate(){
     // generazione di bonus, platform, enemies ----------------------
-    this->p1->generate(this->field->getHeight(), this->field->getLenS(), this->ps, 50);
-    this->b1->generate(10, this->field->getLenS(), this->ps);
+    this->p1->generate(this->ps, 50);
+    this->b1->generate(10, this->ps);
     this->E->generate(5, this->field->getLenS(), this->ps);
     // --------------------------------------------------------------
 }
@@ -77,7 +77,7 @@ void Game::game_check_enemy_collision(){
 
 void Game::game_bonus(){
     // verifica che il bonus sia stato incontrato e aggiorna valori vita / punti
-    int type = this->b1->find_bonus(ps, this->field->getLenS(), this->player->get_position().x, this->player->get_position().y, this->player->get_versor());
+    int type = this->b1->find_bonus(ps, this->player->get_position().x, this->player->get_position().y, this->player->get_versor());
     if(type == 0){         // ( $ )
             this->player->increase_points(10);
     }
