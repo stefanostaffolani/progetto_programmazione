@@ -18,25 +18,27 @@ int Player::get_points(){return this->points;}
 void Player::increase_points(int n){this->points += n;}
 
 bool Player::hit_enemy(){
-    return (mvinch(this->pos.y, this->pos.x) == (int)'o' || mvinch(this->pos.y, this->pos.x) == (int)'O');
+    return (mvinch(this->pos.y, this->pos.x) == (int)'o' || mvinch(this->pos.y, this->pos.x) == (int)'O');  // va bene per come vengono gestiti i print nel ciclo di gioco
 }
 
 void Player::move(int& ps){
-    if((this->versor == -1) && (this->pos.x < 20) && (ps >= 1)){
+    if((this->versor == -1) && (this->pos.x < 20) && (ps >= 1)){   // se sono al bordo shifto lo screen con ps
         ps--;
     }else if ((this->versor == 1) && (this->pos.x > 55)){
         ps++;
     }
-    else Item::move(0);
+    else Item::move(0);   // altrimenti chiamo il move di Item
     this->print_item(0);
-    s2->update_bullet(ps, 75);
-    p2->printPlatforms(ps, 75, this->versor);
-    b2->print_bonus(ps, 75, this->versor);
-    e2->printEnemies(ps, 75, this->versor);
+    s2->update_bullet(ps, LENGTH);
+    p2->printPlatforms(ps, LENGTH, this->versor);    // ristampo tutto per fare il refresh
+    b2->print_bonus(ps, LENGTH, this->versor);
+    e2->printEnemies(ps, LENGTH, this->versor);
 }
 
 void Player::decrease_life(int n){this->life -= n;}
+
 void Player::increase_life(int n){this->life += n;}
+
 void Player::set_life(int n) {this->life = n;}
 
 void Player::check_is_hit(){
@@ -69,11 +71,10 @@ void Player::jump(int& ps){
         
         if (mvinch(diagonale.y, diagonale.x) == (int)' '){
             this->delete_item(0);
-            if(mvinch(sopra.y, sopra.x) == (int)' '){   //perchè il move cancella
+            if(mvinch(sopra.y, sopra.x) == (int)' '){   //perchè il move cancella anche
                 this->pos.y--;
                 this->move(ps);
-            }else{
-                //this->delete_item(0);
+            }else{                    //per gestire caso del move che potrebbe cancellare il carattere sopra!!
                 this->pos.y--;
                 this->pos.x += this->versor;
                 this->print_item(0);
@@ -82,17 +83,17 @@ void Player::jump(int& ps){
         } else{
             hit_something = true;
         }
-        s2->update_bullet(ps, 75);   //TODO mettere lenS al posto di 75
-        //p2->printPlatforms(ps,75,versor);
+        s2->update_bullet(ps, LENGTH);   //TODO mettere lenS al posto di 75
 
     }
     gravity(ps);
 }
 
-void Player::gravity(int& ps){   //TODO: gestire caso salto su proiettili (magari mettendo hit_something = false???)
+void Player::gravity(int& ps){  
     bool hit_something = false;
     char c;
-    if (mvinch(this->pos.y + 1, this->pos.x) != SPACE && mvinch(this->pos.y + 1, this->pos.x) != DOLLAR && mvinch(this->pos.y + 1, this->pos.x) != 86) hit_something = true;  //controllare 
+    //se ho sotto qualcosa per cui cui non posso scendere mi fermo subito!!
+    if (mvinch(this->pos.y + 1, this->pos.x) != (int)' ' && mvinch(this->pos.y + 1, this->pos.x) != (int)'$' && mvinch(this->pos.y + 1, this->pos.x) != (int)'V') hit_something = true; 
     else hit_something = false;
     position diagonale, sotto, laterale;
     while(!(hit_something)){
@@ -102,33 +103,34 @@ void Player::gravity(int& ps){   //TODO: gestire caso salto su proiettili (magar
         //per sparare
         c = getch();
         if(c == SPACE) s2->add_bullet(this->pos, this->versor, '-', P_DAMAGE);
-        
+        //posizioni rispetto al giocatore aggiornate nel ciclo
         diagonale = {this->pos.x + versor, this->pos.y + 1};
         sotto = {this->pos.x, this->pos.y+1};
         laterale = {this->pos.x+this->versor, this->pos.y};
+
         if (mvinch(sotto.y, sotto.x) == (int)'=' || this->pos.y == HEIGHT){   // ho qualcosa sotto
             hit_something = true;
         }
         else if(mvinch(diagonale.y, diagonale.x) != SPACE){
             hit_something = true;
-            if(mvinch(diagonale.y, diagonale.x) == (int)'-' || mvinch(diagonale.y, diagonale.x) == (int)'*'){
-                hit_something = false;
+            if(mvinch(diagonale.y, diagonale.x) == (int)'-' || mvinch(diagonale.y, diagonale.x) == (int)'*'){  // se cado in diagonale su un proiettile, contiunuo a cadere
+                hit_something = false;   // per rimanere nel ciclo
                 this->delete_item(0);
                 this->pos.x += versor;
                 this->pos.y++;
                 this->print_item(0);
             }
-            else if (mvinch(diagonale.y, diagonale.x) == (int)'$' || mvinch(diagonale.y, diagonale.x) == (int)'V'){
+            else if (mvinch(diagonale.y, diagonale.x) == (int)'$' || mvinch(diagonale.y, diagonale.x) == (int)'V'){  // se cado in diagonale su un bonus
                 this->delete_item(0);
                 this->pos.y++;
                 this->move(ps);
-            }else if(mvinch(diagonale.y, diagonale.x) == (int)'|'){
+            }else if(mvinch(diagonale.y, diagonale.x) == (int)'|'){   //se vado a sabttere sul bordo sx
                 this->delete_item(0);
                 this->pos.y = HEIGHT;
                 this->pos.x = INIT_X;
                 this->print_item(0);
                 refresh();
-            }else if(mvinch(diagonale.y,diagonale.x) == (int)'o' || mvinch(diagonale.y,diagonale.x) == (int)'O'){
+            }else if(mvinch(diagonale.y,diagonale.x) == (int)'o' || mvinch(diagonale.y,diagonale.x) == (int)'O'){   //se cado in diagonale su un nemico
                 this->delete_item(0);
                 this->pos.y++;
                 this->print_item(0);
@@ -153,7 +155,7 @@ void Player::gravity(int& ps){   //TODO: gestire caso salto su proiettili (magar
                 this->print_item(0);
             }
         }      
-        s2->update_bullet(ps,75);
-        p2->printPlatforms(ps, 75, versor);
+        s2->update_bullet(ps,LENGTH);
+        p2->printPlatforms(ps, LENGTH, versor);
     }
 }

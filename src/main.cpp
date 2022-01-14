@@ -5,6 +5,3 @@ int main(){
         game.game_loop();
         return 0;
 }
-
-
-
