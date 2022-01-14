@@ -44,8 +44,8 @@ void Bonus::addNode(int n){
         tmp->next = NULL;
         last->next = tmp;
         last = tmp;
-    
-        tmp->x = last->x + 30 + rand() % n;
+
+        tmp->x = tmp->prev->x + 30 + rand() % n;
         tmp->y = this->set_y(tmp->x);
         tmp->type = (rand()%10 == 0) ? 1 : 0;
 
@@ -156,6 +156,7 @@ int Bonus::find_bonus(int ps, int plx, int ply, int versor){
 
                 bonus_type_found = iter->type;
                 removeBonus(iter);
+                update_current(ps, versor);
 
                 mvprintw(ply, plx, "@");
                 mvprintw(ply, plx + 1, " ");
