@@ -55,7 +55,7 @@ void Bonus::removeBonus(p_bon iter){
     // verifico se il bonus è current, last, first altirmenti nulla
     
     if(iter == current){
-        if(iter == first && iter == last){
+        if(iter == first && iter == last){                  // cAO
             first = NULL;
             last = NULL;
             current = NULL;
@@ -163,16 +163,16 @@ int Bonus::find_bonus(int ps, int plx, int ply, int versor){
 int Bonus::set_y(int x){
     p_node iter = p->get_current();
 
-    if(iter == NULL) return 12;
-    else if(iter->prev == NULL) return 12;
+    if(iter == NULL) return HEIGHT;
+    else if(iter->prev == NULL) return HEIGHT;
     else{
         while(iter->next != NULL && iter->x < x)
             iter = iter->next;
         if(iter->prev->x + iter->prev->len - 1 < x)    // -1 perchè x + len sborda di 1
-            return 12;
+            return HEIGHT;
         else{
             if(rand()%2)return iter->prev->y - 1;
-            else return 12;
+            else return HEIGHT;
         }
     }
 }
