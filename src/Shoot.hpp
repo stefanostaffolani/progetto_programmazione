@@ -14,7 +14,7 @@ typedef bullet_list* p_bullet;
 class Shoot{
     public:
         Shoot();
-        void update_bullet(int, int);   // aggiorna la lista dei proiettili
+        void update_bullet(int);   // aggiorna la lista dei proiettili
         void add_bullet(position, int, char, int);
         void remove_bullet(p_bullet&);
         p_bullet get_head();

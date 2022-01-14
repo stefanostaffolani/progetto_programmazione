@@ -29,9 +29,9 @@ void Player::move(int& ps){
     }
     else Item::move(0);   // altrimenti chiamo il move di Item
     this->print_item(0);
-    s2->update_bullet(ps, LENGTH);
-    p2->printPlatforms(ps, LENGTH, this->versor);    // ristampo tutto per fare il refresh
-    b2->print_bonus(ps, LENGTH, this->versor);
+    s2->update_bullet(ps);
+    p2->printPlatforms(ps, this->versor);    // ristampo tutto per fare il refresh
+    b2->print_bonus(ps, this->versor);
     e2->printEnemies(ps, LENGTH, this->versor);
 }
 
@@ -45,6 +45,7 @@ void Player::check_is_hit(){
     p_bullet iter = s2->get_head();
     bool game_over = false;
     while(iter != NULL && !game_over){
+        // se c'e' un proiettile nella posizione del player decrementa vita e se termina la vita esci dal ciclo
         if(iter->b->get_position().x == this->pos.x && iter->b->get_position().y == this->pos.y && (iter->b->get_avatar() != '-')){
             this->decrease_life(iter->b->get_damage());
             if(this->get_life() <= 0) game_over = true;
@@ -59,7 +60,7 @@ void Player::jump(int& ps){
     char c;
     bool hit_something = false;
     position diagonale, sopra;
-    while((i < Y_JUMP) && !(hit_something)){
+    while((i < Y_JUMP) && !(hit_something)){   // salta finche' non colpisce qualcosa o per un max di 5 in altezza
 
         e2->move_and_shoot(75,ps,this->pos.x,s2);     //aggiorna i nemici
 
@@ -83,7 +84,7 @@ void Player::jump(int& ps){
         } else{
             hit_something = true;
         }
-        s2->update_bullet(ps, LENGTH);   //TODO mettere lenS al posto di 75
+        s2->update_bullet(ps);   //TODO mettere lenS al posto di 75
 
     }
     gravity(ps);
@@ -155,7 +156,7 @@ void Player::gravity(int& ps){
                 this->print_item(0);
             }
         }      
-        s2->update_bullet(ps,LENGTH);
-        p2->printPlatforms(ps, LENGTH, versor);
+        s2->update_bullet(ps);
+        p2->printPlatforms(ps, versor);
     }
 }
