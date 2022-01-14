@@ -36,51 +36,57 @@ void Bonus::addNode(int n){
         first->y = this->set_y(first->x);
         first->type = (rand()%10 == 0) ? 1 : 0;
     }
-    else{
+    else{ // altrimenti aggiungo in testa
         p_bon tmp = new bonuslist();
-        tmp->next = NULL;
+
+        // sistema della dinamica di puntatori, last punta all'ultimo nodo appena creato tmp, current e first non vengono cambiati
         tmp->prev = last;
+        tmp->next = NULL;
+        last->next = tmp;
+        last = tmp;
+    
         tmp->x = last->x + 30 + rand() % n;
         tmp->y = this->set_y(tmp->x);
         tmp->type = (rand()%10 == 0) ? 1 : 0;
 
-        last->next = tmp;
-        last = tmp;
+        
     }
 
 }
 
 // rimuove un bonus dalla lista dei bonus
 void Bonus::removeBonus(p_bon iter){
-    // verifico se il bonus è current, last, first altirmenti nulla
+    // verifico se il bonus è current, last, first altirmenti lo elimino senza dover aggiornare nulla
     
+    // se il mio iteratore raggiunge current il suo valore deve essere aggiornato 
     if(iter == current){
-        if(iter == first && iter == last){                  // cAO
-            first = NULL;
+        // il current può collidere con first e/o last, considero i seguenti casi 
+        if(iter == first && iter == last){                  // caso: a | first = current = last = a
+            first = NULL;                                   
             last = NULL;
             current = NULL;
-        }
+        }                                                   // caso: a b | first = current = a, last = b
         else if(iter == first && iter != last){
             first = first->next;
             current = first;
             first->prev = NULL;
         }
-        else if(iter != first && iter == last){
+        else if(iter != first && iter == last){             // caso a b | first = b, current = last = a
             last = last->prev;
             current = last;  
             last->next = NULL;       
         }
-        else{
+        else{                                               // caso a b c | first = a, current = b, last = c
             iter->next->prev = iter->prev;
             iter->prev->next = iter->next;
             current = iter->prev;
         }
     }
-    else if(iter == first){
+    else if(iter == first){                                 
         first = first->next;
         first->prev = NULL;
     }
-    else if(iter == last){
+    else if(iter == last){                                 
         last = last->prev;
         last->next = NULL;
     }
@@ -96,18 +102,18 @@ void Bonus::removeBonus(p_bon iter){
 // aggiorna il valore del puntatore current, viene chiamata dalla funzione stampa
 void Bonus::update_current(int ps, int versor){
     if(current!=NULL){
-        if(current -> x < ps && current->next != NULL)
-                current = current -> next;
-                // se sto andando in dietro:
-        else if(current -> prev != NULL && current -> prev -> x >= ps)
-                current = current -> prev;
+        // se sto andando avanti:
+        if(current -> x < ps && current->next != NULL)  // se x+len di current è fuori dallo schermo a sinistra
+                current = current -> next;              
+        // se sto andando in dietro:
+        else if(current -> prev != NULL && current -> prev -> x >= ps) // se x+len è fuori dallo schermo a destra 
+                current = current -> prev;                             
     }
 }
 
 void Bonus::print_bonus(int ps, int versor){
 
     // 1) verifica dell'aggiornamento valore current -------------------------
-                // se sto andando avanti:
     update_current(ps, versor);
 
     // 2) stampare da current fino a limite schermo --------------------------
@@ -115,8 +121,11 @@ void Bonus::print_bonus(int ps, int versor){
 
     if(current != NULL){
         while(iter != NULL && iter -> x < ps + LENGTH){ // cicla fino a che la nuova x di iter è fuori dallo schermo
+             // a seconda della direzione(versor) cancello il bonus poichè lo schermo si è mosso
             if(versor == 1) mvprintw(iter->y, iter->x - ps + 1, " "); // premo d 
             else if(versor == -1) mvprintw(iter->y, iter->x - ps - 1, " "); // premo a
+
+            // stampo bonus controllando che non esca dallo schermo
             if(iter -> x >= ps && iter -> x < ps + LENGTH - 1){
                 if(iter->type == 0)
                     mvprintw(iter -> y, iter -> x - ps, "$");
@@ -139,13 +148,14 @@ int Bonus::find_bonus(int ps, int plx, int ply, int versor){
     int bonus_type_found = -1;
 
     if(iter!=NULL){
+        // cicla tutti i bonus da current a fine schermo
         while(iter != NULL && iter->x < ps+LENGTH){
             
+            // se la posizione del bonus è la stessa del player
             if(iter->x == plx + ps && iter->y == ply) {
 
                 bonus_type_found = iter->type;
                 removeBonus(iter);
-                update_current(ps, versor);
 
                 mvprintw(ply, plx, "@");
                 mvprintw(ply, plx + 1, " ");
