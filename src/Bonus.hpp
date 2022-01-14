@@ -15,7 +15,7 @@ class Bonus{
 public:
     Bonus(Platform*);
     void generate(int,int);
-    void addNode();
+    void addNode(int);
     void removeBonus(p_bon);
 
     void update_current(int,int);
