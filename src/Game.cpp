@@ -11,6 +11,7 @@ Game::Game(){
     this->player = new Player('@',p1,b1,E,s1,start);
     this->ps = 0;   //scrren pointer
     this->gameOver = false;
+
     //genero 50 platform, 15 nemici e 15 bonus
     for(int i = 0; i < 50; i++)
         this->p1->addNode();
@@ -24,7 +25,7 @@ Game::Game(){
     field->upgradeData(100,0);
 }
 
-void Game::game_loop(){
+void Game::game_loop(){   // ciclo di gioco
     while(!this->gameOver){
         timeout(100);
         this->kbd_input();

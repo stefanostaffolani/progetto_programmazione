@@ -2,7 +2,7 @@
  
 Enemies::Enemies(Platform* plat){
     this->difficulty = 0;
-    this->fattore_incremento = 200;    // valutare poi il fattore di incremento
+    this->fattore_incremento = 20;    // valutare poi il fattore di incremento
     this->p2 = plat;
     this->first = NULL;
     this->last = NULL;
@@ -142,7 +142,7 @@ void Enemies::move_and_shoot(int ps, int x_player, Shoot* s2){
                 if(iter->e->get_versor() == 1) mvprintw(iter->e->get_position().y, iter->e->get_position().x - ps + 1, " "); // premo d 
                 else if(iter->e->get_versor() == -1) mvprintw(iter->e->get_position().y, iter->e->get_position().x - ps - 1, " "); // premo a
                 iter->e->random_move(ps);
-                iter->e->random_shoot((10-this->difficulty), x_player, ps, s2);
+                iter->e->random_shoot((11-this->difficulty), x_player, ps, s2);
             }
             iter = iter->next;
         }
@@ -155,8 +155,7 @@ void Enemies::increase_difficulty(int ps){    // operazione per aumentare la dif
     if(this->difficulty < 9) this->difficulty = ps / this->fattore_incremento;
 }
 
-//per la frequenza di sparo si potrebbe fare (10 - difficult) (10 livelli di difficoltà), al decimo livello spara sempre
-int Enemies::set_y(int x){   //TODO: controllare questa funzione e rifarla
+int Enemies::set_y(int x){
     bool found_plat = false;
 
     p_node iter = p2->get_current();
@@ -181,7 +180,6 @@ char Enemies::set_avatar(int type){
 
 void Enemies::delete_base_enemy(position player_pos, int ps){
     p_enem iter = this->current;
-    //bool out_of_screen = false;
     bool found = false;
     int x_enem,y_enem;
     

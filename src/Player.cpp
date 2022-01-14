@@ -84,7 +84,7 @@ void Player::jump(int& ps){
         } else{
             hit_something = true;
         }
-        s2->update_bullet(ps);   //TODO mettere lenS al posto di 75
+        s2->update_bullet(ps);
 
     }
     gravity(ps);

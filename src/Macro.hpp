@@ -8,3 +8,5 @@
 #define PIPE 124
 #define P_DAMAGE 10
 #define LIFE 100
+#define BASE_ENEMY_LIFE 20
+#define HARD_ENEMY_LIFE 50
