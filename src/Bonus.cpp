@@ -36,20 +36,16 @@ void Bonus::addNode(int n){
         first->y = this->set_y(first->x);
         first->type = (rand()%10 == 0) ? 1 : 0;
     }
-    else{ // altrimenti aggiungo in testa
+    else{
         p_bon tmp = new bonuslist();
-
-        // sistema della dinamica di puntatori, last punta all'ultimo nodo appena creato tmp, current e first non vengono cambiati
-        tmp->prev = last;
         tmp->next = NULL;
-        last->next = tmp;
-        last = tmp;
-    
+        tmp->prev = last;
         tmp->x = last->x + 30 + rand() % n;
         tmp->y = this->set_y(tmp->x);
         tmp->type = (rand()%10 == 0) ? 1 : 0;
 
-        
+        last->next = tmp;
+        last = tmp;
     }
 
 }
@@ -121,11 +117,8 @@ void Bonus::print_bonus(int ps, int versor){
 
     if(current != NULL){
         while(iter != NULL && iter -> x < ps + LENGTH){ // cicla fino a che la nuova x di iter è fuori dallo schermo
-             // a seconda della direzione(versor) cancello il bonus poichè lo schermo si è mosso
             if(versor == 1) mvprintw(iter->y, iter->x - ps + 1, " "); // premo d 
             else if(versor == -1) mvprintw(iter->y, iter->x - ps - 1, " "); // premo a
-
-            // stampo bonus controllando che non esca dallo schermo
             if(iter -> x >= ps && iter -> x < ps + LENGTH - 1){
                 if(iter->type == 0)
                     mvprintw(iter -> y, iter -> x - ps, "$");
@@ -148,14 +141,13 @@ int Bonus::find_bonus(int ps, int plx, int ply, int versor){
     int bonus_type_found = -1;
 
     if(iter!=NULL){
-        // cicla tutti i bonus da current a fine schermo
         while(iter != NULL && iter->x < ps+LENGTH){
             
-            // se la posizione del bonus è la stessa del player
             if(iter->x == plx + ps && iter->y == ply) {
 
                 bonus_type_found = iter->type;
                 removeBonus(iter);
+                update_current(ps, versor);
 
                 mvprintw(ply, plx, "@");
                 mvprintw(ply, plx + 1, " ");
