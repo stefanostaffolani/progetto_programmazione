@@ -46,7 +46,6 @@ void Game::game_generate(){
     this->p1->generate(this->ps, 50);
     this->b1->generate(10, this->ps);
     this->E->generate(5, this->ps);
-   
 }
 
 void Game::game_dynamics(){

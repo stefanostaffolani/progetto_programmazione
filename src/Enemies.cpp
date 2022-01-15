@@ -40,7 +40,7 @@ void Enemies::addNode(int n){
         first->next = NULL;
         first->prev = NULL;
         position pos_enemy = {x,y};
-        first->e = new Enemy(this->set_avatar(type),p2, pos_enemy, type, on_plat, P_DAMAGE+2*this->difficulty);
+        first->e = new Enemy(this->set_avatar(type),p2, pos_enemy, type, on_plat, P_DAMAGE+2*this->difficulty*type);
     }
     else{
         x = last->e->get_position().x + 50 + rand() % n; 
