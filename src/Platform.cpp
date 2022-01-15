@@ -92,7 +92,7 @@ void Platform::printPlatforms(int ps, int versor){
 } 
 
 /* se l'ultima platform che è stata generata entra nello schermo
-*  chiama per n volte la funzione addNode che aggiunge un nuovo bonus 
+*  chiama per n volte la funzione addNode che aggiunge un nuovo nodo 
 */
 void Platform::generate(int ps, int n){
         if(last->x < ps + LENGTH){ 
