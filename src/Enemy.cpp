@@ -1,8 +1,8 @@
 #include "Enemy.hpp"
  
-Enemy::Enemy(char avatar, Platform* p1, position pos, int type = 0, bool on_plat = false):Item(avatar, pos, 0){
+Enemy::Enemy(char avatar, Platform* p1, position pos, int type = 0, bool on_plat = false, int damage = P_DAMAGE):Item(avatar, pos, 0){
     this->type = type;
-    set_damage();
+    this->damage = damage;
     p2 = p1;
     this->on_plat = on_plat;
     if(type == 0) life = BASE_ENEMY_LIFE;    // setto la vita in base al tipo
@@ -12,11 +12,6 @@ Enemy::Enemy(char avatar, Platform* p1, position pos, int type = 0, bool on_plat
 void Enemy::decrease_life(int n){this->life -= n;}
 
 int Enemy::get_life(){return this->life;}
-
-void Enemy::set_damage(){ 
-    if(this->type == 0) this->damage = P_DAMAGE;   // nemico base
-    else this->damage = 2*P_DAMAGE;                     // nemico forte
-}
 
 int Enemy::get_damage(){return this->damage;}
 

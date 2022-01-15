@@ -8,7 +8,7 @@ class Bullet : public Item{
 
         // incr-decr
         void decrease_counter();
-        void increase_damage(int);
+        //void increase_damage(int);
 
         void hit_something();
         void set_damage(int);

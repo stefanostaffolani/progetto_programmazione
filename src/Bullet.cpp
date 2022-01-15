@@ -8,7 +8,7 @@ Bullet::Bullet(int versor, position pos, char avatar, int damage) : Item(avatar,
 
 void Bullet::set_damage(int n){this->damage = n;}
 
-void Bullet::increase_damage(int n){this->damage += n;} 
+//void Bullet::increase_damage(int n){this->damage += n;} 
 
 void Bullet::decrease_counter(){this->counter--;}
 
