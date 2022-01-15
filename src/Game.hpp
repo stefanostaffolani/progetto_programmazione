@@ -12,6 +12,7 @@ class Game{
         void game_generate();
         void game_bonus();
         void game_dynamics();
+        void init();
 
     protected:
         Field* field;

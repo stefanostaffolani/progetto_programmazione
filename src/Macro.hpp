@@ -10,3 +10,5 @@
 #define LIFE 100
 #define BASE_ENEMY_LIFE 20
 #define HARD_ENEMY_LIFE 50
+#define PLAT_INIT 50
+#define BON_ENEM_INIT 3

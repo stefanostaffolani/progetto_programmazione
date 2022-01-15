@@ -11,21 +11,10 @@ Game::Game(){
     this->player = new Player('@',p1,b1,E,s1,start);
     this->ps = 0;   //scrren pointer
     this->gameOver = false;
-
-    //genero 50 platform, 15 nemici e 15 bonus
-    for(int i = 0; i < 50; i++)
-        this->p1->addNode();
-    for(int i = 0; i < 3; i++){   //TODO: pulire sta cosa
-        this->E->addNode(5);
-        this->b1->addNode(5);
-    }
-    initscr();
-    noecho();       // fa si che non si vede quello che premo dalla tastiera
-    curs_set(0);    // rende invisibile il cursore
-    field->upgradeData(100,0);
 }
 
 void Game::game_loop(){   // ciclo di gioco
+    init();
     while(!this->gameOver){
         timeout(100);
         this->kbd_input();
@@ -108,3 +97,18 @@ void Game::kbd_input(){
     else if(c == (int)' ')       // (SPACE) => sparo
         this->s1->add_bullet(this->player->get_position(), this->player->get_versor(), '-', P_DAMAGE);
 }
+
+void Game::init(){
+    //genero 50 platform, 15 nemici e 15 bonus
+    for(int i = 0; i < PLAT_INIT; i++)
+        this->p1->addNode();
+    for(int i = 0; i < BON_ENEM_INIT; i++){   //TODO: pulire sta cosa
+        this->E->addNode(BON_ENEM_INIT);
+        this->b1->addNode(BON_ENEM_INIT);
+    }
+    initscr();
+    noecho();       // fa si che non si vede quello che premo dalla tastiera
+    curs_set(0);    // rende invisibile il cursore
+    field->upgradeData(LIFE,0);
+}
+
