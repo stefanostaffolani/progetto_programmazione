@@ -40,7 +40,7 @@ void Enemies::addNode(int n){
         first->next = NULL;
         first->prev = NULL;
         position pos_enemy = {x,y};
-        first->e = new Enemy(this->set_avatar(type),p2, pos_enemy, type, on_plat);
+        first->e = new Enemy(this->set_avatar(type),p2, pos_enemy, type, on_plat, P_DAMAGE+2*this->difficulty);
     }
     else{
         x = last->e->get_position().x + 50 + rand() % n; 
@@ -53,7 +53,7 @@ void Enemies::addNode(int n){
         tmp->next = NULL;
         tmp->prev = last;
         position pos_enemy = {x,y};
-        tmp->e = new Enemy(this->set_avatar(type),p2, pos_enemy, type, on_plat);
+        tmp->e = new Enemy(this->set_avatar(type),p2, pos_enemy, type, on_plat, P_DAMAGE+2*this->difficulty);
 
         last->next = tmp;
         last = tmp;
@@ -142,7 +142,7 @@ void Enemies::move_and_shoot(int ps, int x_player, Shoot* s2){     //scorre la l
                 if(iter->e->get_versor() == 1) mvprintw(iter->e->get_position().y, iter->e->get_position().x - ps + 1, " "); // premo d, quindi vado a dx  ==> avevo incremento ps
                 else if(iter->e->get_versor() == -1) mvprintw(iter->e->get_position().y, iter->e->get_position().x - ps - 1, " "); // premo a, quindi vado a sx ==> avevo decrementato ps
                 iter->e->random_move(ps);
-                iter->e->random_shoot((11-this->difficulty), x_player, ps, s2);   // 11 - diff ==> probabilita' di sparo fino a 50%
+                iter->e->random_shoot((12-this->difficulty), x_player, ps, s2);   // 11 - diff ==> probabilita' di sparo fino a 50%
             }
             iter = iter->next;
         }
@@ -152,7 +152,7 @@ void Enemies::move_and_shoot(int ps, int x_player, Shoot* s2){     //scorre la l
 int Enemies::get_difficulty(){return difficulty;}
 
 void Enemies::increase_difficulty(int ps){    // operazione per aumentare la difficoltà dei nemici lungo il gioco (da valutare)
-    if(this->difficulty < 9) this->difficulty = ps / this->fattore_incremento;
+    if(this->difficulty < 10) this->difficulty = ps / this->fattore_incremento;
 }
 
 int Enemies::set_y(int x){    

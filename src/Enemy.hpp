@@ -2,7 +2,7 @@
 
 class Enemy : public Item {
 public:
-    Enemy(char, Platform*, position, int, bool);
+    Enemy(char, Platform*, position, int, bool, int);
     
     // check per movimento
     bool check_plat_border(int);
@@ -26,7 +26,6 @@ protected:
     int life;
     int type;
     int damage;
-    void set_damage();
     void increase_damage(int);
 };
 
