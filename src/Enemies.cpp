@@ -186,7 +186,7 @@ void Enemies::delete_base_enemy(position player_pos, int ps){
     while(iter != NULL && !found){
         x_enem = iter->e->get_position().x - ps;
         y_enem = iter->e->get_position().y;
-        if((x_enem == player_pos.x) && (y_enem == player_pos.y)){   //se e' il nemico in posizione richiesta cancella
+        if((x_enem == player_pos.x) && (y_enem == player_pos.y) && (iter->e->get_type()==0)){   //se e' il nemico in posizione richiesta cancella
             found = true;
             this->removeEnemies(iter);
         }else {
