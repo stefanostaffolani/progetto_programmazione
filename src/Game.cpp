@@ -42,11 +42,11 @@ void Game::game_print(){
 }
 
 void Game::game_generate(){
-    // generazione di bonus, platform, enemies ----------------------
+    // generazione di bonus, platform, enemies 
     this->p1->generate(this->ps, 50);
     this->b1->generate(10, this->ps);
     this->E->generate(5, this->ps);
-    // --------------------------------------------------------------
+   
 }
 
 void Game::game_dynamics(){
@@ -76,7 +76,7 @@ void Game::game_bonus(){
             this->player->increase_life(10);
         else
             this->player->set_life(100);      
-    } // ---------------------------------------------------------
+    } 
 
 }
 
