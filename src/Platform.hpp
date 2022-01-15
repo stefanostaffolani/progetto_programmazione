@@ -21,7 +21,7 @@ public:
         void addNode();    
         void printPlatforms(int ps, int versor);           // gli viene passato il puntatore della visuale
         void generate(int ps, int n);                      // genera n nuove platform
-        p_node get_current() { return current; }
+        p_node get_current();
 
 protected:
         p_node first;

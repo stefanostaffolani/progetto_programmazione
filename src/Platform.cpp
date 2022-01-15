@@ -100,3 +100,5 @@ void Platform::generate(int ps, int n){
                       addNode();                          
         }
 }
+
+p_node Platform::get_current(){ return this->current; }
