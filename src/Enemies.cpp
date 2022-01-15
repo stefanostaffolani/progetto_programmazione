@@ -53,7 +53,7 @@ void Enemies::addNode(int n){
         tmp->next = NULL;
         tmp->prev = last;
         position pos_enemy = {x,y};
-        tmp->e = new Enemy(this->set_avatar(type),p2, pos_enemy, type, on_plat, P_DAMAGE+2*this->difficulty);
+        tmp->e = new Enemy(this->set_avatar(type),p2, pos_enemy, type, on_plat, P_DAMAGE+2*this->difficulty*type);
 
         last->next = tmp;
         last = tmp;
