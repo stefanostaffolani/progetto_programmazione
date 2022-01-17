@@ -69,7 +69,7 @@ void Platform::printPlatforms(int ps, int versor){
                 current = current -> next;              
                 // se sto andando in dietro:
         else if(current -> prev != NULL && current -> prev -> x + current -> prev -> len >= ps) // se x+len è fuori dallo schermo a destra 
-                current = current -> prev;                                                     
+                currnet = current -> prev;                                                     
 
 
         // 2) stampo le platform da current fino a che o finisco o trovo una x fuori dallo schermo
