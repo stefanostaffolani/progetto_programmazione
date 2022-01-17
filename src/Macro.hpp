@@ -14,3 +14,4 @@
 #define PLAT_X_POS 40 
 #define Y_JUMP 5
 #define FACTOR 200
+#define ESC 27

@@ -82,7 +82,7 @@ void Game::game_bonus(){
 void Game::kbd_input(){
     this->c = getch();    
     // verifica di che valore ottiene c da tastiera
-    if (c == 27 || this->player->get_life() <= 0) this->gameOver = true;
+    if (c == ESC || this->player->get_life() <= 0) this->gameOver = true;
     else if(c == (int)'d'){      // (d)     => destra       
         this->player->set_versor(1);
         this->player->move(ps);//set_x(player.get_x() + 1);          
