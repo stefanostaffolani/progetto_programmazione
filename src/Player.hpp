@@ -1,6 +1,4 @@
 #include "Enemies.hpp"
-
-#define Y_JUMP 5
  
 class Player : public Item{
 public:
