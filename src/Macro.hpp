@@ -13,3 +13,4 @@
 #define BONU_x_POS 30 
 #define PLAT_X_POS 40 
 #define Y_JUMP 5
+#define FACTOR 200

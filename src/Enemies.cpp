@@ -2,7 +2,7 @@
  
 Enemies::Enemies(Platform* plat){
     this->difficulty = 0;
-    this->fattore_incremento = 200;    // valutare poi il fattore di incremento
+    this->fattore_incremento = FACTOR;    // valutare poi il fattore di incremento
     this->p2 = plat;
     this->first = NULL;
     this->last = NULL;
