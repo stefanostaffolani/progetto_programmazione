@@ -44,4 +44,4 @@ up:
 	./PlatformGame
 
 clean:
-	rm *.o test
+	rm *.o PlatformGame
