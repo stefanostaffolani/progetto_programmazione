@@ -4,8 +4,8 @@ DIR = ./src
 OBJECTS = main.o Platform.o Field.o Player.o Bonus.o Item.o Shoot.o Enemy.o Enemies.o Bullet.o Game.o
 
 
-test: $(OBJECTS)
-	$(CC) -o test $(OBJECTS) $(INCLUDES)
+PlatformGame.o: $(OBJECTS)
+	$(CC) -o PlatformGame $(OBJECTS) $(INCLUDES)
 
 main.o : $(DIR)/main.cpp
 	$(CC) -c $(DIR)/main.cpp
