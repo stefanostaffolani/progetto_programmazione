@@ -1,7 +1,5 @@
 #include "Item.hpp"
 
-#define RANGE 20
-
 class Bullet : public Item{
     public:
         Bullet(int, position, char, int);
