@@ -58,7 +58,7 @@ void Game::game_dynamics(){
 void Game::game_check_enemy_collision(){
      //se sono sopra ad un nemico
     if(this->player->hit_enemy()) {
-        this->player->decrease_life(10);
+        this->player->decrease_life(P_DAMAGE);
         this->E->delete_base_enemy(this->player->get_position(), this->ps);
     }
     this->player->print_item(0);          // stampa player @
@@ -71,10 +71,10 @@ void Game::game_bonus(){
             this->player->increase_points(10);
     }
     else if(type == 1){    // ( V )
-        if(this->player->get_life() + 10 < 100)
+        if(this->player->get_life() + 10 < LIFE)
             this->player->increase_life(10);
         else
-            this->player->set_life(100);      
+            this->player->set_life(LIFE);      
     } 
 
 }
