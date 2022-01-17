@@ -19,7 +19,7 @@ void Platform::addNode(){
         if(first == NULL){ 
                
                 first = new node;               // il primo nodo(first), prima nullo, punta a un nuovo nodo 
-                first -> x = 40;                // posizione x della platform [ x==== ]
+                first -> x = PLAT_X_POS;                // posizione x della platform [ x==== ]
                 first -> y = rand() % 2 + 10;   // posizione y della platform (valore random e il player deve poterci arrivare)
                 first -> len = rand() % 10 + 5; // lunghezza len della platform [ 01..===t ] len = t                     
                 

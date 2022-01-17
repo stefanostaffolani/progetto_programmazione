@@ -21,13 +21,12 @@ void Enemies::generate(int n, int ps){
 
 // aggiungie un nemico nella lista di nemici
 void Enemies::addNode(int n){
-    // genero 10 nemici
     int x;
     int y;
     bool on_plat = false;
 
     if(first == NULL){ // è il primo nemico che genero
-        x = rand() % n + 50;
+        x = rand() % n + ENEM_x_POS;
         y = this->set_y(x);
         
         on_plat = y < HEIGHT;
@@ -43,7 +42,7 @@ void Enemies::addNode(int n){
         first->e = new Enemy(this->set_avatar(type),p2, pos_enemy, type, on_plat, P_DAMAGE+2*this->difficulty*type);
     }
     else{
-        x = last->e->get_position().x + 50 + rand() % n; 
+        x = last->e->get_position().x + ENEM_x_POS + rand() % n; 
         y = this->set_y(x);
         
         on_plat = y < HEIGHT;

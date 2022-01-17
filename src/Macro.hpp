@@ -12,3 +12,6 @@
 #define HARD_ENEMY_LIFE 50
 #define PLAT_INIT 50
 #define BON_ENEM_INIT 3
+#define ENEM_x_POS 50
+#define BONU_x_POS 30 
+#define PLAT_X_POS 40 
