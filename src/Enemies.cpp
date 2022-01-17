@@ -141,7 +141,7 @@ void Enemies::move_and_shoot(int ps, int x_player, Shoot* s2){     //scorre la l
                 if(iter->e->get_versor() == 1) mvprintw(iter->e->get_position().y, iter->e->get_position().x - ps + 1, " "); // premo d, quindi vado a dx  ==> avevo incremento ps
                 else if(iter->e->get_versor() == -1) mvprintw(iter->e->get_position().y, iter->e->get_position().x - ps - 1, " "); // premo a, quindi vado a sx ==> avevo decrementato ps
                 iter->e->random_move(ps);
-                iter->e->random_shoot((12-this->difficulty), x_player, ps, s2);   // 11 - diff ==> probabilita' di sparo fino a 50%
+                iter->e->random_shoot((12-this->difficulty), x_player, ps, s2);   // 12 - diff ==> probabilita' di sparo fino a 50%
             }
             iter = iter->next;
         }
