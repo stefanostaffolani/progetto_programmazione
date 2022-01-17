@@ -41,7 +41,7 @@ Bullet.o: $(DIR)/Bullet.?pp
 	$(CC) -c $(DIR)/Bullet.cpp
 
 up:
-	./test
+	./PlatformGame
 
 clean:
 	rm *.o test

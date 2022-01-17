@@ -60,7 +60,7 @@ void Player::jump(int& ps){
     char c;
     bool hit_something = false;
     position diagonale, sopra;
-    while((i < Y_JUMP) && !(hit_something)){   // salta finche' non colpisce qualcosa o per un max di 5 in altezza
+    while((i < Y_JUMP) && !(hit_something)){   // salta finche' non colpisce qualcosa o per un max in altezza
 
         e2->move_and_shoot(ps,this->pos.x,s2);     //aggiorna i nemici
 
