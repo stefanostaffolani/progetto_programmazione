@@ -81,7 +81,7 @@ void Game::game_bonus(){
 
 void Game::kbd_input(){
     this->c = getch();    
-    // verifica di che valore ottiene c da tastiera -----------------
+    // verifica di che valore ottiene c da tastiera
     if (c == 27 || this->player->get_life() <= 0) this->gameOver = true;
     else if(c == (int)'d'){      // (d)     => destra       
         this->player->set_versor(1);
