@@ -21,7 +21,6 @@ void Enemies::generate(int n, int ps){
 
 // aggiungie un nemico nella lista di nemici
 void Enemies::addNode(int n){
-    // genero 10 nemici
     int x;
     int y;
     bool on_plat = false;
