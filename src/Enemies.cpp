@@ -13,7 +13,7 @@ Enemies::Enemies(Platform* plat){
 // chiama per n volte la funzione addNode che aggiunge un nuovo nemico 
 void Enemies::generate(int n, int ps){
     if(first == NULL) addNode(5);
-    if(last->e->get_position().x < ps + LENGTH){ // se il nemico ultimo entra nellos schermo
+    if(last->e->get_position().x < ps + LENGTH){ // se il nemico ultimo entra nello schermo
         for(int i = 0; i < n; i++)
             addNode(n);
     }
