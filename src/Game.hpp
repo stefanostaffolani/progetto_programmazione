@@ -1,4 +1,3 @@
-#include <ncurses.h>
 #include "Field.hpp"
 using namespace std;
 
